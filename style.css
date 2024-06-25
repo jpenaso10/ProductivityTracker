@@ -8,6 +8,7 @@ body, html {
 
 .form {
     width: 300px; 
+   
     
 }
 
@@ -57,3 +58,13 @@ label input[type="checkbox"] {
     text-align: left;
 }
 
+/* DASHBOARD */
+
+.nav-bar {
+    display: flex;
+    background-color: #2a8af1;
+    width: 100%;
+    margin: 0;
+    display: grid;
+    place-items: center;
+}
