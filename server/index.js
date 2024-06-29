@@ -2,7 +2,7 @@
 
 const express = require('express')
 const connectDB = require('./db.js')
-
+const itemModel = require('./models/Item.js')
 const app = express()
 
 connectDB()
