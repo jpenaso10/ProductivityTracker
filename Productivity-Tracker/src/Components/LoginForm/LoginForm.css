@@ -1,30 +1,65 @@
 .wrapper{
+    position: relative;
     width: 420px;
+    height: 450px;
     background: whitesmoke;
-    color: steelblue;
     border-radius: 10px;
-    padding: 30px 40px;
+    color: steelblue;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    transition: height .2s ease;
 }
 
-.wrapper h1{
+.wrapper.active {
+    height: 520px;
+}
+.wrapper .form-box {
+    width: 100%;
+    padding: 40px;
+}
+
+.wrapper .form-box.login {
+    transition: translate .18s ease;
+    translate: 0;
+}
+
+.wrapper.active .form-box.login {
+    transition: none;
+    translate: -400px
+}
+
+.wrapper .form-box.register {
+    position: absolute;
+    transition: none;
+    translate: 400px;
+}
+
+.wrapper.active .form-box.register {
+    transition: translate .18s ease;
+    translate: 0;
+}
+
+form h1 {
     font-size: 36px;
     text-align: center;
 }
 
-.wrapper .input-box{
+form .input-box {
     position: relative;
     width: 100%;
     height: 50px;
-    background: #fff;
     margin: 30px 0;
+
 }
 
-.input-box input{
+.input-box input {
     width: 100%;
     height: 100%;
     background: transparent;
-    border: 2px solid rgba(255, 255, 255, .2);
+    border: none;
     outline: none;
+    border: 2px solid rgba(255, 255, 255, .2);
     border-radius: 40px;
     color: steelblue;
     padding: 20px 45px 20px 20px;
@@ -38,32 +73,32 @@
     position: absolute;
     right: 20px;
     top:  50%;
-    transform: translateY(-50%);
+    translate: 0 -50%;
     font-size: 16px;
 }
 
-.wrapper .remember-forgot {
+form .remember-forgot {
     display: flex;
     justify-content: space-between;
     font-size: 14.5px;
     margin: -15px 0 15px;
 }
 
-.remember-forgot label input{
+.remember-forgot label input {
     accent-color: steelblue;
     margin-right: 4px;
 }
 
-.remember-forgot a{
+.remember-forgot a {
     color: steelblue;
     text-decoration: none;
 }
 
-.remember-forgot a:hover{
+.remember-forgot a:hover {
     text-decoration: underline;
 }
 
-.wrapper button {
+form button {
     width: 100%;
     height: 45px;
     background: #fff;
@@ -77,7 +112,7 @@
     font-weight: 700;
 }
 
-.wrapper .register-link {
+form .register-link {
     font-size: 14.5px;
     text-align: center;
     margin: 20px 0 15px;
