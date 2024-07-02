@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import './Login.css'
 import { FaUser, FaLock, FaEnvelope } from 'react-icons/fa'
-import Axios from 'axios'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 function Login() {
 
@@ -9,19 +10,22 @@ function Login() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
+    const navigate = useNavigate()
+
+    axios.defaults.withCredentials = true
     const handleSubmit = (e) => {
         e.preventDefault()
-        Axios.post('http://localhost:3000/auth/signup', {
+        axios.post("http://localhost:5000/auth/login", {
             username, 
-            email, 
-            password,
+            password
         })
-        .then(response => {
-            console.log(response)
+        .then(response=> {
+            if(response.data.status) {
+                navigate ('/dashboard')
+            }
+            
         })
-        .catch(err => {
-            console.log(err)
-        })
+        .catch(err => console.log(err))
     }
 
   return (
@@ -48,7 +52,7 @@ function Login() {
                 <button type='submit'>Login</button>
 
                 <div className="register-link">
-                    <p>Don't have an account? <a href="/Signup">Register</a></p>
+                    <p>Don't have an account? <a href="/Signup">Sign Up</a></p>
                 </div>
 
             </form>

@@ -55,7 +55,7 @@ function Signup() {
                 <button type='submit'>Register</button>
 
                 <div className="register-link">
-                    <p>Already have an account <a href="/login">Login</a></p>
+                    <p>Already have an account <a href="/">Login</a></p>
                 </div>
 
             </form>
