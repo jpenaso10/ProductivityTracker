@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import './LoginForm.css'
 import { FaUser,FaLock,FaEnvelope} from "react-icons/fa";
+import axios from 'axios'
 
 const LoginForm = () => {
 
@@ -14,12 +15,31 @@ const LoginForm = () => {
         setAction('');
     };
 
+    const [username, setUsername] = useState()
+    const [email, setEmail] = useState()
+    const [password, setPassword] = useState()
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        axios.post('http://localhost:3000/auth/loginform', {
+            username, 
+            email, 
+            password
+        })
+        .then(response => {
+            console.log(response)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+
     return (
 
         <div className={`wrapper ${action}`}>
 
             <div className="form-box login">
-                <form action="">
+                <form>
                     <h1>Productivity Tracker</h1>
                     <div className="input-box">
                         <input type="text" placeholder='Username' required/>
@@ -45,20 +65,20 @@ const LoginForm = () => {
             </div>
 
             <div className="form-box register">
-                <form action="">
+                <form onSubmit={handleSubmit}>
                     <h1>Registration</h1>
                     <div className="input-box">
-                        <input type="text" placeholder='Username' required/>
+                        <input type="text" placeholder='Username' onChange={(e) => setUsername(e.target.value)} required/>
                         <FaUser className='icon'/>
                     </div>
 
                     <div className="input-box">
-                        <input type="email" placeholder='E-mail' required/>
+                        <input type="email" placeholder='E-mail' onChange={(e) => setEmail(e.target.value)} required/>
                         <FaEnvelope className= 'icon' />
                     </div>
 
                     <div className="input-box">
-                        <input type="password" placeholder='Password' required />
+                        <input type="password" placeholder='Password' onChange={(e) => setPassword(e.target.value)} required />
                         <FaLock className='icon'/>
                     </div>
 

@@ -1,9 +1,10 @@
-const express = require('express')
+import express from 'express'
+import dotenv from 'dotenv'
+dotenv.config()
 
 const app = express()
 
-app.post("/", async(req,res) => {
-    console.log("port Run");
+app.listen(process.env.PORT, () => {
+    console.log("Server is Running");
 })
 
-app.listen(4000);
