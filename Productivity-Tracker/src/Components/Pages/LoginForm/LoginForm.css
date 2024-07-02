@@ -2,7 +2,7 @@
     position: relative;
     width: 420px;
     height: 450px;
-    background: whitesmoke;
+    background: rgba(197, 197, 197, 0.329);
     border-radius: 10px;
     color: steelblue;
     display: flex;
@@ -59,14 +59,14 @@ form .input-box {
     background: transparent;
     border: none;
     outline: none;
-    border: 2px solid rgba(13, 127, 158, 0.2);
+    border: 2px solid rgba(9, 96, 121, 0.2);
     border-radius: 40px;
     color: steelblue;
     padding: 20px 45px 20px 20px;
 }
 
 .input-box input::placeholder{
-    color: steelblue;
+    color: rgba(0, 85, 182, 0.534);
 }
 
 .input-box .icon{
