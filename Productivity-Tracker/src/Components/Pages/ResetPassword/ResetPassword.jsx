@@ -15,7 +15,7 @@ function ResetPassword() {
         axios.post("http://localhost:5000/auth/reset-password/"+token, {
             password, 
         })
-        .then(response=> {
+        .then(response => {
             if(response.data.status) {
                 navigate('/')
             }
