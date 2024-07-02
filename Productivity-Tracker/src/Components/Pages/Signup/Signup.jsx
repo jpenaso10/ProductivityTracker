@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './Signup.css'
 import { FaUser, FaLock, FaEnvelope } from 'react-icons/fa'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 function Signup() {
 
@@ -10,14 +10,21 @@ function Signup() {
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
 
+    const navigate = useNavigate()
+
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post("http://localhost:5000/register", {
+        axios.post("http://localhost:5000/auth/signup", {
             username, 
             email, 
             password
         })
-        .then(result => console.log(result))
+        .then(response=> {
+            if(response.data.status) {
+                navigate ('/login')
+            }
+            
+        })
         .catch(err => console.log(err))
     }
 

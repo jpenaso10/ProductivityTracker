@@ -3,7 +3,7 @@ import './Login.css'
 import { FaUser, FaLock, FaEnvelope } from 'react-icons/fa'
 import Axios from 'axios'
 
-function Signup() {
+function Login() {
 
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
@@ -58,4 +58,4 @@ function Signup() {
 
 }
 
-export default Signup
+export default Login
