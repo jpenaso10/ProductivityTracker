@@ -21,7 +21,7 @@ function Signup() {
         })
         .then(response=> {
             if(response.data.status) {
-                navigate ('/login')
+                navigate ('/')
             }
             
         })
