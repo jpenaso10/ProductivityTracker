@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './Dashboard.css';
 import { FaTachometerAlt, FaUser, FaChartBar, FaBriefcase, FaQuestionCircle, FaCog, FaSignOutAlt, FaSearch } from "react-icons/fa";
 import { BiAlarm } from "react-icons/bi";
@@ -8,8 +8,24 @@ import { CgMenuLeftAlt } from "react-icons/cg";
 import { CgMenuGridR } from "react-icons/cg";
 import { GoQuestion } from "react-icons/go";
 import { VscSettingsGear } from "react-icons/vsc";
+import { Navigate, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function Dashboard() {
+  const navigate = useNavigate()
+    axios.defaults.withCredentials = true
+
+    useEffect(() => {
+        axios.get('http://localhost:5000/auth/verify')
+        .then(res=> {
+          if(res.data.status) {
+
+          } else {
+            navigate('/')
+          }
+        })
+    }, [])
+
   return (
     <div>
       <head>
