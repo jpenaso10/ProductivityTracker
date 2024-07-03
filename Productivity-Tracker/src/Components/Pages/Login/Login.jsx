@@ -5,7 +5,6 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
 function Login() {
-
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -22,6 +21,9 @@ function Login() {
         .then(response=> {
             if(response.data.status) {
                 navigate ('/dashboard')
+            }
+            else{
+                alert("Incorrect Username or Password. Please try again.")
             }
             
         })
