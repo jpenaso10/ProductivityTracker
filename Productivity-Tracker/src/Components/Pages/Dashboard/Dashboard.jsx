@@ -60,7 +60,7 @@ function Dashboard() {
               </a>
             </li>
             <li className="logout">
-              <a href="#">
+              <a href="/">
 
                 <BiLogOut />
                 <span>Logout</span>
