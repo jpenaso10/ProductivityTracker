@@ -28,14 +28,19 @@ function ResetPassword() {
     <div className="wrapper">
         <div className="form-box login">
             <form action="/" onSubmit={handleSubmit}>
-                <h1>Reset Password</h1>
+                <FaLock className='icon-lock'/>
+                <h1 id='icon'>Reset Password</h1>
                 
                 <div className="input-box">
-                    <input type="password" placeholder='Password' onChange={(e) => setPassword(e.target.value)} required />
+                    <input type="password" placeholder='New Password' onChange={(e) => setPassword(e.target.value)} required />
                     <FaEnvelope className='icon'/>
                 </div>
-            
+
                 <button type='submit'>Reset</button>
+
+                <div className="register-link">
+                    <p>Don't have an account? <a href="/Signup">Sign Up</a></p>
+                </div>
             </form>
         </div>
     </div>
