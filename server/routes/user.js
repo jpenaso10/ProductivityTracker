@@ -1,9 +1,12 @@
 import express from 'express'
 import bcrypt from 'bcrypt'
 const router = express.Router();
-import { User } from '../models/user.js';
+import { User, Admin } from '../models/user.js';
 import jwt from 'jsonwebtoken'
 import nodemailer from 'nodemailer'
+
+
+/* Employee/User Registration Form to DB */
 
 router.post('/signup', async (req, res) => {
     const {username, email, password} = req.body
@@ -40,6 +43,29 @@ router.post('/login', async (req, res) => {
     res.cookie('token', token, {httpOnly: true, maxAge: 360000})
     return res.json({status: true, message: "login successfully"})
 })
+
+/* Admin Registration Form to DB */
+
+router.post('/admin', async (req, res) => {
+    const {username, email, password} = req.body
+    const admin = await Admin.findOne({username,email})
+    if(admin) {
+        return res.json({message: "User already existed"})
+    }
+
+    const hashpassword = await bcrypt.hash(password, 10)
+    const newadmin = new Admin({
+        username,
+        email,
+        password: hashpassword
+    })
+
+    await newadmin.save()
+    return res.json({status: true, message: "Record registered"})
+
+})
+
+
 
 router.post('/forgot-password', async (req, res) => {
     const {email} = req.body

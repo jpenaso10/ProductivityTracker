@@ -7,6 +7,8 @@ import Signup from './Components/Pages/Employee/Signup/Signup';
 import Dashboard from './Components/Pages/Employee/Dashboard/Dashboard';
 import ForgotPassword from './Components/Pages/Employee/ForgotPassword/ForgotPassword';
 import ResetPassword from './Components/Pages/Employee/ResetPassword/ResetPassword';
+import Settings from './Components/Pages/Employee/Settings/Settings'
+import Admin from './Components/Pages/Admin/Signup/AdminSignup';
 
 
 
@@ -20,6 +22,8 @@ function App() {
         <Route path="/forgotPassword" element={<ForgotPassword />} />
         <Route path="/resetPassword/:token" element={<ResetPassword />} />
         <Route path="/Profile" element={<Profile />} />
+        <Route path="/Settings" element={<Settings />} />
+        <Route path='/Admin' element={<Admin/>}/>
       </Routes>
     </BrowserRouter>
   );
