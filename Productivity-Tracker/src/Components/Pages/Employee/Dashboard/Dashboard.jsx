@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import styles from '../Dashboard/Dashboard.module.css'
+import styles from './Dashboard.module.css'
 import { FaTachometerAlt, FaUser, FaChartBar, FaBriefcase, FaQuestionCircle, FaCog, FaSignOutAlt, FaSearch } from "react-icons/fa";
 import { BiAlarm } from "react-icons/bi";
 import { BiLogOut } from "react-icons/bi";

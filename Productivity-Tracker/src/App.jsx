@@ -1,12 +1,12 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Profile from './Components/Pages/Profile/Profile'
-import Login from './Components/Pages/Login/Login';
-import Signup from './Components/Pages/Signup/Signup';
-import Dashboard from './Components/Pages/Dashboard/Dashboard';
-import ForgotPassword from './Components/Pages/ForgotPassword/ForgotPassword';
-import ResetPassword from './Components/Pages/ResetPassword/ResetPassword';
+import Profile from './Components/Pages/Employee/Profile/Profile'
+import Login from './Components/Pages/Employee/Login/Login';
+import Signup from './Components/Pages/Employee/Signup/Signup';
+import Dashboard from './Components/Pages/Employee/Dashboard/Dashboard';
+import ForgotPassword from './Components/Pages/Employee/ForgotPassword/ForgotPassword';
+import ResetPassword from './Components/Pages/Employee/ResetPassword/ResetPassword';
 
 
 
