@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../Profile/Profile.module.css'
+import styles from './Profile.module.css'
 import { FaTachometerAlt, FaUser, FaChartBar, FaBriefcase, FaQuestionCircle, FaCog, FaSignOutAlt, FaSearch } from "react-icons/fa";
 import { BiAlarm } from "react-icons/bi";
 import { BiLogOut } from "react-icons/bi";
