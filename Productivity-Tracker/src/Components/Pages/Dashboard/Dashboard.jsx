@@ -40,7 +40,7 @@ function Dashboard() {
           <div className="logo"></div>
           <ul className="menu">
             <li className="active">
-              <a href="#">
+              <a href="./Dashboard">
                 <CgMenuLeftAlt />
                 <span>Dashboard</span>
               </a>
@@ -52,7 +52,7 @@ function Dashboard() {
               </a>
             </li>
             <li>
-              <a href="#">
+              <a href="./Lunch">
                 <BiAlarm />
                 <span>Break</span>
               </a>
