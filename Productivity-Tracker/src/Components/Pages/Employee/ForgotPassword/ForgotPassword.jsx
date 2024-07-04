@@ -37,13 +37,7 @@ function ForgotPassword() {
                     <input type="email" placeholder='Email' onChange={(e) => setEmail(e.target.value)} required />
                     <FaEnvelope className='icon'/>
                 </div>
-
-                <div className="register-link">
-                    <p>Don't have an account? <a href="/Signup">Sign Up</a></p>
-                </div>
-
-
-            
+     
                 <button type='submit'>Send</button>
             </form>
         </div>

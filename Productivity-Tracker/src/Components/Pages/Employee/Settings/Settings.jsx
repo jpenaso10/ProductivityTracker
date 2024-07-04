@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './Profile.module.css'
+import styles from './Settings.module.css'
 import { FaTachometerAlt, FaUser, FaChartBar, FaBriefcase, FaQuestionCircle, FaCog, FaSignOutAlt, FaSearch } from "react-icons/fa";
 import { BiAlarm } from "react-icons/bi";
 import { BiLogOut } from "react-icons/bi";
@@ -12,7 +12,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 
-function Profile() {
+function Settings() {
   const navigate = useNavigate()
     axios.defaults.withCredentials = true
 
@@ -28,7 +28,7 @@ function Profile() {
                   <span>Dashboard</span>
                 </a>
               </li>
-              <li className={styles.active}>
+              <li>
                 <a href="./Profile">
                   <CgProfile />
                   <span>Profile</span>
@@ -40,8 +40,8 @@ function Profile() {
                   <span>FAQ</span>
                 </a>
               </li>
-              <li>
-                <a href="./Settings">
+              <li className={styles.active}>
+                <a href="#">
                   <VscSettingsGear />
                   <span>Settings</span>
                 </a>
@@ -60,7 +60,7 @@ function Profile() {
             <div className={styles.headerwrapper}>
               <div className={styles.headertitle}>
                 <span>Primary</span>
-                <h2>Profile</h2>
+                <h2>Settings</h2>
               </div>
               <div className={styles.userinfo}>
                 <div className={styles.searchbox}>
@@ -75,4 +75,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default Settings;
