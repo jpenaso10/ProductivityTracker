@@ -1,0 +1,95 @@
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .profile-header {
+    text-align: center;
+  }
+  
+  .profile-header img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+  }
+  
+  .profile-header h2 {
+    margin: 10px 0;
+  }
+  
+  .profile-header p {
+    color: #777;
+  }
+  
+  .profile-header button {
+    background: steelblue;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  .profile-header button:hover {
+    background: #3b5998;
+  }
+  
+  .profile-details {
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  .profile-details .account-info,
+  .profile-details .bill-info {
+    background: #f9f9f9;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .profile-details h3 {
+    margin-bottom: 10px;
+  }
+  
+  .profile-details p {
+    color: #555;
+  }
+  
+  .profile-details button {
+    background: steelblue;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  .profile-details button:hover {
+    background: #3b5998;
+  }
+  
+  .bill-info ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .bill-info li {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .bill-info li.paid {
+    color: green;
+  }
+  
+  .bill-info li.unpaid {
+    color: red;
+  }
+  
