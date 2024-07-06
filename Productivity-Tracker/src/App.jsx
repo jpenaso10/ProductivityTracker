@@ -10,6 +10,7 @@ import ResetPassword from "./Components/Pages/Employee/ResetPassword/ResetPasswo
 import Settings from "./Components/Pages/Employee/Settings/Settings";
 import Admin from "./Components/Pages/Admin/Signup/AdminSignup";
 import AdminDashboard from "./Components/Pages/Admin/AdminDashboard/AdminDashboard";
+import AdminTasks from "./Components/Pages/Admin/Tasks/AdminTasks";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/Settings" element={<Settings />} />
         <Route path="/Admin" element={<Admin />} />
         <Route path="/AdminDashboard" element={<AdminDashboard />} />
+        <Route path="/AdminTasks" element={<AdminTasks />} />
       </Routes>
     </BrowserRouter>
   );

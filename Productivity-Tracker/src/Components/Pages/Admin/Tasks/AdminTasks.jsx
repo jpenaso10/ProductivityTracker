@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import styles from "./AdminDashboard.module.css";
+import styles from "./AdminTasks.module.css";
 import {
   FaTachometerAlt,
   FaUser,
@@ -22,7 +22,7 @@ import { MdAddTask } from "react-icons/md";
 
 import axios from "axios";
 
-function AdminDashboard() {
+function AdminTasks() {
   const navigate = useNavigate();
   axios.defaults.withCredentials = true;
 
@@ -62,7 +62,7 @@ function AdminDashboard() {
               </a>
             </li>
             <li>
-              <a href="/AdminTasks">
+              <a href="#">
                 <MdAddTask />
                 <span>Tasks</span>
               </a>
@@ -86,7 +86,7 @@ function AdminDashboard() {
           <div className={styles.headerwrapper}>
             <div className={styles.headertitle}>
               <span>ADMIN</span>
-              <h2>Dashboard</h2>
+              <h2>Tasks</h2>
             </div>
             <div className={styles.userinfo}>
               <div className={styles.searchbox}>
@@ -96,9 +96,11 @@ function AdminDashboard() {
             </div>
           </div>
         </div>
+
+        <div className="styles maintasks"></div>
       </body>
     </div>
   );
 }
 
-export default AdminDashboard;
+export default AdminTasks;
