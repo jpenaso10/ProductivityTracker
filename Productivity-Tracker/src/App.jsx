@@ -1,16 +1,15 @@
-import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Profile from './Components/Pages/Employee/Profile/Profile'
-import Login from './Components/Pages/Employee/Login/Login';
-import Signup from './Components/Pages/Employee/Signup/Signup';
-import Dashboard from './Components/Pages/Employee/Dashboard/Dashboard';
-import ForgotPassword from './Components/Pages/Employee/ForgotPassword/ForgotPassword';
-import ResetPassword from './Components/Pages/Employee/ResetPassword/ResetPassword';
-import Settings from './Components/Pages/Employee/Settings/Settings'
-import Admin from './Components/Pages/Admin/Signup/AdminSignup';
-
-
+import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Profile from "./Components/Pages/Employee/Profile/Profile";
+import Login from "./Components/Pages/Employee/Login/Login";
+import Signup from "./Components/Pages/Employee/Signup/Signup";
+import Dashboard from "./Components/Pages/Employee/Dashboard/Dashboard";
+import ForgotPassword from "./Components/Pages/Employee/ForgotPassword/ForgotPassword";
+import ResetPassword from "./Components/Pages/Employee/ResetPassword/ResetPassword";
+import Settings from "./Components/Pages/Employee/Settings/Settings";
+import Admin from "./Components/Pages/Admin/Signup/AdminSignup";
+import AdminDashboard from "./Components/Pages/Admin/AdminDashboard/AdminDashboard";
 
 function App() {
   return (
@@ -23,7 +22,8 @@ function App() {
         <Route path="/resetPassword/:token" element={<ResetPassword />} />
         <Route path="/Profile" element={<Profile />} />
         <Route path="/Settings" element={<Settings />} />
-        <Route path='/Admin' element={<Admin/>}/>
+        <Route path="/Admin" element={<Admin />} />
+        <Route path="/AdminDashboard" element={<AdminDashboard />} />
       </Routes>
     </BrowserRouter>
   );
