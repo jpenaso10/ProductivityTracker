@@ -150,5 +150,27 @@ router.get('/verify', verifyUser, (req,res) => {
 })
 
 
+ /* Employee status */
+
+
+ router.put('/status', async (req, res) => {
+    const { userId, status } = req.body;
+  
+    if (!['active', 'break', 'lunch', 'not working'].includes(status)) {
+      return res.status(400).json({ message: 'Invalid status' });
+    }
+  
+    try {
+      const user = await User.findByIdAndUpdate(userId, { status }, { new: true });
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+      res.json({ status: user.status });
+    } catch (error) {
+      res.status(500).json({ message: 'Server error', error });
+    }
+  });
+
+
 
 export { router as UserRouter}
