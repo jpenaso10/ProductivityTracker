@@ -203,6 +203,7 @@ body {
     color: rgba(0, 101, 255, 0.7);
     background-color: aqua;
     border-radius: 10px;
+    font-weight: bold;
   }
 
 
@@ -210,12 +211,22 @@ body {
     background-color: #fff;
     padding: 5px;
     border-radius: 10px;
+    
+  }
+
+  .mainnav button {
+    font-weight: normal; /* Normal weight initially */
+    transition: font-weight 0.3s ease;
+  }
+
+  .mainnav button:hover {
+    font-weight: bold;
   }
   
   .navbutton {
     background-color: #fff;
-    margin: 5px;
-    color: rgb(0, 195, 255);;
+    margin: 10px 40px 10px 10px;
+    color: rgba(0, 101, 255, 0.7)
   }
 
 
@@ -239,6 +250,8 @@ body {
 
   .modal input {
     margin: 10px;
+    border: 1px solid #ccc;
+    
   }
 
   .modal button {
