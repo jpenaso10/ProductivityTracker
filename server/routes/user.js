@@ -97,6 +97,8 @@ router.post('/login', async (req, res) => {
 })
 
 
+   
+
 
 router.post('/forgot-password', async (req, res) => {
     const {email} = req.body
@@ -177,7 +179,6 @@ const verifyUser = async (req, res, next) => {
 
 router.get('/verify', verifyUser, (req,res) => {
     return res.json({status: true, message: "authorized"})
-
 })
 
 
@@ -216,7 +217,10 @@ router.get('/verify', verifyUser, (req,res) => {
   });
 
 
-
+  router.get('/logout', (req, res) => {
+    res.clearCookie('token')
+    return res.json({status: true})
+})
 
 
 export { router as UserRouter}

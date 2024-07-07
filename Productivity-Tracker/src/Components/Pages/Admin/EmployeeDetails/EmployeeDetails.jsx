@@ -30,16 +30,28 @@ function EmployeeDetails() {
       });
   }, []);
 
-  /*useEffect(() => {
-        axios.get('http://localhost:5000/auth/verify')
-        .then(res=> {
-          if(res.data.status) {
+  useEffect(() => {
+    axios.get("http://localhost:5000/auth/verify").then((res) => {
+      if (res.data.status) {
+      } else {
+        navigate("/");
+      }
+    });
+  }, []);
 
-          } else {
-            navigate('/')
-          }
-        })
-    }, []) */
+  const handleLogout = () => {
+    axios.defaults.withCredentials = true;
+    axios
+      .get("http://localhost:5000/auth/logout")
+      .then((res) => {
+        if (res.data.status) {
+          navigate("/");
+        }
+      })
+      .catch((err) => {
+        console.log(res);
+      });
+  };
 
   const [employeeData, setEmployeeData] = useState({
     username: "",
@@ -127,9 +139,9 @@ function EmployeeDetails() {
               </a>
             </li>
             <li className={styles.logout}>
-              <a href="/">
+              <a>
                 <BiLogOut />
-                <span>Logout</span>
+                <span onClick={handleLogout}>Logout</span>
               </a>
             </li>
           </ul>
@@ -200,7 +212,7 @@ function EmployeeDetails() {
         className={styles.modal}
         overlayClassName={styles.overlay}
       >
-        <h2>Add Employee</h2>
+        <h2>New Employee</h2>
         <form onSubmit={handleSubmit}>
           <div>
             <label>Last Name:</label>
@@ -248,16 +260,29 @@ function EmployeeDetails() {
           </div>
           <div>
             <label>Role:</label>
-            <select
+
+            <input
+              type="radio"
+              id="adminRole"
               name="role"
-              value={employeeData.role}
+              value="Admin"
+              checked={employeeData.role === "Admin"}
               onChange={handleInputChange}
               required
-            >
-              <option value="">Select Role</option>
-              <option value="Admin">Admin</option>
-              <option value="Employee">Employee</option>
-            </select>
+            />
+            <label>Admin</label>
+
+            <input
+              type="radio"
+              id="employeeRole"
+              name="role"
+              value="Employee"
+              checked={employeeData.role === "Employee"}
+              onChange={handleInputChange}
+              required
+            />
+            <label>Employee</label>
+            <br />
           </div>
           <div>
             <label>Contact Number:</label>
