@@ -4,8 +4,14 @@
         username: { type: String, required: true, unique: true },
         email: { type: String, required: true, unique: true },
         password: { type: String, required: true },
-        status: { type: String, enum: ['active', 'break', 'lunch', 'not working'], default: 'not working' }
-      });
+        status: { type: String, enum: ['active', 'break', 'lunch', 'not working'], default: 'not working' },
+        firstName: { type: String, required: true },
+        lastName: { type: String, required: true },
+        gender: { type: String, enum: ['Male', 'Female', 'Other'], required: true },
+        role: { type: String, enum: ['Admin', 'Employee'], required: true },
+        contactNumber: { type: String, required: true },
+        profilePicture: { type: String }  // URL or path to the profile picture
+    });
 
     const UserModel = mongoose.model("User", UserSchema)
 

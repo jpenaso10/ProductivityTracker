@@ -5,6 +5,8 @@ import dotenv from 'dotenv'
 dotenv.config()
 import { UserRouter } from './routes/user.js'
 import cookieParser from 'cookie-parser'
+import path from 'path'
+import { fileURLToPath } from 'url';
 
 const app = express()
 app.use(express.json())
@@ -17,6 +19,12 @@ app.use(cookieParser())
 mongoose.connect('mongodb+srv://jpenaso10:K0utaaa2023!@cluster0.vs1qlvf.mongodb.net/authentication')
 app.use(express.json())
 app.use('/auth', UserRouter)
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+app.use('/public/Profile', express.static(path.join(__dirname, "public/Profile")))
+
 
 app.listen(process.env.PORT, () => {
     console.log("Server is Running..")
