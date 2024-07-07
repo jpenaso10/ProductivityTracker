@@ -126,8 +126,8 @@ body {
   background-color: rgb(82, 236, 253);
   color: rgb(0, 0, 0);
   border: none;
+  text-align: center;
   padding: 5px 163px;
-  display: inline-block;
   font-size: 15px;
   margin-top: 30px;
   /* Increase margin-top to create more space below */
