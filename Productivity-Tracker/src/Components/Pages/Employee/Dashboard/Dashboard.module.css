@@ -104,6 +104,64 @@ body {
   height: 100vh;
 }
 
+.TaskBox1 {
+  margin: 12px 0;
+  padding: 20px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 454px;
+  height: 250px;
+  position: absolute;
+  left: 20px;
+  top: 30%;
+  transform: translateY(-50%);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.taskButton {
+  background-color: rgb(82, 236, 253);
+  color: rgb(0, 0, 0);
+  border: none;
+  text-align: center;
+  padding: 5px 163px;
+  font-size: 15px;
+  margin-top: 30px;
+  /* Increase margin-top to create more space below */
+  cursor: pointer;
+  border-radius: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.taskButton:hover {
+  background-color: rgb(67, 203, 221);
+}
+
+.activeStatus {
+  background-color: #5fe163;
+  color: white;
+  padding: 1px 7px;
+  border-radius: 30px;
+  display: inline-block;
+  position: absolute;
+  left: 10px;
+  top: 10px;
+}
+
+.inProgressStatus {
+  background-color: #5087b4;
+  color: white;
+  padding: 1px 7px;
+  border-radius: 30px;
+  display: inline-block;
+  position: absolute;
+  left: 10px;
+  top: 10px;
+}
+
 .headerwrapper {
   display: flex;
   justify-content: space-between;
@@ -147,4 +205,40 @@ body {
 
 .menu li a.active {
   color: #fff;
+}
+
+.timerButtonWrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.timerButton {
+  background-color: #38e173;
+  border: none;
+  color: white;
+  padding: 10px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 10px 10px;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.timerButton.endShiftButton {
+  background-color: rgb(247, 72, 72);
+}
+
+.timerDisplay {
+  position: absolute;
+  top: 50%;
+  left: 90%;
+  transform: translate(5px, -50%);
+  margin-left: 10px;
+  border-radius: 5px;
+  font-size: 1rem;
+  color: #333;
+  background-color: white;
 }
