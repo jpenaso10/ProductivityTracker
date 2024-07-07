@@ -4,9 +4,61 @@ const router = express.Router();
 import { User, Admin } from '../models/user.js';
 import jwt from 'jsonwebtoken'
 import nodemailer from 'nodemailer'
+import multer from 'multer';
+import path from 'path';
 
 
-/* Employee/User Registration Form to DB */
+/* UPLOAD IMAGES FOR PROFILE PICTURE */
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'public/Profile'); // Save to 'uploads' folder
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + path.extname(file.originalname)); // Append file extension
+    }
+});
+
+const upload = multer({ storage: storage });
+
+/* Register New Employees */
+
+router.post('/signup', upload.single('profilePicture'), async (req, res) => {
+    const {
+        username,
+        email,
+        password,
+        firstName,
+        lastName,
+        gender,
+        role,
+        contactNumber
+    } = req.body;
+
+    const user = await User.findOne({ $or: [{ username }, { email }] });
+    if (user) {
+        return res.json({ message: "User already existed" });
+    }
+
+    const hashpassword = await bcrypt.hash(password, 10);
+    const newuser = new User({
+        username,
+        email,
+        password: hashpassword,
+        firstName,
+        lastName,
+        gender,
+        role,
+        contactNumber,
+        profilePicture: req.file ? req.file.path : null
+    });
+
+    await newuser.save();
+    return res.json({ status: true, message: "Record registered" });
+});
+
+
+/*
 
 router.post('/signup', async (req, res) => {
     const {username, email, password} = req.body
@@ -25,7 +77,7 @@ router.post('/signup', async (req, res) => {
     await newuser.save()
     return res.json({status: true, message: "Record registered"})
 
-})
+}) */
 
 router.post('/login', async (req, res) => {
     const {username, password} = req.body
@@ -36,33 +88,12 @@ router.post('/login', async (req, res) => {
 
     const validPassword = await bcrypt.compare(password, user.password)
     if(!validPassword) {
-        return res.json({message: "password is incorrect"})
+        return res.json({ status: false, message: "Password is incorrect" });
     }
 
     const token = jwt.sign({username: user.username}, process.env.KEY, {expiresIn: '1h'})
     res.cookie('token', token, {httpOnly: true, maxAge: 360000})
-    return res.json({status: true, message: "login successfully"})
-})
-
-/* Admin Registration Form to DB */
-
-router.post('/admin', async (req, res) => {
-    const {username, email, password} = req.body
-    const admin = await Admin.findOne({username,email})
-    if(admin) {
-        return res.json({message: "User already existed"})
-    }
-
-    const hashpassword = await bcrypt.hash(password, 10)
-    const newadmin = new Admin({
-        username,
-        email,
-        password: hashpassword
-    })
-
-    await newadmin.save()
-    return res.json({status: true, message: "Record registered"})
-
+    return res.json({status: true, message: "login successfully", role: user.role})
 })
 
 
@@ -170,6 +201,21 @@ router.get('/verify', verifyUser, (req,res) => {
       res.status(500).json({ message: 'Server error', error });
     }
   });
+
+
+  /* GET THE INFORMATION TO PUT IN EMPLOYEE DETAILS */
+
+  router.get('/employees', async (req, res) => {
+    try {
+      const employees = await User.find();
+      res.json(employees);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Server error' });
+    }
+  });
+
+
 
 
 

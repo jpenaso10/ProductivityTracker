@@ -205,6 +205,91 @@ body {
     border-radius: 10px;
   }
 
+
+  .mainnav {
+    background-color: #fff;
+    padding: 5px;
+    border-radius: 10px;
+  }
   
+  .navbutton {
+    background-color: #fff;
+    margin: 5px;
+    color: rgb(0, 195, 255);;
+  }
 
 
+  .modal {
+    position: absolute;
+    top: 10%;
+    left: 40%;
+    right: auto;
+    bottom: auto;
+    marginRight: '-50%';
+    transform: translate('-50%', '-50%');
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .modal label {
+    margin: 5px;
+  }
+
+  .modal input {
+    margin: 10px;
+  }
+
+  .modal button {
+    margin: 5px;
+  }
+  
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    backgroundColor: 'rgba(0, 0, 0, 0.75)';
+  }
+
+  .employeeDetails {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    margin: 20px 0;
+  }
+  
+  .employeeDetails {
+    margin-top: 20px;
+  }
+  
+  .employeeDetails h3 {
+    margin-bottom: 20px;
+    font-size: 20px;
+  }
+  
+  .employeeTable {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .employeeTable th, .employeeTable td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .employeeTable th {
+    background-color: #f4f4f4;
+  }
+  
+  .employeeTable tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .employeeTable tr:hover {
+    background-color: #f1f1f1;
+  }

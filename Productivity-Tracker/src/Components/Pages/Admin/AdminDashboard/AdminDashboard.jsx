@@ -39,13 +39,13 @@ function AdminDashboard() {
               </a>
             </li>
             <li>
-              <a href="/Profile">
+              <a href="#">
                 <CgProfile />
                 <span>Profile</span>
               </a>
             </li>
             <li>
-              <a href="/Employee">
+              <a href="/EmployeeDetails">
                 <FaUsers />
                 <span>Employee</span>
               </a>
