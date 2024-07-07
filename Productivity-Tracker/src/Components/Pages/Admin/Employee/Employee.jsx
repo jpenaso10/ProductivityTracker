@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import styles from "./AdminTasks.module.css";
+import styles from "./Employee.module.css";
 import { FaSearch } from "react-icons/fa";
 import { BiLogOut } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
@@ -8,11 +8,17 @@ import { VscSettingsGear } from "react-icons/vsc";
 import { Navigate, useNavigate } from "react-router-dom";
 import { MdAddTask } from "react-icons/md";
 import { FaUsers } from "react-icons/fa";
+import ModalForm from "../ModalForm/ModalForm";
 
 import axios from "axios";
 
-function AdminTasks() {
+function Employee() {
   const navigate = useNavigate();
+
+  const [username, setUsername] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+
   axios.defaults.withCredentials = true;
 
   /*useEffect(() => {
@@ -39,19 +45,19 @@ function AdminTasks() {
               </a>
             </li>
             <li>
-              <a href="/Profile">
+              <a href="#">
                 <CgProfile />
                 <span>Profile</span>
               </a>
             </li>
-            <li>
+            <li className={styles.active}>
               <a href="/Employee">
                 <FaUsers />
                 <span>Employee</span>
               </a>
             </li>
-            <li className={styles.active}>
-              <a href="#">
+            <li>
+              <a href="/AdminTasks">
                 <MdAddTask />
                 <span>Tasks</span>
               </a>
@@ -75,7 +81,7 @@ function AdminTasks() {
           <div className={styles.headerwrapper}>
             <div className={styles.headertitle}>
               <span>ADMIN</span>
-              <h2>Tasks</h2>
+              <h2>Employee Details</h2>
             </div>
             <div className={styles.userinfo}>
               <div className={styles.searchbox}>
@@ -84,12 +90,21 @@ function AdminTasks() {
               </div>
             </div>
           </div>
+
+          <nav className={styles.adminnav}>
+            <button className={styles.addemployee} onClick={openModal}>
+              Add Employee
+            </button>
+            <button className={styles.addemployee}>Sample</button>
+            <button className={styles.addemployee}>Sample</button>
+            <button className={styles.addemployee}>Sample</button>
+          </nav>
         </div>
 
-        <div className="styles maintasks"></div>
+        <ModalForm isOpen={isModalOpen} onRequestClose={closeModal} />
       </body>
     </div>
   );
 }
 
-export default AdminTasks;
+export default Employee;
