@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import styles from './Dashboard.module.css';
+import React, { useState, useEffect } from "react";
+import styles from "./Dashboard.module.css";
 import { FaSearch } from "react-icons/fa";
 import { BiLogOut } from "react-icons/bi";
 import { CgProfile, CgMenuLeftAlt, CgMenuGridR } from "react-icons/cg";
 import { GoQuestion } from "react-icons/go";
 import { VscSettingsGear } from "react-icons/vsc";
-import { useNavigate } from 'react-router-dom';
-import { BsListTask } from "react-icons/bs";
-import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+import { MdAddTask } from "react-icons/md";
+import axios from "axios";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ function Dashboard() {
     let timer;
     if (isTimerRunning) {
       timer = setInterval(() => {
-        setTime(prevTime => prevTime + 1);
+        setTime((prevTime) => prevTime + 1);
       }, 1000);
     } else {
       clearInterval(timer);
@@ -39,25 +39,24 @@ function Dashboard() {
   }, [isTimerRunning]);
 
   const toggleTimer = () => {
-    setIsTimerRunning(prevState => !prevState);
+    setIsTimerRunning((prevState) => !prevState);
     if (isTimerRunning) {
       setTime(0);
     }
-
   };
 
   const handleTaskStart = () => {
-    setIsTaskActive(prevState => !prevState); // Toggle task active status
+    setIsTaskActive((prevState) => !prevState); // Toggle task active status
   };
 
   const formatTime = (seconds) => {
-    const getSeconds = `0${(seconds % 60)}`.slice(-2);
+    const getSeconds = `0${seconds % 60}`.slice(-2);
     const minutes = `${Math.floor(seconds / 60)}`;
     const getMinutes = `0${minutes % 60}`.slice(-2);
     const getHours = `0${Math.floor(seconds / 3600)}`.slice(-2);
     return `${getHours}:${getMinutes}:${getSeconds}`;
   };
-  ''
+  ("");
   return (
     <div>
       <body>
@@ -66,37 +65,37 @@ function Dashboard() {
           <ul className={styles.menu}>
             <li className={styles.active}>
               <a href="./Dashboard">
-                <CgMenuGridR style={{ fontSize: '1.2rem' }} />
+                <CgMenuGridR style={{ fontSize: "1.2rem" }} />
                 <span>Dashboard</span>
               </a>
             </li>
             <li>
               <a href="/Profile">
-                <CgProfile style={{ fontSize: '1.1rem' }} />
+                <CgProfile style={{ fontSize: "1.1rem" }} />
                 <span>Profile</span>
               </a>
             </li>
             <li>
               <a href="./EmployeeTasks">
-                <BsListTask style={{ fontSize: '1.1rem' }} />
+                <MdAddTask style={{ fontSize: "1.1rem" }} />
                 <span>Tasks</span>
               </a>
             </li>
             <li>
               <a href="#">
-                <GoQuestion style={{ fontSize: '1.1rem' }} />
+                <GoQuestion style={{ fontSize: "1.1rem" }} />
                 <span>FAQ</span>
               </a>
             </li>
             <li>
               <a href="./Settings">
-                <VscSettingsGear style={{ fontSize: '1.1rem' }} />
+                <VscSettingsGear style={{ fontSize: "1.1rem" }} />
                 <span>Settings</span>
               </a>
             </li>
             <li className={styles.logout}>
               <a href="/">
-                <BiLogOut style={{ fontSize: '1.3rem' }} />
+                <BiLogOut style={{ fontSize: "1.3rem" }} />
                 <span>Logout</span>
               </a>
             </li>
@@ -110,10 +109,12 @@ function Dashboard() {
             </div>
             <div className={styles.timerButtonWrapper}>
               <button
-                className={`${styles.timerButton} ${isTimerRunning ? styles.endShiftButton : ''}`}
+                className={`${styles.timerButton} ${
+                  isTimerRunning ? styles.endShiftButton : ""
+                }`}
                 onClick={toggleTimer}
               >
-                {isTimerRunning ? 'End Shift' : 'Start Shift'}
+                {isTimerRunning ? "End Shift" : "Start Shift"}
               </button>
               <div className={styles.timerDisplay}>{formatTime(time)}</div>
             </div>
@@ -125,15 +126,23 @@ function Dashboard() {
             </div>
           </div>
           <div className={styles.TaskBox1}>
-            <p className={isTaskActive ? styles.inProgressStatus : styles.activeStatus}>
-              {isTaskActive ? 'In Progress...' : 'Active'}
+            <p
+              className={
+                isTaskActive ? styles.inProgressStatus : styles.activeStatus
+              }
+            >
+              {isTaskActive ? "In Progress..." : "Active"}
             </p>
-            <h4><br></br>This is the Task</h4>
-            <p>Task description here.
-              Task description here.Task description here.Task description here.Task description here.Task description here.
+            <h4>
+              <br></br>This is the Task
+            </h4>
+            <p>
+              Task description here. Task description here.Task description
+              here.Task description here.Task description here.Task description
+              here.
             </p>
             <button className={styles.taskButton} onClick={handleTaskStart}>
-              {isTaskActive ? 'Done task' : 'Start task'}
+              {isTaskActive ? "Done task" : "Start task"}
             </button>
           </div>
         </div>

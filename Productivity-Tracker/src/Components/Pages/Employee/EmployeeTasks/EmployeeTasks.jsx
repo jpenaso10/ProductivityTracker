@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import styles from './EmployeeTasks.module.css';
+import React, { useState, useEffect } from "react";
+import styles from "./EmployeeTasks.module.css";
 import { FaSearch } from "react-icons/fa";
 import { BiLogOut } from "react-icons/bi";
 import { CgProfile, CgMenuLeftAlt, CgMenuGridR } from "react-icons/cg";
 import { GoQuestion } from "react-icons/go";
 import { VscSettingsGear } from "react-icons/vsc";
-import { useNavigate } from 'react-router-dom';
-import { BsListTask } from "react-icons/bs";
-import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+import { MdAddTask } from "react-icons/md";
+import axios from "axios";
 
 function EmployeeTasks() {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ function EmployeeTasks() {
         })
     }, []) */
 
-  ''
+  ("");
   return (
     <div>
       <body>
@@ -32,37 +32,37 @@ function EmployeeTasks() {
           <ul className={styles.menu}>
             <li>
               <a href="./Dashboard">
-                <CgMenuGridR style={{ fontSize: '1.2rem' }} />
+                <CgMenuGridR style={{ fontSize: "1.2rem" }} />
                 <span>Dashboard</span>
               </a>
             </li>
             <li>
               <a href="/Profile">
-                <CgProfile style={{ fontSize: '1.1rem' }} />
+                <CgProfile style={{ fontSize: "1.1rem" }} />
                 <span>Profile</span>
               </a>
             </li>
             <li className={styles.active}>
               <a href="./EmployeeTasks">
-                <BsListTask style={{ fontSize: '1.1rem' }} />
+                <MdAddTask style={{ fontSize: "1.1rem" }} />
                 <span>Tasks</span>
               </a>
             </li>
             <li>
               <a href="#">
-                <GoQuestion style={{ fontSize: '1.1rem' }} />
+                <GoQuestion style={{ fontSize: "1.1rem" }} />
                 <span>FAQ</span>
               </a>
             </li>
             <li>
               <a href="./Settings">
-                <VscSettingsGear style={{ fontSize: '1.1rem' }} />
+                <VscSettingsGear style={{ fontSize: "1.1rem" }} />
                 <span>Settings</span>
               </a>
             </li>
             <li className={styles.logout}>
               <a href="/">
-                <BiLogOut style={{ fontSize: '1.3rem' }} />
+                <BiLogOut style={{ fontSize: "1.3rem" }} />
                 <span>Logout</span>
               </a>
             </li>
