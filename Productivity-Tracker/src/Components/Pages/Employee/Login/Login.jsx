@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
@@ -21,7 +20,12 @@ function Login() {
       })
       .then((response) => {
         if (response.data.status) {
-          navigate("/dashboard");
+          const role = response.data.role;
+          if (role === "Admin") {
+            navigate("/admindashboard");
+          } else {
+            navigate("/dashboard");
+          }
         } else {
           alert("Incorrect Username or Password. Please try again.");
         }
