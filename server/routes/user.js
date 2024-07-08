@@ -54,7 +54,7 @@ router.post('/signup', upload.single('profilePicture'), async (req, res) => {
     });
 
     await newuser.save();
-    return res.json({ status: true, message: "Record registered" });
+    return res.json({ status: true, message: "Record registered", newEmployee: newuser });
 });
 
 

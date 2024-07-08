@@ -15,16 +15,14 @@ function AdminDashboard() {
   const navigate = useNavigate();
   axios.defaults.withCredentials = true;
 
-  /*useEffect(() => {
-        axios.get('http://localhost:5000/auth/verify')
-        .then(res=> {
-          if(res.data.status) {
-
-          } else {
-            navigate('/')
-          }
-        })
-    }, []) */
+  useEffect(() => {
+    axios.get("http://localhost:5000/auth/verify").then((res) => {
+      if (res.data.status) {
+      } else {
+        navigate("/");
+      }
+    });
+  }, []);
 
   return (
     <div>
