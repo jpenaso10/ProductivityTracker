@@ -1,7 +1,8 @@
 import express from 'express'
 import bcrypt from 'bcrypt'
 const router = express.Router();
-import { User, Admin } from '../models/user.js';
+import { User } from '../models/user.js';
+import { Task } from '../models/Tasks.js';
 import jwt from 'jsonwebtoken'
 import nodemailer from 'nodemailer'
 import multer from 'multer';
@@ -56,6 +57,38 @@ router.post('/signup', upload.single('profilePicture'), async (req, res) => {
     await newuser.save();
     return res.json({ status: true, message: "Record registered", newEmployee: newuser });
 });
+
+/* Create Tasks */
+
+router.post('/task', async (req, res) => {
+    try {
+        const {
+            name,
+            description,
+            date,
+            priority
+        } = req.body;
+
+        const existingTask = await Task.findOne({ $or: [{ name }, { description }] });
+        if (existingTask) {
+            return res.status(400).json({ message: "Task already created!" });
+        }
+
+        const newTask = new Task({
+            name,
+            description,
+            date,
+            priority,
+        });
+
+        await newTask.save();
+        return res.status(201).json({ status: true, message: "Task Created", newTask: newTask });
+    } catch (error) {
+        console.error("Error creating task:", error);
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+});
+
 
 
 /*
@@ -222,5 +255,33 @@ router.get('/verify', verifyUser, (req,res) => {
     return res.json({status: true})
 })
 
+/* GET THE INFORMATION FOR TASK */
+
+router.get('/tasks', async (req, res) => {
+    try {
+        const tasks = await Task.find();
+        res.status(200).json(tasks);
+    } catch (error) {
+        console.error("Error fetching tasks:", error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+});
+
+
+/* Delete Tasks */
+
+router.delete("/tasks/:id", async (req, res) => {
+    try {
+      const task = await Task.findByIdAndDelete(req.params.id);
+      if (!task) {
+        return res.status(404).json({ message: "Task not found" });
+      }
+  
+      res.json({ message: "Task deleted" });
+    } catch (err) {
+      console.error("Error deleting Task:", err);
+      res.status(400).json(err);
+    }
+  });
 
 export { router as UserRouter}
