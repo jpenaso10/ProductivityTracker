@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styles from './Dashboard.module.css';
+import styles from './EmployeeTasks.module.css';
 import { FaSearch } from "react-icons/fa";
 import { BiLogOut } from "react-icons/bi";
 import { CgProfile, CgMenuLeftAlt, CgMenuGridR } from "react-icons/cg";
@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { BsListTask } from "react-icons/bs";
 import axios from 'axios';
 
-function Dashboard() {
+function EmployeeTasks() {
   const navigate = useNavigate();
   axios.defaults.withCredentials = true;
   /*useEffect(() => {
@@ -22,41 +22,7 @@ function Dashboard() {
           }
         })
     }, []) */
-  const [isTimerRunning, setIsTimerRunning] = useState(false);
-  const [time, setTime] = useState(0);
-  const [isTaskActive, setIsTaskActive] = useState(false); // State for task status
 
-  useEffect(() => {
-    let timer;
-    if (isTimerRunning) {
-      timer = setInterval(() => {
-        setTime(prevTime => prevTime + 1);
-      }, 1000);
-    } else {
-      clearInterval(timer);
-    }
-    return () => clearInterval(timer);
-  }, [isTimerRunning]);
-
-  const toggleTimer = () => {
-    setIsTimerRunning(prevState => !prevState);
-    if (isTimerRunning) {
-      setTime(0);
-    }
-
-  };
-
-  const handleTaskStart = () => {
-    setIsTaskActive(prevState => !prevState); // Toggle task active status
-  };
-
-  const formatTime = (seconds) => {
-    const getSeconds = `0${(seconds % 60)}`.slice(-2);
-    const minutes = `${Math.floor(seconds / 60)}`;
-    const getMinutes = `0${minutes % 60}`.slice(-2);
-    const getHours = `0${Math.floor(seconds / 3600)}`.slice(-2);
-    return `${getHours}:${getMinutes}:${getSeconds}`;
-  };
   ''
   return (
     <div>
@@ -64,7 +30,7 @@ function Dashboard() {
         <div className={styles.sidebar}>
           <div className={styles.logo}></div>
           <ul className={styles.menu}>
-            <li className={styles.active}>
+            <li>
               <a href="./Dashboard">
                 <CgMenuGridR style={{ fontSize: '1.2rem' }} />
                 <span>Dashboard</span>
@@ -76,7 +42,7 @@ function Dashboard() {
                 <span>Profile</span>
               </a>
             </li>
-            <li>
+            <li className={styles.active}>
               <a href="./EmployeeTasks">
                 <BsListTask style={{ fontSize: '1.1rem' }} />
                 <span>Tasks</span>
@@ -105,17 +71,8 @@ function Dashboard() {
         <div className={styles.maincontent}>
           <div className={styles.headerwrapper}>
             <div className={styles.headertitle}>
-              <span>Dashboard</span>
-              <h2>Productivity Tracker</h2>
-            </div>
-            <div className={styles.timerButtonWrapper}>
-              <button
-                className={`${styles.timerButton} ${isTimerRunning ? styles.endShiftButton : ''}`}
-                onClick={toggleTimer}
-              >
-                {isTimerRunning ? 'End Shift' : 'Start Shift'}
-              </button>
-              <div className={styles.timerDisplay}>{formatTime(time)}</div>
+              <span>Productivity Tracker</span>
+              <h2>Tasks</h2>
             </div>
             <div className={styles.userinfo}>
               <div className={styles.searchbox}>
@@ -124,22 +81,10 @@ function Dashboard() {
               </div>
             </div>
           </div>
-          <div className={styles.TaskBox1}>
-            <p className={isTaskActive ? styles.inProgressStatus : styles.activeStatus}>
-              {isTaskActive ? 'In Progress...' : 'Active'}
-            </p>
-            <h4><br></br>This is the Task</h4>
-            <p>Task description here.
-              Task description here.Task description here.Task description here.Task description here.Task description here.
-            </p>
-            <button className={styles.taskButton} onClick={handleTaskStart}>
-              {isTaskActive ? 'Done task' : 'Start task'}
-            </button>
-          </div>
         </div>
       </body>
     </div>
   );
 }
 
-export default Dashboard;
+export default EmployeeTasks;

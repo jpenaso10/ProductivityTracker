@@ -8,10 +8,10 @@ import Dashboard from "./Components/Pages/Employee/Dashboard/Dashboard";
 import ForgotPassword from "./Components/Pages/Employee/ForgotPassword/ForgotPassword";
 import ResetPassword from "./Components/Pages/Employee/ResetPassword/ResetPassword";
 import Settings from "./Components/Pages/Employee/Settings/Settings";
-import EmployeeTask from "./Components/Pages/Employee/EmployeeTask/Tasks";
 import Admin from "./Components/Pages/Admin/Signup/AdminSignup";
 import AdminDashboard from "./Components/Pages/Admin/AdminDashboard/AdminDashboard";
 import AdminTasks from "./Components/Pages/Admin/Tasks/AdminTasks";
+import EmployeeTasks from "./Components/Pages/Employee/EmployeeTasks/EmployeeTasks";
 import EmployeeDetails from "./Components/Pages/Admin/EmployeeDetails/EmployeeDetails";
 
 function App() {
@@ -28,6 +28,7 @@ function App() {
         <Route path="/Admin" element={<Admin />} />
         <Route path="/AdminDashboard" element={<AdminDashboard />} />
         <Route path="/AdminTasks" element={<AdminTasks />} />
+        <Route path="/EmployeeTasks" element={<EmployeeTasks />} />
         <Route path="/EmployeeDetails" element={<EmployeeDetails />} />
       </Routes>
     </BrowserRouter>
