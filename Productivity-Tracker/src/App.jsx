@@ -8,6 +8,7 @@ import Dashboard from "./Components/Pages/Employee/Dashboard/Dashboard";
 import ForgotPassword from "./Components/Pages/Employee/ForgotPassword/ForgotPassword";
 import ResetPassword from "./Components/Pages/Employee/ResetPassword/ResetPassword";
 import Settings from "./Components/Pages/Employee/Settings/Settings";
+import EmployeeTask from "./Components/Pages/Employee/EmployeeTask/Tasks";
 import Admin from "./Components/Pages/Admin/Signup/AdminSignup";
 import AdminDashboard from "./Components/Pages/Admin/AdminDashboard/AdminDashboard";
 import AdminTasks from "./Components/Pages/Admin/Tasks/AdminTasks";

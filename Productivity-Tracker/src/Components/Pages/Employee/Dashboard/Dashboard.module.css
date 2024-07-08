@@ -110,7 +110,8 @@ body {
   background-color: #f0f0f0;
   border: 1px solid #ccc;
   border-radius: 10px;
-  width: 90%;
+  width: calc(100% - 40px);
+  /* Adjust width for responsiveness */
   max-width: 454px;
   height: 250px;
   position: absolute;
@@ -120,6 +121,46 @@ body {
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
+}
+
+/* Hide scrollbar for WebKit browsers */
+.TaskBox1::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.TaskBox1 {
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 600px) {
+  .TaskBox1 {
+    width: calc(100% - 40px);
+    /* Ensure it doesn't overflow */
+    max-width: 90%;
+    /* Adjust max-width for smaller screens */
+    height: auto;
+    /* Adjust height for smaller screens */
+  }
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
+  .TaskBox1 {
+    width: calc(100% - 40px);
+    height: auto;
+  }
+}
+
+@media (min-width: 1025px) {
+  .TaskBox1 {
+    width: calc(100% - 40px);
+    height: auto;
+  }
 }
 
 .taskButton {
