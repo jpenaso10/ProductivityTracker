@@ -1,24 +1,13 @@
 import React, { useEffect } from "react";
 import styles from "./AdminDashboard.module.css";
-import {
-  FaTachometerAlt,
-  FaUser,
-  FaChartBar,
-  FaBriefcase,
-  FaQuestionCircle,
-  FaCog,
-  FaSignOutAlt,
-  FaSearch,
-} from "react-icons/fa";
-import { BiAlarm } from "react-icons/bi";
+import { FaSearch } from "react-icons/fa";
 import { BiLogOut } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
 import { CgMenuLeftAlt } from "react-icons/cg";
-import { CgMenuGridR } from "react-icons/cg";
-import { GoQuestion } from "react-icons/go";
 import { VscSettingsGear } from "react-icons/vsc";
 import { Navigate, useNavigate } from "react-router-dom";
 import { MdAddTask } from "react-icons/md";
+import { FaUsers } from "react-icons/fa";
 
 import axios from "axios";
 
@@ -50,14 +39,14 @@ function AdminDashboard() {
               </a>
             </li>
             <li>
-              <a href="/Profile">
+              <a href="#">
                 <CgProfile />
                 <span>Profile</span>
               </a>
             </li>
             <li>
-              <a href="#">
-                <GoQuestion />
+              <a href="/EmployeeDetails">
+                <FaUsers />
                 <span>Employee</span>
               </a>
             </li>
