@@ -1,20 +1,17 @@
 import React from 'react';
-import styles from './Profile.module.css'
-import { FaTachometerAlt, FaUser, FaChartBar, FaBriefcase, FaQuestionCircle, FaCog, FaSignOutAlt, FaSearch } from "react-icons/fa";
-import { BiAlarm } from "react-icons/bi";
-import { BiLogOut } from "react-icons/bi";
-import { CgProfile } from "react-icons/cg";
-import { CgMenuLeftAlt } from "react-icons/cg";
-import { CgMenuGridR } from "react-icons/cg";
-import { GoQuestion } from "react-icons/go";
-import { VscSettingsGear } from "react-icons/vsc";
-import { Navigate, useNavigate } from 'react-router-dom';
+import styles from './Profile.module.css';
+import { FaSearch } from 'react-icons/fa';
+import { BiLogOut } from 'react-icons/bi';
+import { CgProfile, CgMenuGridR } from 'react-icons/cg';
+import { GoQuestion } from 'react-icons/go';
+import { VscSettingsGear } from 'react-icons/vsc';
+import { MdAddTask } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-
 function Profile() {
-  const navigate = useNavigate()
-  axios.defaults.withCredentials = true
+  const navigate = useNavigate();
+  axios.defaults.withCredentials = true;
 
   return (
     <div>
@@ -24,7 +21,7 @@ function Profile() {
           <ul className={styles.menu}>
             <li>
               <a href="./Dashboard">
-                <CgMenuLeftAlt style={{ fontSize: '1.2rem' }} />
+                <CgMenuGridR style={{ fontSize: '1.2rem' }} />
                 <span>Dashboard</span>
               </a>
             </li>
@@ -32,6 +29,12 @@ function Profile() {
               <a href="./Profile">
                 <CgProfile style={{ fontSize: '1.1rem' }} />
                 <span>Profile</span>
+              </a>
+            </li>
+            <li>
+              <a href="./EmployeeTasks">
+                <MdAddTask style={{ fontSize: '1.1rem' }} />
+                <span>Tasks</span>
               </a>
             </li>
             <li>
