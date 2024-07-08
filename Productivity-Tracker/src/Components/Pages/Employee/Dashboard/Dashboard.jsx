@@ -124,7 +124,6 @@ function Dashboard() {
               </div>
             </div>
           </div>
-
           <div className={styles.TaskBox1}>
             <p className={isTaskActive ? styles.inProgressStatus : styles.activeStatus}>
               {isTaskActive ? 'In Progress...' : 'Active'}
