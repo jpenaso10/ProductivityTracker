@@ -6,6 +6,7 @@ import { CgProfile, CgMenuLeftAlt, CgMenuGridR } from "react-icons/cg";
 import { GoQuestion } from "react-icons/go";
 import { VscSettingsGear } from "react-icons/vsc";
 import { useNavigate } from 'react-router-dom';
+import { BsListTask } from "react-icons/bs";
 import axios from 'axios';
 
 function Dashboard() {
@@ -56,7 +57,7 @@ function Dashboard() {
     const getHours = `0${Math.floor(seconds / 3600)}`.slice(-2);
     return `${getHours}:${getMinutes}:${getSeconds}`;
   };
-
+  ''
   return (
     <div>
       <body>
@@ -65,7 +66,7 @@ function Dashboard() {
           <ul className={styles.menu}>
             <li className={styles.active}>
               <a href="./Dashboard">
-                <CgMenuLeftAlt style={{ fontSize: '1.2rem' }} />
+                <CgMenuGridR style={{ fontSize: '1.2rem' }} />
                 <span>Dashboard</span>
               </a>
             </li>
@@ -73,6 +74,12 @@ function Dashboard() {
               <a href="/Profile">
                 <CgProfile style={{ fontSize: '1.1rem' }} />
                 <span>Profile</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <BsListTask style={{ fontSize: '1.1rem' }} />
+                <span>Tasks</span>
               </a>
             </li>
             <li>
