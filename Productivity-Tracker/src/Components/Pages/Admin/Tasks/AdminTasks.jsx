@@ -84,6 +84,19 @@ function AdminTasks() {
               </div>
             </div>
           </div>
+
+          <div className={styles.mainnav}>
+            <nav>
+              <button
+                className={styles.navbutton}
+                onClick={() => setModalIsOpen(true)}
+              >
+                New Employee
+              </button>
+              <button className={styles.navbutton}> Sample</button>
+              <button className={styles.navbutton}> sample</button>
+            </nav>
+          </div>
         </div>
 
         <div className="styles maintasks"></div>
