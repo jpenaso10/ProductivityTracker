@@ -12,6 +12,7 @@ import EmployeeTasks from "./Components/Pages/Employee/EmployeeTasks/EmployeeTas
 import Admin from "./Components/Pages/Admin/Signup/AdminSignup";
 import AdminDashboard from "./Components/Pages/Admin/AdminDashboard/AdminDashboard";
 import AdminTasks from "./Components/Pages/Admin/Tasks/AdminTasks";
+import EmployeeDetails from "./Components/Pages/Admin/EmployeeDetails/EmployeeDetails";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path="/AdminDashboard" element={<AdminDashboard />} />
         <Route path="/AdminTasks" element={<AdminTasks />} />
         <Route path="/EmployeeTasks" element={<EmployeeTasks />} />
+        <Route path="/EmployeeDetails" element={<EmployeeDetails />} />
       </Routes>
     </BrowserRouter>
   );
