@@ -91,7 +91,10 @@ function EmployeeDetails() {
       .post("http://localhost:5000/auth/signup", formData)
       .then((response) => {
         if (response.data.status) {
-          setEmployees([...employees, response.data.newEmployee]); // Add the new employee to the list
+          setEmployees((prevEmployees) => [
+            ...prevEmployees,
+            response.data.newEmployee,
+          ]); // Add the new employee to the list
           setModalIsOpen(false);
         } else {
           alert(response.data.message);
@@ -188,15 +191,17 @@ function EmployeeDetails() {
                   </tr>
                 </thead>
                 <tbody>
-                  {employees.map((employee) => (
-                    <tr key={employee._id}>
-                      <td>{employee.lastName}</td>
-                      <td>{employee.firstName}</td>
-                      <td>{employee.email}</td>
-                      <td>{employee.role}</td>
-                      <td>{employee.status}</td>
-                    </tr>
-                  ))}
+                  {employees.map((employee) =>
+                    employee ? (
+                      <tr key={employee._id}>
+                        <td>{employee.lastName}</td>
+                        <td>{employee.firstName}</td>
+                        <td>{employee.email}</td>
+                        <td>{employee.role}</td>
+                        <td>{employee.status}</td>
+                      </tr>
+                    ) : null
+                  )}
                 </tbody>
               </table>
             ) : (
@@ -270,7 +275,7 @@ function EmployeeDetails() {
               onChange={handleInputChange}
               required
             />
-            <label>Admin</label>
+            <label htmlFor="adminRole">Admin</label>
 
             <input
               type="radio"
@@ -281,7 +286,7 @@ function EmployeeDetails() {
               onChange={handleInputChange}
               required
             />
-            <label>Employee</label>
+            <label htmlFor="employeeRole">Employee</label>
             <br />
           </div>
           <div>
