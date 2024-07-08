@@ -8,10 +8,10 @@ import Dashboard from "./Components/Pages/Employee/Dashboard/Dashboard";
 import ForgotPassword from "./Components/Pages/Employee/ForgotPassword/ForgotPassword";
 import ResetPassword from "./Components/Pages/Employee/ResetPassword/ResetPassword";
 import Settings from "./Components/Pages/Employee/Settings/Settings";
-import EmployeeTasks from "./Components/Pages/Employee/EmployeeTasks/EmployeeTasks";
 import Admin from "./Components/Pages/Admin/Signup/AdminSignup";
 import AdminDashboard from "./Components/Pages/Admin/AdminDashboard/AdminDashboard";
 import AdminTasks from "./Components/Pages/Admin/Tasks/AdminTasks";
+import EmployeeTasks from "./Components/Pages/Employee/EmployeeTasks/EmployeeTasks";
 import EmployeeDetails from "./Components/Pages/Admin/EmployeeDetails/EmployeeDetails";
 
 function App() {
