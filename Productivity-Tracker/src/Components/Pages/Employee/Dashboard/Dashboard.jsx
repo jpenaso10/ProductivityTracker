@@ -92,12 +92,6 @@ function Dashboard() {
               </a>
             </li>
             <li>
-              <a href="#">
-                <GoQuestion style={{ fontSize: "1.1rem" }} />
-                <span>FAQ</span>
-              </a>
-            </li>
-            <li>
               <a href="./Settings">
                 <VscSettingsGear style={{ fontSize: "1.1rem" }} />
                 <span>Settings</span>

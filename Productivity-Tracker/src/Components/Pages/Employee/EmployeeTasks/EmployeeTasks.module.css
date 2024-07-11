@@ -167,3 +167,175 @@ body {
 .menu li a.active {
   color: #fff;
 }
+
+/* To do, Pending.., Completed CSS */
+
+.mainnav {
+  background-color: #fff;
+  padding: 5px;
+  border-radius: 10px;
+  
+}
+
+.mainnav button {
+  font-weight: normal; /* Normal weight initially */
+  transition: font-weight 0.3s ease;
+}
+
+.mainnav button:hover {
+  font-weight: bold;
+}
+
+.navbutton {
+  background-color: #fff;
+  margin: 10px 40px 10px 10px;
+  color: #212121;
+}
+
+
+
+ /*  TASKS CARD CSS */
+
+
+ .tasks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.taskCard {
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  padding: 1rem;
+  width: 300px; /* Fixed width */
+  height: 400px; /* Fixed height */
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+/* Card Status CSS */
+
+.taskDetails {
+  margin-bottom: 1rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.status {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 15px;
+  width: fit-content;
+}
+
+.statusActive {
+  background-color: red;
+  color: white;
+}
+
+.statusPending {
+  background-color: orange;
+  color: white;
+}
+
+.statusDone {
+  background-color: green;
+  color: white;
+}
+
+
+
+.highPriority {
+  background-color: #ffcccc; /* Light red for high priority */
+}
+
+.mediumPriority {
+  background-color: #fff4cc; /* Light yellow for medium priority */
+}
+
+.lowPriority {
+  background-color: #ccffcc; /* Light green for low priority */
+}
+
+.taskDetails {
+  margin-bottom: 1rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.taskName {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.taskDescription {
+  font-size: 1rem;
+  flex-grow: 1;
+  overflow-y: auto;
+  margin-bottom: 0.5rem;
+  border: 1px solid #0000001f;
+  padding: 0.5rem;
+  max-height: 180px; /* Adjust max-height as needed */
+  width: 100%; /* Ensure full width */
+  display: block; /* Ensure it behaves as a block element */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+
+}
+
+.taskDescription::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+}
+
+
+.taskDescription::-webkit-scrollbar-thumb {
+  background: #88888890; /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Rounded corners */
+}
+
+
+.taskDate,
+.taskPriority {
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
+}
+
+.taskActions {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 60%;
+}
+
+
+.actionButtoncomplete{
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+} 
+
+.actionButton {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  
+}
+
+
+
+.actionButton:hover {
+  background-color: #0056b3;
+}

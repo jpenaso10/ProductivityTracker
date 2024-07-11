@@ -19,7 +19,6 @@ const TaskSchema = new mongoose.Schema({
     },
     status: { 
         type: String, enum: ['Active', 'Pending', 'Done'], default: 'Active' },
-
 });
 
 const TaskModel = mongoose.model("Task", TaskSchema)
