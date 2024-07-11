@@ -39,18 +39,13 @@ function EmployeeDetails() {
     });
   }, []);
 
-  const handleLogout = () => {
-    axios.defaults.withCredentials = true;
-    axios
-      .get("http://localhost:5000/auth/logout")
-      .then((res) => {
-        if (res.data.status) {
-          navigate("/");
-        }
-      })
-      .catch((err) => {
-        console.log(res);
-      });
+  const handleLogout = async () => {
+    try {
+      await axios.post("http://localhost:5000/auth/logout");
+      navigate("/");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
   };
 
   const [employeeData, setEmployeeData] = useState({
@@ -142,9 +137,9 @@ function EmployeeDetails() {
               </a>
             </li>
             <li className={styles.logout}>
-              <a>
+              <a onClick={handleLogout}>
                 <BiLogOut />
-                <span onClick={handleLogout}>Logout</span>
+                <span>Logout</span>
               </a>
             </li>
           </ul>

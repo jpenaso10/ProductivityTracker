@@ -30,16 +30,24 @@ function AdminTasks() {
         console.error("There was an error fetching the tasks data!", error);
       });
   }, []);
-  /*useEffect(() => {
-        axios.get('http://localhost:5000/auth/verify')
-        .then(res=> {
-          if(res.data.status) {
 
-          } else {
-            navigate('/')
-          }
-        })
-    }, []) */
+  useEffect(() => {
+    axios.get("http://localhost:5000/auth/verify").then((res) => {
+      if (res.data.status) {
+      } else {
+        navigate("/");
+      }
+    });
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      await axios.post("http://localhost:5000/auth/logout");
+      navigate("/");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
 
   const handleTaskSubmit = (taskData) => {
     axios
@@ -150,7 +158,7 @@ function AdminTasks() {
               </a>
             </li>
             <li className={styles.logout}>
-              <a href="/">
+              <a href="#" onClick={handleLogout}>
                 <BiLogOut />
                 <span>Logout</span>
               </a>

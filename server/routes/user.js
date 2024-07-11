@@ -90,28 +90,6 @@ router.post('/task', async (req, res) => {
 });
 
 
-
-/*
-
-router.post('/signup', async (req, res) => {
-    const {username, email, password} = req.body
-    const user = await User.findOne({username,email})
-    if(user) {
-        return res.json({message: "User already existed"})
-    }
-
-    const hashpassword = await bcrypt.hash(password, 10)
-    const newuser = new User({
-        username,
-        email,
-        password: hashpassword
-    })
-
-    await newuser.save()
-    return res.json({status: true, message: "Record registered"})
-
-}) */
-
 router.post('/login', async (req, res) => {
     const {username, password} = req.body
     const user = await User.findOne({username})
@@ -124,13 +102,17 @@ router.post('/login', async (req, res) => {
         return res.json({ status: false, message: "Password is incorrect" });
     }
 
-    const token = jwt.sign({username: user.username}, process.env.KEY, {expiresIn: '1h'})
+    const token = jwt.sign({username: user.username}, process.env.KEY, {expiresIn: '7h'})
     res.cookie('token', token, {httpOnly: true, maxAge: 360000})
     return res.json({status: true, message: "login successfully", role: user.role})
 })
 
 
-   
+router.post('/logout', (req, res) => {
+    res.clearCookie('token');
+    return res.json({ status: true, message: "Logged out successfully" });
+  });
+
 
 
 router.post('/forgot-password', async (req, res) => {
@@ -250,11 +232,7 @@ router.get('/verify', verifyUser, (req,res) => {
   });
 
 
-  router.get('/logout', (req, res) => {
-    res.clearCookie('token')
-    return res.json({status: true})
-})
-
+  
 /* GET THE INFORMATION FOR TASK */
 
 router.get('/tasks', async (req, res) => {
