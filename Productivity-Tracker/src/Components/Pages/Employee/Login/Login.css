@@ -1,4 +1,4 @@
-.wrapper{
+.wrapper {
     position: relative;
     width: 420px;
     height: 450px;
@@ -8,36 +8,37 @@
     display: flex;
     align-items: center;
     overflow: hidden;
-    transition: height .2s ease;
+    transition: height 0.2s ease;
 }
 
 .wrapper.active {
     height: 520px;
 }
+
 .wrapper .form-box {
     width: 100%;
     padding: 40px;
 }
 
 .wrapper .form-box.login {
-    transition: translate .18s ease;
-    translate: 0;
+    transition: transform 0.18s ease;
+    transform: translateX(0);
 }
 
 .wrapper.active .form-box.login {
     transition: none;
-    translate: -400px
+    transform: translateX(-400px);
 }
 
 .wrapper .form-box.register {
     position: absolute;
     transition: none;
-    translate: 400px;
+    transform: translateX(400px);
 }
 
 .wrapper.active .form-box.register {
-    transition: translate .18s ease;
-    translate: 0;
+    transition: transform 0.18s ease;
+    transform: translateX(0);
 }
 
 form h1 {
@@ -45,15 +46,14 @@ form h1 {
     text-align: center;
 }
 
-form .input-box {
+.form-group {
     position: relative;
     width: 100%;
     height: 50px;
     margin: 30px 0;
-
 }
 
-.input-box input {
+.form-group input {
     width: 100%;
     height: 100%;
     background: transparent;
@@ -65,19 +65,19 @@ form .input-box {
     padding: 20px 45px 20px 20px;
 }
 
-.input-box input::placeholder{
+.form-group input::placeholder {
     color: rgba(0, 85, 182, 0.534);
 }
 
-.input-box .icon{
+.form-group .icon {
     position: absolute;
     right: 20px;
-    top:  50%;
-    translate: 0 -50%;
+    top: 50%;
+    transform: translateY(-50%);
     font-size: 16px;
 }
 
-form .remember-forgot {
+.remember-forgot {
     display: flex;
     justify-content: space-between;
     font-size: 14.5px;
@@ -105,7 +105,7 @@ form button {
     border: none;
     outline: none;
     border-radius: 40px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     font-size: 16px;
     color: steelblue;
@@ -113,20 +113,10 @@ form button {
 }
 
 form button:hover {
-    width: 100%;
-    height: 45px;
-    background: #fff;
-    border: none;
-    outline: none;
-    border-radius: 40px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
-    cursor: pointer;
-    font-size: 16px;
     color: rgb(11, 149, 248);
-    font-weight: 700;
 }
 
-form .register-link {
+.register-link {
     font-size: 14.5px;
     text-align: center;
     margin: 20px 0 15px;
@@ -141,4 +131,3 @@ form .register-link {
 .register-link p a:hover {
     text-decoration: underline;
 }
-
