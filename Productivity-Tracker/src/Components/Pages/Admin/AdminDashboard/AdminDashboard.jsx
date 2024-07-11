@@ -24,6 +24,15 @@ function AdminDashboard() {
     });
   }, []);
 
+  const handleLogout = async () => {
+    try {
+      await axios.post("http://localhost:5000/auth/logout");
+      navigate("/");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
+
   return (
     <div>
       <body>
@@ -61,7 +70,7 @@ function AdminDashboard() {
               </a>
             </li>
             <li className={styles.logout}>
-              <a href="/">
+              <a href="#" onClick={handleLogout}>
                 <BiLogOut />
                 <span>Logout</span>
               </a>

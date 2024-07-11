@@ -11,17 +11,7 @@ import axios from "axios";
 
 function Dashboard() {
   const navigate = useNavigate();
-  axios.defaults.withCredentials = true;
-  /*useEffect(() => {
-        axios.get('http://localhost:5000/auth/verify')
-        .then(res=> {
-          if(res.data.status) {
 
-          } else {
-            navigate('/')
-          }
-        })
-    }, []) */
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [time, setTime] = useState(0);
   const [isTaskActive, setIsTaskActive] = useState(false); // State for task status
@@ -37,6 +27,26 @@ function Dashboard() {
     }
     return () => clearInterval(timer);
   }, [isTimerRunning]);
+
+  axios.defaults.withCredentials = true;
+
+  useEffect(() => {
+    axios.get("http://localhost:5000/auth/verify").then((res) => {
+      if (res.data.status) {
+      } else {
+        navigate("/");
+      }
+    });
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      await axios.post("http://localhost:5000/auth/logout");
+      navigate("/");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
 
   const toggleTimer = () => {
     setIsTimerRunning((prevState) => !prevState);
@@ -94,7 +104,7 @@ function Dashboard() {
               </a>
             </li>
             <li className={styles.logout}>
-              <a href="/">
+              <a href="#" onClick={handleLogout}>
                 <BiLogOut style={{ fontSize: "1.3rem" }} />
                 <span>Logout</span>
               </a>
