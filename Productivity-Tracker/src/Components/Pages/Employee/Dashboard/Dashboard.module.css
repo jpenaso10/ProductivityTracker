@@ -92,7 +92,7 @@ body {
 /** DASHBOARD CONTENT */
 
 .maincontent {
-  flex: 1;
+  flex-grow: 1;
   padding: 1rem;
   background: #ebe9e9;
   overflow-y: auto;
@@ -123,8 +123,6 @@ body {
   scrollbar-color: transparent transparent;
 }
 
-
-
 .headerwrapper {
   display: flex;
   justify-content: space-between;
@@ -143,6 +141,7 @@ body {
   display: flex;
   align-items: center;
   gap: 1rem;
+  position: relative; /* Add relative positioning for dropdown positioning */
 }
 
 .searchbox {
@@ -160,6 +159,84 @@ body {
   outline: none;
   padding: 4px;
 }
+
+/* PROFILE PIC AND STATUS */
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  position: relative; /* Ensure the dropdown is positioned relative to the profile */
+}
+
+.profile img {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+
+.profileInfo {
+  display: flex;
+  align-items: center;
+}
+
+.statusIndicator {
+  position: absolute;
+  bottom: -5px; /* Adjust this value to position the indicator as needed */
+  right: 10px; /* Adjust this value to position the indicator as needed */
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.statusprod {
+  background-color: #38e173; /* Green */
+}
+
+.statusmeeting,
+.statuslunch,
+.statusbreak,
+.statuscoaching {
+  background-color: #fdd835; /* Yellow */
+}
+
+.statusunavail {
+  background-color: #9e9e9e; /* Gray */
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: none;
+  z-index: 100;
+}
+
+.dropdown.show {
+  display: block;
+}
+
+.dropdown ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dropdown ul li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.dropdown ul li:hover {
+  background-color: #f0f0f0;
+}
+
+
+
+/* ------- */ 
 
 .menu li.active {
   background-color: rgb(0, 195, 255);
@@ -206,8 +283,6 @@ body {
   background-color: white;
 }
 
-/* Your shift style */
-
 .mainnav {
   background-color: #fff;
   border-radius: 10px;
@@ -219,5 +294,31 @@ body {
   background-color: #fff;
   border-radius: 15px;
   margin-top: 10px;
-  padding: 5rem;
+  padding: 12rem;
 }
+
+.statusContainer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap; /* Adjusts layout if there isn't enough space */
+  transition: all 0.2s ease;
+  flex-shrink: 1;
+}
+
+.statusprod, .statusmeeting, .statuslunch, .statusbreak, .statuscoaching, .statusunavail {
+  flex-shrink: 1;
+  padding: 10px;
+  padding-right: 10rem;
+  margin-top: 10px;
+  margin-right: 5px;
+  border: 2px solid transparent;
+  border-radius: 15px;
+  background-color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+

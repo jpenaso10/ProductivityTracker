@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./Dashboard.module.css";
 import { FaSearch } from "react-icons/fa";
 import { BiLogOut } from "react-icons/bi";
@@ -14,7 +14,11 @@ function Dashboard() {
 
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [time, setTime] = useState(0);
-  const [isTaskActive, setIsTaskActive] = useState(false); // State for task status
+  const [isTaskActive, setIsTaskActive] = useState(false);
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [status, setStatus] = useState("Unavailable");
+
+  const dropdownRef = useRef(null);
 
   useEffect(() => {
     let timer;
@@ -37,6 +41,19 @@ function Dashboard() {
         navigate("/");
       }
     });
+  }, [navigate]);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownVisible(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
 
   const handleLogout = async () => {
@@ -56,7 +73,7 @@ function Dashboard() {
   };
 
   const handleTaskStart = () => {
-    setIsTaskActive((prevState) => !prevState); // Toggle task active status
+    setIsTaskActive((prevState) => !prevState);
   };
 
   const formatTime = (seconds) => {
@@ -66,7 +83,16 @@ function Dashboard() {
     const getHours = `0${Math.floor(seconds / 3600)}`.slice(-2);
     return `${getHours}:${getMinutes}:${getSeconds}`;
   };
-  ("");
+
+  const toggleDropdown = () => {
+    setDropdownVisible((prevVisible) => !prevVisible);
+  };
+
+  const handleStatusChange = (newStatus) => {
+    setStatus(newStatus);
+    setDropdownVisible(false); // Close dropdown after selecting a status
+  };
+
   return (
     <div>
       <body>
@@ -123,9 +149,36 @@ function Dashboard() {
               <div className={styles.timerDisplay}>{formatTime(time)}</div>
             </div>
             <div className={styles.userinfo}>
-              <div className={styles.searchbox}>
-                <FaSearch />
-                <input type="text" placeholder="Search" />
+              <div className={styles.profile} ref={dropdownRef}>
+                <img src="https://via.placeholder.com/40" alt="Profile" />
+                <span onClick={toggleDropdown}>{status}</span>
+                <div
+                  className={`${styles.statusIndicator} ${
+                    styles[status.toLowerCase()]
+                  }`}
+                ></div>
+                <div
+                  className={`${styles.dropdown} ${
+                    dropdownVisible ? styles.show : ""
+                  }`}
+                >
+                  <ul>
+                    <li onClick={() => handleStatusChange("Production")}>
+                      Production
+                    </li>
+                    <li onClick={() => handleStatusChange("Meeting")}>
+                      Meeting
+                    </li>
+                    <li onClick={() => handleStatusChange("Coaching")}>
+                      Coaching
+                    </li>
+                    <li onClick={() => handleStatusChange("Lunch")}>Lunch</li>
+                    <li onClick={() => handleStatusChange("Break")}>Break</li>
+                    <li onClick={() => handleStatusChange("Unavailable")}>
+                      Unavailable
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
@@ -136,17 +189,26 @@ function Dashboard() {
           <div className={styles.timechart}>
             <h1>TIME CHART HERE</h1>
           </div>
-          <div className={styles.statusprod}>
-            <p>Production</p>
-          </div>
-          <div className={styles.statusmeeting}>
-            <p>Meeting</p>
-          </div>
-          <div className={styles.statuslunch}>
-            <p>Lunch</p>
-          </div>
-          <div className={styles.statusbreak}>
-            <p>Break</p>
+          <div className={styles.statusContainer}>
+            <div className={styles.statusprod}>
+              <p>Production</p>
+              <p>00:00</p>
+            </div>
+            <div className={styles.statusmeeting}>
+              <p>Meeting</p> <p>00:00</p>
+            </div>
+            <div className={styles.statuscoaching}>
+              <p>Coaching</p> <p>00:00</p>
+            </div>
+            <div className={styles.statuslunch}>
+              <p>Lunch</p> <p>00:00</p>
+            </div>
+            <div className={styles.statusbreak}>
+              <p>Break</p> <p>00:00</p>
+            </div>
+            <div className={styles.statusunavail}>
+              <p>Unavailable</p> <p>00:00</p>
+            </div>
           </div>
         </div>
       </body>
