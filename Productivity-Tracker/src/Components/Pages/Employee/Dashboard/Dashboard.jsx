@@ -133,6 +133,21 @@ function Dashboard() {
             <h3>Your shift</h3>
             <p>Your time spent in status codes on "insert date here"</p>
           </div>
+          <div className={styles.timechart}>
+            <h1>TIME CHART HERE</h1>
+          </div>
+          <div className={styles.statusprod}>
+            <p>Production</p>
+          </div>
+          <div className={styles.statusmeeting}>
+            <p>Meeting</p>
+          </div>
+          <div className={styles.statuslunch}>
+            <p>Lunch</p>
+          </div>
+          <div className={styles.statusbreak}>
+            <p>Break</p>
+          </div>
         </div>
       </body>
     </div>

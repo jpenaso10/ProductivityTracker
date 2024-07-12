@@ -214,3 +214,10 @@ body {
   padding: 0.5rem;
   padding-bottom: 0;
 }
+
+.timechart {
+  background-color: #fff;
+  border-radius: 15px;
+  margin-top: 10px;
+  padding: 5rem;
+}
