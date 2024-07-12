@@ -129,25 +129,9 @@ function Dashboard() {
               </div>
             </div>
           </div>
-          <div className={styles.TaskBox1}>
-            <p
-              className={
-                isTaskActive ? styles.inProgressStatus : styles.activeStatus
-              }
-            >
-              {isTaskActive ? "In Progress..." : "Active"}
-            </p>
-            <h4>
-              <br></br>This is the Task
-            </h4>
-            <p>
-              Task description here. Task description here.Task description
-              here.Task description here.Task description here.Task description
-              here.
-            </p>
-            <button className={styles.taskButton} onClick={handleTaskStart}>
-              {isTaskActive ? "Done task" : "Start task"}
-            </button>
+          <div className={styles.mainnav}>
+            <h3>Your shift</h3>
+            <p>Your time spent in status codes on "insert date here"</p>
           </div>
         </div>
       </body>

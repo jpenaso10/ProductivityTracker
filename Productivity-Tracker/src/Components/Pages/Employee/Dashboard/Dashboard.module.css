@@ -123,85 +123,7 @@ body {
   scrollbar-color: transparent transparent;
 }
 
-/* Hide scrollbar for WebKit browsers */
-.TaskBox1::-webkit-scrollbar {
-  width: 0;
-  background: transparent;
-}
 
-/* Hide scrollbar for IE, Edge and Firefox */
-.TaskBox1 {
-  scrollbar-width: none;
-  /* Firefox */
-  -ms-overflow-style: none;
-  /* IE and Edge */
-}
-
-/* Media queries for responsiveness */
-@media (max-width: 600px) {
-  .TaskBox1 {
-    width: calc(100% - 40px);
-    /* Ensure it doesn't overflow */
-    max-width: 90%;
-    /* Adjust max-width for smaller screens */
-    height: auto;
-    /* Adjust height for smaller screens */
-  }
-}
-
-@media (min-width: 601px) and (max-width: 1024px) {
-  .TaskBox1 {
-    width: calc(100% - 40px);
-    height: auto;
-  }
-}
-
-@media (min-width: 1025px) {
-  .TaskBox1 {
-    width: calc(100% - 40px);
-    height: auto;
-  }
-}
-
-.taskButton {
-  background-color: rgb(82, 236, 253);
-  color: rgb(0, 0, 0);
-  border: none;
-  text-align: center;
-  padding: 5px 163px;
-  font-size: 15px;
-  margin-top: 30px;
-  /* Increase margin-top to create more space below */
-  cursor: pointer;
-  border-radius: 20px;
-  transition: background-color 0.3s ease;
-}
-
-.taskButton:hover {
-  background-color: rgb(67, 203, 221);
-}
-
-.activeStatus {
-  background-color: #5fe163;
-  color: white;
-  padding: 1px 7px;
-  border-radius: 30px;
-  display: inline-block;
-  position: absolute;
-  left: 10px;
-  top: 10px;
-}
-
-.inProgressStatus {
-  background-color: #5087b4;
-  color: white;
-  padding: 1px 7px;
-  border-radius: 30px;
-  display: inline-block;
-  position: absolute;
-  left: 10px;
-  top: 10px;
-}
 
 .headerwrapper {
   display: flex;
@@ -282,4 +204,13 @@ body {
   font-size: 1rem;
   color: #333;
   background-color: white;
+}
+
+/* Your shift style */
+
+.mainnav {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 0.5rem;
+  padding-bottom: 0;
 }
