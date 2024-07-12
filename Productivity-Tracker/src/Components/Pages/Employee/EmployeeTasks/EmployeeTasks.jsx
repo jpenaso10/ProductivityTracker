@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./EmployeeTasks.module.css";
 import { FaSearch } from "react-icons/fa";
 import { BiLogOut } from "react-icons/bi";
-import { CgProfile, CgMenuLeftAlt, CgMenuGridR } from "react-icons/cg";
-import { GoQuestion } from "react-icons/go";
+import { CgProfile, CgMenuGridR } from "react-icons/cg";
 import { VscSettingsGear } from "react-icons/vsc";
 import { useNavigate } from "react-router-dom";
 import { MdAddTask } from "react-icons/md";
@@ -126,7 +125,7 @@ function EmployeeTasks() {
               </a>
             </li>
             <li className={styles.logout}>
-              <a href="/">
+              <a onClick={handleLogout}>
                 <BiLogOut style={{ fontSize: "1.3rem" }} />
                 <span>Logout</span>
               </a>
@@ -182,20 +181,21 @@ function EmployeeTasks() {
                 >
                   <div className={styles.taskDetails}>
                     <p
-                      className={`${styles.status} ${
-                        task.status === "Active"
-                          ? styles.statusActive
-                          : task.status === "Pending"
+                      className={`${styles.status} ${task.status === "Active"
+                        ? styles.statusActive
+                        : task.status === "Pending"
                           ? styles.statusPending
                           : task.status === "Done"
-                          ? styles.statusDone
-                          : ""
-                      }`}
+                            ? styles.statusDone
+                            : ""
+                        }`}
                     >
                       {task.status}
                     </p>
                     <h3 className={styles.taskName}>{task.name}</h3>
-                    <p className={styles.taskDescription}>{task.description}</p>
+                    <p className={styles.taskDescription}>
+                      {task.description}
+                    </p>
                     <p className={styles.taskDate}>
                       Due: {new Date(task.date).toLocaleDateString()}
                     </p>
