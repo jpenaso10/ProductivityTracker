@@ -89,7 +89,7 @@ function Dashboard() {
               </a>
             </li>
             <li>
-              <a href="/Profile">
+              <a href="./Profile">
                 <CgProfile style={{ fontSize: "1.1rem" }} />
                 <span>Profile</span>
               </a>

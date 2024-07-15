@@ -264,4 +264,26 @@ router.delete("/tasks/:id", async (req, res) => {
 
   /* Task Routes */
 
+  /* User Time Logs */
+  //ADD
+  router.post("/timelogs", async (req, res) => {
+    res.json({message: "Time logged"});
+
+  })
+  //UPDATE
+  router.patch("/timelogs/:id", async (req, res) =>{
+
+  })
+  //DELETE
+  router.delete("/timelogs/:id", async (req, res) => {
+
+  })
+  //READ
+  router.get("/timelogs", async (req, res) => {
+    res.json({message: "Time logged"});
+  })
+  router.get(("/timelogs/:id", async (req, res) => {
+
+  }))
+
 export { router as UserRouter}
