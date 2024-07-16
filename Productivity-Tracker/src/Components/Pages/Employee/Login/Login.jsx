@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Login.css";
-import { FaUser, FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaUser, FaEye } from "react-icons/fa"; // Importing FaUser and FaEye
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -75,11 +75,7 @@ function Login() {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-            {showPassword ? (
-              <FaEyeSlash className="icon" onClick={togglePasswordVisibility} />
-            ) : (
-              <FaEye className="icon" onClick={togglePasswordVisibility} />
-            )}
+            <FaEye className="icon" onClick={togglePasswordVisibility} />
           </div>
 
           <div className="remember-forgot">
