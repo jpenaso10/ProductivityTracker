@@ -75,7 +75,7 @@ form h1 {
     top: 50%;
     transform: translateY(-50%);
     font-size: 16px;
-    cursor: pointer; /* Added for clickable icon */
+    cursor: pointer;
 }
 
 .remember-forgot {
