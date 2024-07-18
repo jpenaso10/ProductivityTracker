@@ -8,6 +8,7 @@ import { VscSettingsGear } from "react-icons/vsc";
 import { useNavigate } from "react-router-dom";
 import { MdAddTask } from "react-icons/md";
 import axios from "axios";
+import DigitalClock from "./DigitalClock";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -137,6 +138,7 @@ function Dashboard() {
               <span>Dashboard</span>
               <h2>Productivity Tracker</h2>
             </div>
+            <DigitalClock/>
             <div className={styles.timerButtonWrapper}>
               <button
                 className={`${styles.timerButton} ${
