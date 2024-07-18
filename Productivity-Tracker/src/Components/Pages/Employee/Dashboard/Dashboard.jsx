@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { MdAddTask } from "react-icons/md";
 import axios from "axios";
 import DigitalClock from "./DigitalClock";
+import Stopwatch, {start, stop, reset} from "./Stopwatch.jsx";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -164,7 +165,7 @@ function Dashboard() {
                     dropdownVisible ? styles.show : ""
                   }`}
                 >
-                  <ul>
+                  {/*<ul>
                     <li onClick={() => handleStatusChange("Production")}>
                       Production
                     </li>
@@ -179,10 +180,24 @@ function Dashboard() {
                     <li onClick={() => handleStatusChange("Unavailable")}>
                       Unavailable
                     </li>
-                  </ul>
+                  </ul>*/}
+                    <button onClick={() => handleStatusChange("Production")}>
+                      Production
+                    </button><br></br>
+                    <button onClick={() => handleStatusChange("Meeting")}>
+                      Meeting
+                    </button><br></br>
+                    <button onClick={() => handleStatusChange("Coaching")}>
+                      Coaching
+                    </button><br></br>
+                    <button onClick={() => handleStatusChange("Lunch")}>Lunch</button><br></br>
+                    <button onClick={() => handleStatusChange("Break")}>Break</button><br></br>
+                    <button onClick={() => handleStatusChange("Unavailable")}>
+                      Unavailable
+                    </button>
                 </div>
               </div>
-            </div>
+            </div> {/*end div for status*/}
           </div>
           <div className={styles.mainnav}>
             <h3>Your shift</h3>
@@ -194,22 +209,28 @@ function Dashboard() {
           <div className={styles.statusContainer}>
             <div className={styles.statusprod}>
               <p>Production</p>
-              <p>00:00</p>
+              <Stopwatch />
+              {/*<p>00:00</p>*/}
             </div>
             <div className={styles.statusmeeting}>
-              <p>Meeting</p> <p>00:00</p>
+              <p>Meeting</p>
+              <Stopwatch/> {/*<p>00:00</p>*/}
             </div>
             <div className={styles.statuscoaching}>
-              <p>Coaching</p> <p>00:00</p>
+              <p>Coaching</p>
+              <Stopwatch/> {/*<p>00:00</p>*/}
             </div>
             <div className={styles.statuslunch}>
-              <p>Lunch</p> <p>00:00</p>
+              <p>Lunch</p>
+              <Stopwatch/> {/*<p>00:00</p>*/}
             </div>
             <div className={styles.statusbreak}>
-              <p>Break</p> <p>00:00</p>
+              <p>Break</p>
+              <Stopwatch/> {/*<p>00:00</p>*/}
             </div>
             <div className={styles.statusunavail}>
-              <p>Unavailable</p> <p>00:00</p>
+              <p>Unavailable</p>
+              <Stopwatch/> {/*<p>00:00</p>*/}
             </div>
           </div>
         </div>
