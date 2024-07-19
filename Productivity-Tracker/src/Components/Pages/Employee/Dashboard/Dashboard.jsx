@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { MdAddTask } from "react-icons/md";
 import axios from "axios";
 import DigitalClock from "./DigitalClock";
-import Stopwatch from "./Stopwatch";
+import Stopwatch from "./Stopwatch.jsx";
 
 function Dashboard() {
   const navigate = useNavigate();
