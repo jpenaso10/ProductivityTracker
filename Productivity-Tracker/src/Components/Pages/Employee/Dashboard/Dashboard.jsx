@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { MdAddTask } from "react-icons/md";
 import axios from "axios";
 import DigitalClock from "./DigitalClock";
+import Stopwatch from "./Stopwatch";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -194,22 +195,33 @@ function Dashboard() {
           <div className={styles.statusContainer}>
             <div className={styles.statusprod}>
               <p>Production</p>
-              <p>00:00</p>
+              <Stopwatch/>
+              {/*<p>00:00</p>*/}
             </div>
             <div className={styles.statusmeeting}>
-              <p>Meeting</p> <p>00:00</p>
+              <p>Meeting</p> 
+              <Stopwatch/>
+              {/*<p>00:00</p>*/}
             </div>
             <div className={styles.statuscoaching}>
-              <p>Coaching</p> <p>00:00</p>
+              <p>Coaching</p> 
+              <Stopwatch/>
+              {/*<p>00:00</p>*/}
             </div>
             <div className={styles.statuslunch}>
-              <p>Lunch</p> <p>00:00</p>
+              <p>Lunch</p> 
+              <Stopwatch/>
+              {/*<p>00:00</p>*/}
             </div>
             <div className={styles.statusbreak}>
-              <p>Break</p> <p>00:00</p>
+              <p>Break</p> 
+              <Stopwatch/>
+              {/*<p>00:00</p>*/}
             </div>
             <div className={styles.statusunavail}>
-              <p>Unavailable</p> <p>00:00</p>
+              <p>Unavailable</p> 
+              <Stopwatch/>
+              {/*<p>00:00</p>*/}
             </div>
           </div>
         </div>
