@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { MdAddTask } from "react-icons/md";
 import axios from "axios";
 import DigitalClock from "./DigitalClock";
+import Stopwatch from "./Stopwatch";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -89,10 +90,47 @@ function Dashboard() {
     setDropdownVisible((prevVisible) => !prevVisible);
   };
 
-  const handleStatusChange = (newStatus) => {
+  /*const handleStatusChange = (newStatus) => {
     setStatus(newStatus);
     setDropdownVisible(false); // Close dropdown after selecting a status
-  };
+  };*/
+
+  const [activeStopwatch, setActiveStopwatch] = useState(null);
+
+  const productionStopwatch = <Stopwatch />;
+  const meetingStopwatch = <Stopwatch />;
+  const coachingStopwatch = <Stopwatch />;
+  const lunchStopwatch = <Stopwatch />;
+  const breakStopwatch = <Stopwatch />;
+  const unavailableStopwatch = <Stopwatch />;
+
+  const handleStatusChange = (newStatus) =>{
+    setStatus(newStatus);
+    setDropdownVisible(false);
+    switch(status){
+      case "Production":
+        setActiveStopwatch(productionStopwatch);
+        break;
+      case "Meeting":
+        setActiveStopwatch(meetingStopwatch);
+        break;
+      case "Coaching":
+        setActiveStopwatch(coachingStopwatch);
+        break;
+      case "Lunch":
+        setActiveStopwatch(lunchStopwatch);
+        break;
+      case "Break":
+        setActiveStopwatch(productionStopwatch);
+        break;
+      case "Unavailable":
+        setActiveStopwatch(productionStopwatch);
+        break;
+      default:
+        setActiveStopwatch(null);
+        break;
+    }
+  }
 
   return (
     <div>
@@ -165,7 +203,7 @@ function Dashboard() {
                   }`}
                 >
                   <ul>
-                    <li onClick={() => handleStatusChange("Production")}>
+                    <li key="production" onClick={() => handleStatusChange("Production")}>
                       Production
                     </li>
                     <li onClick={() => handleStatusChange("Meeting")}>
@@ -180,6 +218,7 @@ function Dashboard() {
                       Unavailable
                     </li>
                   </ul>
+                  {activeStopwatch}
                 </div>
               </div>
             </div>
