@@ -1,6 +1,8 @@
 import "./Login.css";
 import React, { useState, useEffect } from "react";
 import { FaUser, FaLock } from "react-icons/fa";
+import { FaUser, FaEye, FaEyeSlash } from "react-icons/fa";
+
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -8,6 +10,7 @@ function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
 
@@ -46,6 +49,10 @@ function Login() {
       .catch((err) => console.log(err));
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <div className="wrapper">
       <div className="form-box login">
@@ -63,13 +70,17 @@ function Login() {
           </div>
           <div className="form-group">
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-            <FaLock className="icon" />
+            {showPassword ? (
+              <FaEyeSlash className="icon" onClick={togglePasswordVisibility} />
+            ) : (
+              <FaEye className="icon" onClick={togglePasswordVisibility} />
+            )}
           </div>
 
           <div className="remember-forgot">
