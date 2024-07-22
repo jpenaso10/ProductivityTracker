@@ -18,6 +18,7 @@ import { CgMenuGridR } from "react-icons/cg";
 import { GoQuestion } from "react-icons/go";
 import { VscSettingsGear } from "react-icons/vsc";
 import { Navigate, useNavigate } from "react-router-dom";
+import { MdAddTask } from "react-icons/md";
 import axios from "axios";
 
 function Profile() {
@@ -32,7 +33,7 @@ function Profile() {
           <ul className={styles.menu}>
             <li>
               <a href="./Dashboard">
-                <CgMenuLeftAlt style={{ fontSize: "1.2rem" }} />
+                <CgMenuGridR style={{ fontSize: "1.2rem" }} />
                 <span>Dashboard</span>
               </a>
             </li>
@@ -40,6 +41,12 @@ function Profile() {
               <a href="./Profile">
                 <CgProfile style={{ fontSize: "1.1rem" }} />
                 <span>Profile</span>
+              </a>
+            </li>
+            <li>
+              <a href="./EmployeeTasks">
+                <MdAddTask style={{ fontSize: "1.1rem" }} />
+                <span>Tasks</span>
               </a>
             </li>
             <li>

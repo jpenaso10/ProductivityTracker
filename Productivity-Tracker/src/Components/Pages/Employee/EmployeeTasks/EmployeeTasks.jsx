@@ -125,7 +125,7 @@ function EmployeeTasks() {
               </a>
             </li>
             <li className={styles.logout}>
-              <a onClick={handleLogout}>
+              <a href="#" onClick={handleLogout}>
                 <BiLogOut style={{ fontSize: "1.3rem" }} />
                 <span>Logout</span>
               </a>

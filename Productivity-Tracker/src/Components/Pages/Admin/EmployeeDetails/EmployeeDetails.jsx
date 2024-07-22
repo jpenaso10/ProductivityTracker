@@ -137,8 +137,8 @@ function EmployeeDetails() {
               </a>
             </li>
             <li className={styles.logout}>
-              <a onClick={handleLogout}>
-                <BiLogOut />
+              <a href="#" onClick={handleLogout}>
+                <BiLogOut style={{ fontSize: "1.3rem" }} />
                 <span>Logout</span>
               </a>
             </li>
