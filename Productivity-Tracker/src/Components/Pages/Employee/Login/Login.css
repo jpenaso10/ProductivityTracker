@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+
+
 .wrapper {
     position: relative;
     width: 420px;
@@ -114,20 +117,4 @@ form button {
 
 form button:hover {
     color: rgb(11, 149, 248);
-}
-
-.register-link {
-    font-size: 14.5px;
-    text-align: center;
-    margin: 20px 0 15px;
-}
-
-.register-link p a {
-    color: steelblue;
-    text-decoration: none;
-    font-weight: 600;
-}
-
-.register-link p a:hover {
-    text-decoration: underline;
 }

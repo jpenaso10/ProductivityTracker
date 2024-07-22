@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
 import "./Login.css";
+import React, { useState, useEffect } from "react";
 import { FaUser, FaLock } from "react-icons/fa";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -61,7 +61,6 @@ function Login() {
             />
             <FaUser className="icon" />
           </div>
-
           <div className="form-group">
             <input
               type="password"
