@@ -10,7 +10,7 @@ import {
   FaSignOutAlt,
   FaSearch,
 } from "react-icons/fa";
-import { BiAlarm } from "react-icons/bi";
+
 import { BiLogOut } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
 import { CgMenuLeftAlt } from "react-icons/cg";
