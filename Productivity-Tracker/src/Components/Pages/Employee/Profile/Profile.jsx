@@ -20,6 +20,7 @@ import { VscSettingsGear } from "react-icons/vsc";
 import { Navigate, useNavigate } from "react-router-dom";
 import { MdAddTask } from "react-icons/md";
 import axios from "axios";
+import UserProfileEdit from "./UserProfileEdit.jsx";
 
 function Profile() {
   const navigate = useNavigate();
@@ -77,6 +78,7 @@ function Profile() {
               </div>
             </div>
           </div>
+          <UserProfileEdit/>
         </div>
       </body>
     </div>
