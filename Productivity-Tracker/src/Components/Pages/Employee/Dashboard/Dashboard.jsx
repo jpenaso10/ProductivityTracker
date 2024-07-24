@@ -10,6 +10,8 @@ import { MdAddTask } from "react-icons/md";
 import axios from "axios";
 import DigitalClock from "./DigitalClock";
 
+axios.defaults.withCredentials = true;
+
 function Dashboard() {
   const navigate = useNavigate();
 
@@ -32,16 +34,20 @@ function Dashboard() {
     return () => clearInterval(timer);
   }, [isTimerRunning]);
 
-  axios.defaults.withCredentials = true;
-
   useEffect(() => {
-    axios.get("http://localhost:5000/auth/verify").then((res) => {
-      if (res.data.status) {
-      } else {
-        navigate("/");
+    const verifyUser = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/auth/verify", {
+          withCredentials: true, // Ensure cookies are sent with the request
+        });
+        console.log("Verification response:", response.data);
+      } catch (error) {
+        console.error("Error verifying user:", error);
       }
-    });
-  }, [navigate]);
+    };
+
+    verifyUser();
+  }, []);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -54,6 +60,26 @@ function Dashboard() {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
+  }, []);
+
+  const fetchCurrentStatus = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/auth/get-status",
+        { withCredentials: true }
+      );
+      if (response.data.success) {
+        setStatus(response.data.status);
+      } else {
+        console.error("Failed to fetch status:", response.data.message);
+      }
+    } catch (error) {
+      console.error("Error fetching current status:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCurrentStatus();
   }, []);
 
   const handleLogout = async () => {
@@ -90,14 +116,19 @@ function Dashboard() {
 
   // STATUS CHANGE
 
-  const handleStatusChange = async (status) => {
+  const handleStatusChange = async (newStatus) => {
     try {
       const response = await axios.put(
-        "http://localhost:5000/auth/status", // Updated URL
-        { status },
-        { withCredentials: true }
+        "http://localhost:5000/auth/update-status",
+        { status: newStatus },
+        { withCredentials: true } // Ensure cookies are sent with the request
       );
-      console.log("Status updated successfully:", response.data);
+      if (!response.data.success) {
+        console.error("Failed to update status:", response.data);
+      } else {
+        console.log("Status updated successfully:", response.data);
+        setStatus(newStatus);
+      }
     } catch (error) {
       console.error("Failed to update status:", error);
     }

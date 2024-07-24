@@ -11,14 +11,54 @@ import { MdAddTask } from "react-icons/md";
 import axios from "axios";
 import UserProfileEdit from "./UserProfileEdit.jsx";
 
+axios.defaults.withCredentials = true;
+
 function Profile() {
   const navigate = useNavigate();
-  axios.defaults.withCredentials = true;
 
   const [isTaskActive, setIsTaskActive] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [status, setStatus] = useState("Unavailable");
   const dropdownRef = useRef(null);
+
+  //  VERIFY USER AND UPDATE REALTIME STATUS
+
+  useEffect(() => {
+    const verifyUser = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/auth/verify", {
+          withCredentials: true, // Ensure cookies are sent with the request
+        });
+        console.log("Verification response:", response.data);
+      } catch (error) {
+        console.error("Error verifying user:", error);
+      }
+    };
+
+    verifyUser();
+  }, []);
+
+  const fetchCurrentStatus = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/auth/get-status",
+        { withCredentials: true }
+      );
+      if (response.data.success) {
+        setStatus(response.data.status);
+      } else {
+        console.error("Failed to fetch status:", response.data.message);
+      }
+    } catch (error) {
+      console.error("Error fetching current status:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCurrentStatus();
+  }, []);
+
+  // ---------------------------------------------------------
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -41,9 +81,22 @@ function Profile() {
     setDropdownVisible((prevVisible) => !prevVisible);
   };
 
-  const handleStatusChange = (newStatus) => {
-    setStatus(newStatus);
-    setDropdownVisible(false); // Close dropdown after selecting a status
+  const handleStatusChange = async (newStatus) => {
+    try {
+      const response = await axios.put(
+        "http://localhost:5000/auth/update-status",
+        { status: newStatus },
+        { withCredentials: true } // Ensure cookies are sent with the request
+      );
+      if (!response.data.success) {
+        console.error("Failed to update status:", response.data);
+      } else {
+        console.log("Status updated successfully:", response.data);
+        setStatus(newStatus);
+      }
+    } catch (error) {
+      console.error("Failed to update status:", error);
+    }
   };
 
   const handleLogout = async () => {
