@@ -19,6 +19,16 @@ function AdminProfile() {
   const dropdownRef = useRef(null);
   const [profilePicture, setProfilePicture] = useState("");
   const [username, setUsername] = useState("");
+  const [userInfo, setUserInfo] = useState({
+    username: "",
+    email: "",
+    password: "",
+    firstName: "",
+    lastName: "",
+    gender: "",
+    role: "",
+    contactNumber: "",
+  });
 
   //  VERIFY USER AND UPDATE REALTIME STATUS
 
@@ -247,6 +257,50 @@ function AdminProfile() {
                 </div>
               </div>
             </div>
+          </div>
+          <div className={styles.profileDetails}>
+            <h3>User Information</h3>
+            <div className={styles.infoItem}>
+              <label>Username:</label>
+              <span>{userInfo.username}</span>
+            </div>
+            <div className={styles.infoItem}>
+              <label>Email:</label>
+              <span>{userInfo.email}</span>
+            </div>
+            <div className={styles.infoItem}>
+              <label>Password:</label>
+              <span>{userInfo.password}</span>
+            </div>
+            <div className={styles.infoItem}>
+              <label>First Name:</label>
+              <span>{userInfo.firstName}</span>
+            </div>
+            <div className={styles.infoItem}>
+              <label>Last Name:</label>
+              <span>{userInfo.lastName}</span>
+            </div>
+            <div className={styles.infoItem}>
+              <label>Gender:</label>
+              <span>{userInfo.gender}</span>
+            </div>
+            <div className={styles.infoItem}>
+              <label>Role:</label>
+              <span>{userInfo.role}</span>
+            </div>
+            <div className={styles.infoItem}>
+              <label>Contact Number:</label>
+              <span>{userInfo.contactNumber}</span>
+            </div>
+            {profilePicture && (
+              <div className={styles.infoItem}>
+                <label>Profile Picture:</label>
+                <img
+                  src={`http://localhost:5000/${profilePicture}`}
+                  alt="Profile"
+                />
+              </div>
+            )}
           </div>
         </div>
       </body>
