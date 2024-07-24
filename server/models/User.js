@@ -4,7 +4,7 @@
         username: { type: String, required: true, unique: true },
         email: { type: String, required: true, unique: true },
         password: { type: String, required: true },
-        status: { type: String, enum: ['active', 'break', 'lunch', 'not working'], default: 'not working' },
+        status: { type: String, enum: ['Production','Meeting','Coaching', 'Lunch', 'Break', 'Unavailable'], default: 'Unavailable' },
         firstName: { type: String, required: true },
         lastName: { type: String, required: true },
         gender: { type: String, enum: ['Male', 'Female', 'Other'], required: true },
