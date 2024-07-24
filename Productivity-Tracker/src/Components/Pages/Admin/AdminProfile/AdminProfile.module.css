@@ -237,3 +237,30 @@ body {
 .dropdown ul li:hover {
   background-color: #f0f0f0;
 }
+
+/* PROFILE DETAILS */
+
+.profileDetails {
+  background-color: #fff;
+  margin-top: 20px;
+  border-radius: 1%;
+}
+
+.infoItem {
+  margin-bottom: 10px;
+}
+
+.infoItem label {
+  font-weight: bold;
+  display: block;
+}
+
+.infoItem span {
+  display: block;
+  margin-top: 5px;
+}
+
+.infoItem img {
+  max-width: 100px;
+  border-radius: 0%;
+}
