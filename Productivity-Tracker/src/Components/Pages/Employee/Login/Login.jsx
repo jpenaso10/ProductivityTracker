@@ -1,8 +1,6 @@
 import "./Login.css";
 import React, { useState, useEffect } from "react";
-import { FaUser, FaLock } from "react-icons/fa";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
-
+import { FaUser, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -57,7 +55,9 @@ function Login() {
     <div className="wrapper">
       <div className="form-box login">
         <form onSubmit={handleSubmit}>
-          <h1>Productivity Tracker</h1>
+          <div className="logo-container">
+            <img src="/all-covered-svgrepo-com.png" alt="Productivity Tracker Logo" className="logo" />
+          </div>
           <div className="form-group">
             <input
               type="text"
@@ -82,9 +82,8 @@ function Login() {
               <FaEye className="icon" onClick={togglePasswordVisibility} />
             )}
           </div>
-
           <div className="remember-forgot">
-            <label>
+            <label style={{ color: 'black' }}>
               <input
                 type="checkbox"
                 checked={rememberMe}
@@ -94,7 +93,6 @@ function Login() {
             </label>
             <a href="/forgotPassword">Forgot password?</a>
           </div>
-
           <button type="submit">Login</button>
         </form>
       </div>
