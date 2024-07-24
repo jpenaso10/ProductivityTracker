@@ -18,6 +18,8 @@ function EmployeeTasks() {
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [status, setStatus] = useState("Unavailable");
   const dropdownRef = useRef(null);
+  const [profilePicture, setProfilePicture] = useState("");
+  const [username, setUsername] = useState("");
 
   //  VERIFY USER AND UPDATE REALTIME STATUS
 
@@ -57,6 +59,38 @@ function EmployeeTasks() {
   }, []);
 
   // ---------------------------------------------------------
+
+  // FETCH PROFILE PIC
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/auth/verify");
+        if (response.data.status) {
+          setStatus(response.data.status);
+          if (response.data.profilePicture) {
+            setProfilePicture(response.data.profilePicture);
+          }
+          if (response.data.username) {
+            setUsername(response.data.username);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  const getInitials = (name) => {
+    const nameParts = name.split(" ");
+    if (nameParts.length > 1) {
+      return `${nameParts[0][0]}${nameParts[1][0]}`.toUpperCase();
+    }
+    return name.substring(0, 2).toUpperCase();
+  };
+
+  // ----------------------------------------------------------
 
   useEffect(() => {
     axios
@@ -191,12 +225,6 @@ function EmployeeTasks() {
                 <span>Tasks</span>
               </a>
             </li>
-            <li>
-              <a href="./Settings">
-                <VscSettingsGear style={{ fontSize: "1.1rem" }} />
-                <span>Settings</span>
-              </a>
-            </li>
             <li className={styles.logout}>
               <a href="#" onClick={handleLogout}>
                 <BiLogOut style={{ fontSize: "1.3rem" }} />
@@ -219,7 +247,14 @@ function EmployeeTasks() {
               </div>
             </div>
             <div className={styles.profile} ref={dropdownRef}>
-              <img src="https://via.placeholder.com/40" alt="Profile" />
+              {profilePicture ? (
+                <img
+                  src={`http://localhost:5000/${profilePicture}`}
+                  alt="Profile"
+                />
+              ) : (
+                <div className={styles.initials}>{getInitials(username)}</div>
+              )}
               <span onClick={toggleDropdown}>{status}</span>
               <div
                 className={`${styles.statusIndicator} ${

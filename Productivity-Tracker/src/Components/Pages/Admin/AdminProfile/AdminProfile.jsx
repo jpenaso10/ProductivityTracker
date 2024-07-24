@@ -1,22 +1,19 @@
 import React, { useState, useEffect, useRef } from "react";
-import styles from "./Profile.module.css";
+import styles from "./AdminProfile.module.css";
+import { FaSearch } from "react-icons/fa";
 import { BiLogOut } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
 import { CgMenuLeftAlt } from "react-icons/cg";
-import { CgMenuGridR } from "react-icons/cg";
-import { GoQuestion } from "react-icons/go";
-import { VscSettingsGear } from "react-icons/vsc";
 import { Navigate, useNavigate } from "react-router-dom";
 import { MdAddTask } from "react-icons/md";
+import { FaUsers } from "react-icons/fa";
+
 import axios from "axios";
-import UserProfileEdit from "./UserProfileEdit.jsx";
 
 axios.defaults.withCredentials = true;
 
-function Profile() {
+function AdminProfile() {
   const navigate = useNavigate();
-
-  const [isTaskActive, setIsTaskActive] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [status, setStatus] = useState("Unavailable");
   const dropdownRef = useRef(null);
@@ -93,6 +90,9 @@ function Profile() {
   };
 
   // ----------------------------------------------------------
+
+  // FOR STATUS CODE CHANGE
+
   useEffect(() => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -106,15 +106,11 @@ function Profile() {
     };
   }, []);
 
-  const handleTaskStart = () => {
-    setIsTaskActive((prevState) => !prevState);
-  };
-
   const toggleDropdown = () => {
     setDropdownVisible((prevVisible) => !prevVisible);
   };
 
-  const handleStatusChange = async (newStatus) => {
+  const handleStatusChangeCode = async (newStatus) => {
     try {
       const response = await axios.put(
         "http://localhost:5000/auth/update-status",
@@ -132,6 +128,8 @@ function Profile() {
     }
   };
 
+  // -------------------------------
+
   const handleLogout = async () => {
     try {
       await axios.post("http://localhost:5000/auth/logout");
@@ -141,6 +139,21 @@ function Profile() {
     }
   };
 
+  const handleStatusChange = (taskId, newStatus) => {
+    axios
+      .put(`http://localhost:5000/auth/tasks/${taskId}`, { status: newStatus })
+      .then((response) => {
+        const updatedTasks = tasks.map((task) =>
+          task._id === taskId ? { ...task, status: newStatus } : task
+        );
+        setTasks(updatedTasks);
+        filterTasks(currentTab, updatedTasks);
+      })
+      .catch((error) => {
+        console.error("There was an error updating the task status!", error);
+      });
+  };
+
   return (
     <div>
       <body>
@@ -148,26 +161,32 @@ function Profile() {
           <div className={styles.logo}></div>
           <ul className={styles.menu}>
             <li>
-              <a href="./Dashboard">
-                <CgMenuGridR style={{ fontSize: "1.2rem" }} />
+              <a href="./AdminDashboard">
+                <CgMenuLeftAlt />
                 <span>Dashboard</span>
               </a>
             </li>
             <li className={styles.active}>
-              <a href="./Profile">
-                <CgProfile style={{ fontSize: "1.1rem" }} />
+              <a href="/AdminProfile">
+                <CgProfile />
                 <span>Profile</span>
               </a>
             </li>
             <li>
-              <a href="./EmployeeTasks">
-                <MdAddTask style={{ fontSize: "1.1rem" }} />
+              <a href="/EmployeeDetails">
+                <FaUsers />
+                <span>Employee</span>
+              </a>
+            </li>
+            <li>
+              <a href="/AdminTasks">
+                <MdAddTask />
                 <span>Tasks</span>
               </a>
             </li>
             <li className={styles.logout}>
               <a href="#" onClick={handleLogout}>
-                <BiLogOut style={{ fontSize: "1.3rem" }} />
+                <BiLogOut />
                 <span>Logout</span>
               </a>
             </li>
@@ -177,10 +196,14 @@ function Profile() {
         <div className={styles.maincontent}>
           <div className={styles.headerwrapper}>
             <div className={styles.headertitle}>
-              <span>Primary</span>
+              <span>ADMIN</span>
               <h2>Profile</h2>
             </div>
             <div className={styles.userinfo}>
+              <div className={styles.searchbox}>
+                <FaSearch />
+                <input type="text" placeholder="Search" />
+              </div>
               <div className={styles.profile} ref={dropdownRef}>
                 {profilePicture ? (
                   <img
@@ -202,18 +225,22 @@ function Profile() {
                   }`}
                 >
                   <ul>
-                    <li onClick={() => handleStatusChange("Production")}>
+                    <li onClick={() => handleStatusChangeCode("Production")}>
                       Production
                     </li>
-                    <li onClick={() => handleStatusChange("Meeting")}>
+                    <li onClick={() => handleStatusChangeCode("Meeting")}>
                       Meeting
                     </li>
-                    <li onClick={() => handleStatusChange("Coaching")}>
+                    <li onClick={() => handleStatusChangeCode("Coaching")}>
                       Coaching
                     </li>
-                    <li onClick={() => handleStatusChange("Lunch")}>Lunch</li>
-                    <li onClick={() => handleStatusChange("Break")}>Break</li>
-                    <li onClick={() => handleStatusChange("Unavailable")}>
+                    <li onClick={() => handleStatusChangeCode("Lunch")}>
+                      Lunch
+                    </li>
+                    <li onClick={() => handleStatusChangeCode("Break")}>
+                      Break
+                    </li>
+                    <li onClick={() => handleStatusChangeCode("Unavailable")}>
                       Unavailable
                     </li>
                   </ul>
@@ -221,11 +248,10 @@ function Profile() {
               </div>
             </div>
           </div>
-          <UserProfileEdit />
         </div>
       </body>
     </div>
   );
 }
 
-export default Profile;
+export default AdminProfile;
