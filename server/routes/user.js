@@ -212,8 +212,23 @@ const verifyUser = async (req, res, next) => {
     }
 };
 
-router.get('/verify', verifyUser, (req, res) => {
-    return res.json({ status: true, message: "authorized" });
+router.get('/verify', verifyUser, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id);
+        if (!user) {
+            return res.status(404).json({ status: false, message: "User not found" });
+        }
+        return res.json({
+            status: true,
+            message: "authorized",
+            profilePicture: user.profilePicture,
+            status: user.status,
+            username: user.username,
+        });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ status: false, message: "Internal server error" });
+    }
 });
 
 

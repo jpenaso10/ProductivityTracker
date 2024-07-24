@@ -28,7 +28,7 @@ app.use('/auth', UserRouter)
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-app.use('/public/Profile', express.static(path.join(__dirname, "public/Profile")))
+app.use('/public', express.static(path.join(__dirname, 'public')));
 
 
 app.listen(process.env.PORT, () => {

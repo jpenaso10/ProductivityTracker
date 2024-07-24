@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./EmployeeDetails.module.css";
 import Modal from "react-modal";
 import { FaSearch } from "react-icons/fa";
@@ -12,12 +12,17 @@ import { FaUsers } from "react-icons/fa";
 import axios from "axios";
 Modal.setAppElement("#root");
 
+axios.defaults.withCredentials = true;
+
 function EmployeeDetails() {
   const navigate = useNavigate();
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  axios.defaults.withCredentials = true;
-
   const [employees, setEmployees] = useState([]);
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [status, setStatus] = useState("Unavailable");
+  const dropdownRef = useRef(null);
+  const [profilePicture, setProfilePicture] = useState("");
+  const [username, setUsername] = useState("");
 
   useEffect(() => {
     axios
@@ -28,15 +33,6 @@ function EmployeeDetails() {
       .catch((error) => {
         console.error("There was an error fetching the employee data!", error);
       });
-  }, []);
-
-  useEffect(() => {
-    axios.get("http://localhost:5000/auth/verify").then((res) => {
-      if (res.data.status) {
-      } else {
-        navigate("/");
-      }
-    });
   }, []);
 
   const handleLogout = async () => {
@@ -100,6 +96,116 @@ function EmployeeDetails() {
       });
   };
 
+  //  VERIFY USER AND UPDATE REALTIME STATUS
+
+  useEffect(() => {
+    const verifyUser = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/auth/verify", {
+          withCredentials: true, // Ensure cookies are sent with the request
+        });
+        console.log("Verification response:", response.data);
+      } catch (error) {
+        console.error("Error verifying user:", error);
+      }
+    };
+
+    verifyUser();
+  }, []);
+
+  const fetchCurrentStatus = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/auth/get-status",
+        { withCredentials: true }
+      );
+      if (response.data.success) {
+        setStatus(response.data.status);
+      } else {
+        console.error("Failed to fetch status:", response.data.message);
+      }
+    } catch (error) {
+      console.error("Error fetching current status:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCurrentStatus();
+  }, []);
+
+  // ---------------------------------------------------------
+
+  // FETCH PROFILE PIC
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/auth/verify");
+        if (response.data.status) {
+          setStatus(response.data.status);
+          if (response.data.profilePicture) {
+            setProfilePicture(response.data.profilePicture);
+          }
+          if (response.data.username) {
+            setUsername(response.data.username);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  const getInitials = (name) => {
+    const nameParts = name.split(" ");
+    if (nameParts.length > 1) {
+      return `${nameParts[0][0]}${nameParts[1][0]}`.toUpperCase();
+    }
+    return name.substring(0, 2).toUpperCase();
+  };
+
+  // ----------------------------------------------------------
+
+  // FOR STATUS CODE CHANGE
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownVisible(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const toggleDropdown = () => {
+    setDropdownVisible((prevVisible) => !prevVisible);
+  };
+
+  const handleStatusChangeCode = async (newStatus) => {
+    try {
+      const response = await axios.put(
+        "http://localhost:5000/auth/update-status",
+        { status: newStatus },
+        { withCredentials: true } // Ensure cookies are sent with the request
+      );
+      if (!response.data.success) {
+        console.error("Failed to update status:", response.data);
+      } else {
+        console.log("Status updated successfully:", response.data);
+        setStatus(newStatus);
+      }
+    } catch (error) {
+      console.error("Failed to update status:", error);
+    }
+  };
+
+  // -------------------------------
+
   return (
     <div>
       <body>
@@ -113,7 +219,7 @@ function EmployeeDetails() {
               </a>
             </li>
             <li>
-              <a href="#">
+              <a href="/AdminProfile">
                 <CgProfile />
                 <span>Profile</span>
               </a>
@@ -149,6 +255,48 @@ function EmployeeDetails() {
               <div className={styles.searchbox}>
                 <FaSearch />
                 <input type="text" placeholder="Search" />
+              </div>
+              <div className={styles.profile} ref={dropdownRef}>
+                {profilePicture ? (
+                  <img
+                    src={`http://localhost:5000/${profilePicture}`}
+                    alt="Profile"
+                  />
+                ) : (
+                  <div className={styles.initials}>{getInitials(username)}</div>
+                )}
+                <span onClick={toggleDropdown}>{status}</span>
+                <div
+                  className={`${styles.statusIndicator} ${
+                    styles[status.toLowerCase()]
+                  }`}
+                ></div>
+                <div
+                  className={`${styles.dropdown} ${
+                    dropdownVisible ? styles.show : ""
+                  }`}
+                >
+                  <ul>
+                    <li onClick={() => handleStatusChangeCode("Production")}>
+                      Production
+                    </li>
+                    <li onClick={() => handleStatusChangeCode("Meeting")}>
+                      Meeting
+                    </li>
+                    <li onClick={() => handleStatusChangeCode("Coaching")}>
+                      Coaching
+                    </li>
+                    <li onClick={() => handleStatusChangeCode("Lunch")}>
+                      Lunch
+                    </li>
+                    <li onClick={() => handleStatusChangeCode("Break")}>
+                      Break
+                    </li>
+                    <li onClick={() => handleStatusChangeCode("Unavailable")}>
+                      Unavailable
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
