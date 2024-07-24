@@ -1,16 +1,5 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./Profile.module.css";
-import {
-  FaTachometerAlt,
-  FaUser,
-  FaChartBar,
-  FaBriefcase,
-  FaQuestionCircle,
-  FaCog,
-  FaSignOutAlt,
-  FaSearch,
-} from "react-icons/fa";
-
 import { BiLogOut } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
 import { CgMenuLeftAlt } from "react-icons/cg";
@@ -25,6 +14,46 @@ import UserProfileEdit from "./UserProfileEdit.jsx";
 function Profile() {
   const navigate = useNavigate();
   axios.defaults.withCredentials = true;
+
+  const [isTaskActive, setIsTaskActive] = useState(false);
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [status, setStatus] = useState("Unavailable");
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownVisible(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const handleTaskStart = () => {
+    setIsTaskActive((prevState) => !prevState);
+  };
+
+  const toggleDropdown = () => {
+    setDropdownVisible((prevVisible) => !prevVisible);
+  };
+
+  const handleStatusChange = (newStatus) => {
+    setStatus(newStatus);
+    setDropdownVisible(false); // Close dropdown after selecting a status
+  };
+
+  const handleLogout = async () => {
+    try {
+      await axios.post("http://localhost:5000/auth/logout");
+      navigate("/");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
 
   return (
     <div>
@@ -57,7 +86,7 @@ function Profile() {
               </a>
             </li>
             <li className={styles.logout}>
-              <a href="/">
+              <a href="#" onClick={handleLogout}>
                 <BiLogOut style={{ fontSize: "1.3rem" }} />
                 <span>Logout</span>
               </a>
@@ -72,13 +101,40 @@ function Profile() {
               <h2>Profile</h2>
             </div>
             <div className={styles.userinfo}>
-              <div className={styles.searchbox}>
-                <FaSearch />
-                <input type="text" placeholder="Search" />
+              <div className={styles.profile} ref={dropdownRef}>
+                <img src="https://via.placeholder.com/40" alt="Profile" />
+                <span onClick={toggleDropdown}>{status}</span>
+                <div
+                  className={`${styles.statusIndicator} ${
+                    styles[status.toLowerCase()]
+                  }`}
+                ></div>
+                <div
+                  className={`${styles.dropdown} ${
+                    dropdownVisible ? styles.show : ""
+                  }`}
+                >
+                  <ul>
+                    <li onClick={() => handleStatusChange("Production")}>
+                      Production
+                    </li>
+                    <li onClick={() => handleStatusChange("Meeting")}>
+                      Meeting
+                    </li>
+                    <li onClick={() => handleStatusChange("Coaching")}>
+                      Coaching
+                    </li>
+                    <li onClick={() => handleStatusChange("Lunch")}>Lunch</li>
+                    <li onClick={() => handleStatusChange("Break")}>Break</li>
+                    <li onClick={() => handleStatusChange("Unavailable")}>
+                      Unavailable
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
-          <UserProfileEdit/>
+          <UserProfileEdit />
         </div>
       </body>
     </div>

@@ -180,30 +180,29 @@ router.post('/reset-password/:token', async (req, res) => {
 
 const verifyUser = async (req, res, next) => {
     try {
-        const token = req.cookies.token
+        const token = req.cookies.token;
         if (!token) {
-            return res.json({ status: false, message: "no token" })
+            return res.json({ status: false, message: "no token" });
         }
-        const decoded = jwt.verify(token, process.env.KEY)
-        next()
+        const decoded = jwt.verify(token, process.env.KEY);
+        req.user = decoded; // Attach decoded user info to the request
+        next();
     } catch (err) {
-        return res.json(err)
+        return res.json(err);
     }
-
-}
+};
 
 router.get('/verify', verifyUser, (req, res) => {
-    return res.json({ status: true, message: "authorized" })
-})
+    return res.json({ status: true, message: "authorized" });
+});
 
 
-/* Employee status */
-
+//    ADMIN INTERFACE: Employee Status added in Employe Details
 
 router.put('/status', async (req, res) => {
     const { userId, status } = req.body;
 
-    if (!['active', 'break', 'lunch', 'not working'].includes(status)) {
+    if (!['Production', 'Meeting', 'Coaching', 'Lunch', 'Break', 'Unavailable'].includes(status)) {
         return res.status(400).json({ message: 'Invalid status' });
     }
 

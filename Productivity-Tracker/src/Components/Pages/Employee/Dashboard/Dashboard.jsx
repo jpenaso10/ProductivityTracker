@@ -18,7 +18,6 @@ function Dashboard() {
   const [isTaskActive, setIsTaskActive] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [status, setStatus] = useState("Unavailable");
-
   const dropdownRef = useRef(null);
 
   useEffect(() => {
@@ -89,9 +88,19 @@ function Dashboard() {
     setDropdownVisible((prevVisible) => !prevVisible);
   };
 
-  const handleStatusChange = (newStatus) => {
-    setStatus(newStatus);
-    setDropdownVisible(false); // Close dropdown after selecting a status
+  // STATUS CHANGE
+
+  const handleStatusChange = async (status) => {
+    try {
+      const response = await axios.put(
+        "http://localhost:5000/auth/status", // Updated URL
+        { status },
+        { withCredentials: true }
+      );
+      console.log("Status updated successfully:", response.data);
+    } catch (error) {
+      console.error("Failed to update status:", error);
+    }
   };
 
   return (
@@ -138,7 +147,7 @@ function Dashboard() {
               <span>Dashboard</span>
               <h2>Productivity Tracker</h2>
             </div>
-            <DigitalClock/>
+            <DigitalClock />
             <div className={styles.timerButtonWrapper}>
               <button
                 className={`${styles.timerButton} ${

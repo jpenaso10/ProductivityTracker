@@ -151,12 +151,6 @@ function AdminTasks() {
                 <span>Tasks</span>
               </a>
             </li>
-            <li>
-              <a href="#">
-                <VscSettingsGear />
-                <span>Settings</span>
-              </a>
-            </li>
             <li className={styles.logout}>
               <a href="#" onClick={handleLogout}>
                 <BiLogOut />

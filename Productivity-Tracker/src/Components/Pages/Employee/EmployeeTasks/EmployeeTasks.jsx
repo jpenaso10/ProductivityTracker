@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./EmployeeTasks.module.css";
 import { FaSearch } from "react-icons/fa";
 import { BiLogOut } from "react-icons/bi";
@@ -13,6 +13,9 @@ function EmployeeTasks() {
   const [tasks, setTasks] = useState([]);
   const [filteredTasks, setFilteredTasks] = useState([]);
   const [currentTab, setCurrentTab] = useState("To do");
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [status, setStatus] = useState("Unavailable");
+  const dropdownRef = useRef(null);
 
   axios.defaults.withCredentials = true;
 
@@ -35,6 +38,32 @@ function EmployeeTasks() {
         console.error("There was an error fetching the tasks data!", error);
       });
   }, []);
+
+  // FOR STATUS CODE CHANGE
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownVisible(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const toggleDropdown = () => {
+    setDropdownVisible((prevVisible) => !prevVisible);
+  };
+
+  const handleStatusChangeCode = (newStatus) => {
+    setStatus(newStatus);
+    setDropdownVisible(false); // Close dropdown after selecting a status
+  };
+
+  // -------------------------------
 
   const handleLogout = async () => {
     try {
@@ -145,6 +174,37 @@ function EmployeeTasks() {
                 <input type="text" placeholder="Search" />
               </div>
             </div>
+            <div className={styles.profile} ref={dropdownRef}>
+              <img src="https://via.placeholder.com/40" alt="Profile" />
+              <span onClick={toggleDropdown}>{status}</span>
+              <div
+                className={`${styles.statusIndicator} ${
+                  styles[status.toLowerCase()]
+                }`}
+              ></div>
+              <div
+                className={`${styles.dropdown} ${
+                  dropdownVisible ? styles.show : ""
+                }`}
+              >
+                <ul>
+                  <li onClick={() => handleStatusChangeCode("Production")}>
+                    Production
+                  </li>
+                  <li onClick={() => handleStatusChangeCode("Meeting")}>
+                    Meeting
+                  </li>
+                  <li onClick={() => handleStatusChangeCode("Coaching")}>
+                    Coaching
+                  </li>
+                  <li onClick={() => handleStatusChangeCode("Lunch")}>Lunch</li>
+                  <li onClick={() => handleStatusChangeCode("Break")}>Break</li>
+                  <li onClick={() => handleStatusChangeCode("Unavailable")}>
+                    Unavailable
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
 
           <div className={styles.mainnav}>
@@ -181,21 +241,20 @@ function EmployeeTasks() {
                 >
                   <div className={styles.taskDetails}>
                     <p
-                      className={`${styles.status} ${task.status === "Active"
-                        ? styles.statusActive
-                        : task.status === "Pending"
+                      className={`${styles.status} ${
+                        task.status === "Active"
+                          ? styles.statusActive
+                          : task.status === "Pending"
                           ? styles.statusPending
                           : task.status === "Done"
-                            ? styles.statusDone
-                            : ""
-                        }`}
+                          ? styles.statusDone
+                          : ""
+                      }`}
                     >
                       {task.status}
                     </p>
                     <h3 className={styles.taskName}>{task.name}</h3>
-                    <p className={styles.taskDescription}>
-                      {task.description}
-                    </p>
+                    <p className={styles.taskDescription}>{task.description}</p>
                     <p className={styles.taskDate}>
                       Due: {new Date(task.date).toLocaleDateString()}
                     </p>

@@ -130,12 +130,6 @@ function EmployeeDetails() {
                 <span>Tasks</span>
               </a>
             </li>
-            <li>
-              <a href="#">
-                <VscSettingsGear />
-                <span>Settings</span>
-              </a>
-            </li>
             <li className={styles.logout}>
               <a href="#" onClick={handleLogout}>
                 <BiLogOut style={{ fontSize: "1.3rem" }} />
