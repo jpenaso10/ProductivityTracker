@@ -102,6 +102,7 @@ body {
   top: 0;
   transition: margin-left 0.2s;
   height: 100vh;
+
 }
 
 .headerwrapper {
@@ -112,6 +113,7 @@ body {
   border-radius: 10px;
   padding: 10px 2rem;
   margin-bottom: 1rem;
+
 }
 
 .headertitle {
@@ -147,7 +149,8 @@ body {
   align-items: center;
   gap: 10px;
   cursor: pointer;
-  position: relative; /* Ensure the dropdown is positioned relative to the profile */
+  position: relative;
+  /* Ensure the dropdown is positioned relative to the profile */
 }
 
 .profile img {
@@ -164,7 +167,8 @@ body {
 .initials {
   width: 40px;
   height: 40px;
-  background-color: #cccccc; /* Adjust background color as needed */
+  background-color: #cccccc;
+  /* Adjust background color as needed */
   color: white;
   display: flex;
   align-items: center;
@@ -176,26 +180,31 @@ body {
 
 .statusIndicator {
   position: absolute;
-  bottom: -5px; /* Adjust this value to position the indicator as needed */
-  right: 10px; /* Adjust this value to position the indicator as needed */
+  bottom: -5px;
+  /* Adjust this value to position the indicator as needed */
+  right: 10px;
+  /* Adjust this value to position the indicator as needed */
   width: 10px;
   height: 10px;
   border-radius: 50%;
 }
 
 .statusprod {
-  background-color: #38e173; /* Green */
+  background-color: #38e173;
+  /* Green */
 }
 
 .statusmeeting,
 .statuslunch,
 .statusbreak,
 .statuscoaching {
-  background-color: #fdd835; /* Yellow */
+  background-color: #fdd835;
+  /* Yellow */
 }
 
 .statusunavail {
-  background-color: #9e9e9e; /* Gray */
+  background-color: #9e9e9e;
+  /* Gray */
 }
 
 .dropdown {
@@ -241,155 +250,169 @@ body {
 
 
 .maincontent {
-    flex: 1;
-    padding: 1rem;
-    background: #ebe9e9;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    top: 0;
-    transition: margin-left 0.2s;
-    height: 100vh;
-  }
-  
-  .headerwrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #fff;
-    border-radius: 10px;
-    padding: 10px 2rem;
-    margin-bottom: 1rem;
-  }
-  
-  .headertitle {
-    color: rgba(0, 101, 255, 0.7);
-  }
-  
+  flex: 1;
+  padding: 1rem;
+  background: #ebe9e9;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  top: 0;
+  transition: margin-left 0.2s;
+  height: 100vh;
+  background-image: url("sansadas.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 
-  .adminnav {
-    display: flex;
-    padding: 0px;
-    padding: 5px 1rem;
-    background: #fff;
-    border-radius: 10px;
-    
-  }
+.headerwrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  border-radius: 10px;
+  padding: 10px 2rem;
+  margin-bottom: 1rem;
+  background-image: url("sansadas.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 
-  .addemployee {
-    color: rgba(0, 101, 255, 0.7);
-    margin: 5px;
-    padding: 8px;
-    border-radius: 10px;
-    background-color: #fff;
-    font-size: 15px;
-  }
-
-  .addemployee:hover {
-    color: rgba(0, 101, 255, 0.7);
-    background-color: aqua;
-    border-radius: 10px;
-    font-weight: bold;
-  }
+.headertitle {
+  color: rgba(0, 101, 255, 0.7);
+}
 
 
-  .mainnav {
-    background-color: #fff;
-    padding: 5px;
-    border-radius: 10px;
-    
-  }
+.adminnav {
+  display: flex;
+  padding: 0px;
+  padding: 5px 1rem;
+  background: #fff;
+  border-radius: 10px;
 
-  .mainnav button {
-    font-weight: normal; /* Normal weight initially */
-    transition: font-weight 0.3s ease;
-  }
+}
 
-  .mainnav button:hover {
-    font-weight: bold;
-  }
-  
-  .navbutton {
-    background-color: #fff;
-    margin: 10px 40px 10px 10px;
-    color: rgba(0, 101, 255, 0.7)
-  }
+.addemployee {
+  color: rgba(0, 101, 255, 0.7);
+  margin: 5px;
+  padding: 8px;
+  border-radius: 10px;
+  background-color: #fff;
+  font-size: 15px;
+}
+
+.addemployee:hover {
+  color: rgba(0, 101, 255, 0.7);
+  background-color: aqua;
+  border-radius: 10px;
+  font-weight: bold;
+}
 
 
-  .modal {
-    position: absolute;
-    top: 10%;
-    left: 40%;
-    right: auto;
-    bottom: auto;
-    marginRight: '-50%';
-    transform: translate('-50%', '-50%');
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-  
-  .modal label {
-    margin: 5px;
-  }
+.mainnav {
+  background-color: #fff;
+  padding: 5px;
+  border-radius: 10px;
+  background-image: url("sansadas.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 
-  .modal input {
-    margin: 10px;
-    border: 1px solid #ccc;
-    
-  }
+.mainnav button {
+  font-weight: normal;
+  /* Normal weight initially */
+  transition: font-weight 0.3s ease;
+  background: transparent;
+}
 
-  .modal button {
-    margin: 5px;
-  }
-  
-  .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    backgroundColor: 'rgba(0, 0, 0, 0.75)';
-  }
+.mainnav button:hover {
+  font-weight: bold;
+}
 
-  .employeeDetails {
-    padding: 20px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 15px;
-    margin: 20px 0;
-  }
-  
-  .employeeDetails {
-    margin-top: 20px;
-  }
-  
-  .employeeDetails h3 {
-    margin-bottom: 20px;
-    font-size: 20px;
-  }
-  
-  .employeeTable {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .employeeTable th, .employeeTable td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: left;
-  }
-  
-  .employeeTable th {
-    background-color: #f4f4f4;
-  }
-  
-  .employeeTable tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-  
-  .employeeTable tr:hover {
-    background-color: #f1f1f1;
-  }
+.navbutton {
+  background-color: #fff;
+  margin: 10px 40px 10px 10px;
+  color: rgba(0, 101, 255, 0.7)
+}
+
+
+.modal {
+  position: absolute;
+  top: 10%;
+  left: 40%;
+  right: auto;
+  bottom: auto;
+  marginRight: '-50%';
+  transform: translate('-50%', '-50%');
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal label {
+  margin: 5px;
+}
+
+.modal input {
+  margin: 10px;
+  border: 1px solid #ccc;
+
+}
+
+.modal button {
+  margin: 5px;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  backgroundColor: 'rgba(0, 0, 0, 0.75)';
+}
+
+.employeeDetails {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  margin: 20px 0;
+}
+
+.employeeDetails {
+  margin-top: 20px;
+}
+
+.employeeDetails h3 {
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+
+.employeeTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.employeeTable th,
+.employeeTable td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.employeeTable th {
+  background-color: #f4f4f4;
+}
+
+.employeeTable tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.employeeTable tr:hover {
+  background-color: #f1f1f1;
+}

@@ -25,7 +25,7 @@
 .wrapper {
   position: relative;
   width: 445px;
-  height: 535px;
+  height: 526px;
   background: rgba(255, 255, 255, 0.7);
   border-radius: 50px;
   color: rgb(0, 0, 0);
@@ -136,7 +136,7 @@ form h1 {
   position: relative;
   width: 100%;
   height: 50px;
-  margin: 30px 0;
+  margin: 20px 0;
 }
 
 .form-group input {
