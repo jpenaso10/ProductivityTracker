@@ -307,7 +307,7 @@ function AdminTasks() {
           <ul className={styles.menu}>
             <li>
               <a href="./AdminDashboard">
-                <CgMenuLeftAlt />
+              <CgMenuLeftAlt style={{ fontSize: "1.2rem" }} />
                 <span>Dashboard</span>
               </a>
             </li>
