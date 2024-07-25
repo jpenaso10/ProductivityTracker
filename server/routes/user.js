@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt'
 const router = express.Router();
 import { User } from '../models/user.js';
 import { Task } from '../models/Tasks.js';
+import { TimerData } from '../models/TimerData.js';
 import jwt from 'jsonwebtoken'
 import nodemailer from 'nodemailer'
 import multer from 'multer';
@@ -368,6 +369,64 @@ router.delete("/tasks/:id", async (req, res) => {
     }
 });
 
-/* Task Routes */
+// TIMER DATA
+router.post('/save-timers', verifyUser, async (req, res) => {
+    try {
+      const { date, timers, currentStatus } = req.body;
+      const userId = req.user.id;
+  
+      let timerData = await TimerData.findOne({ userId, date });
+      
+      if (timerData) {
+        timerData.timers = timers;
+        timerData.currentStatus = currentStatus;
+        timerData.updatedAt = new Date(); // Update the timestamp
+        await timerData.save();
+      } else {
+        timerData = new TimerData({
+          userId,
+          date,
+          timers,
+          currentStatus,
+          updatedAt: new Date() // Set the initial timestamp
+        });
+        await timerData.save();
+      }
+  
+      res.json({ success: true, message: 'Timer data saved successfully' });
+    } catch (error) {
+      console.error('Error saving timer data:', error);
+      res.status(500).json({ success: false, message: 'Failed to save timer data' });
+    }
+  });
+
+  router.get('/get-timers/:date', verifyUser, async (req, res) => {
+    try {
+      const { date } = req.params;
+      const userId = req.user.id;
+  
+      const timerData = await TimerData.findOne({ userId, date });
+  
+      if (timerData) {
+        res.json({
+          success: true,
+          timers: timerData.timers,
+          currentStatus: timerData.currentStatus,
+          lastUpdated: timerData.updatedAt
+        });
+      } else {
+        res.json({
+          success: false,
+          message: 'No timer data found for this date'
+        });
+      }
+    } catch (error) {
+      console.error('Error fetching timer data:', error);
+      res.status(500).json({ success: false, message: 'Failed to fetch timer data' });
+    }
+  });
+
+
+//--------------------------------------------------------
 
 export { router as UserRouter }
