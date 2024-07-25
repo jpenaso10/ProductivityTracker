@@ -313,9 +313,9 @@ function AdminTasks() {
             </li>
             <li>
             <a href="/AdminProfile">
-                <CgProfile style={{ fontSize: "1.2rem" }} />
-                <span>Profile</span>
-              </a>
+    <CgProfile style={{ fontSize: "1.2rem" }} />
+    <span>Profile</span>
+</a>
             </li>
             <li>
               <a href="/EmployeeDetails">
