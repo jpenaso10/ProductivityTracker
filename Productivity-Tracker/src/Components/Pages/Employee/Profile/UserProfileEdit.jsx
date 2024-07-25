@@ -18,6 +18,7 @@ function UserProfileEdit() {
     profilePicture: "",
     password: "",
   });
+  const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [status, setStatus] = useState("Unavailable");
@@ -186,15 +187,7 @@ function UserProfileEdit() {
                       <label className="small mb-1" htmlFor="inputUsername">
                         Username
                       </label>
-                      <input
-                        className="form-control"
-                        id="inputUsername"
-                        type="text"
-                        name="username"
-                        value={userData.username}
-                        onChange={handleChange}
-                        placeholder="Enter username"
-                      />
+                      <p className="form-control">{userData.username}</p>
                     </div>
                     <div className="mb-3">
                       <label className="small mb-1" htmlFor="inputEmail">
@@ -259,35 +252,13 @@ function UserProfileEdit() {
                       <label className="small mb-1" htmlFor="inputRole">
                         Role
                       </label>
-                      <input
-                        className="form-control"
-                        id="inputRole"
-                        type="text"
-                        name="role"
-                        value={userData.role}
-                        onChange={handleChange}
-                        placeholder="Role"
-                        readOnly
-                      />
+                      <p className="form-control">{userData.role}</p>
                     </div>
                     <div className="mb-3">
                       <label className="small mb-1" htmlFor="inputStatus">
                         Status
                       </label>
-                      <select
-                        className="form-control"
-                        id="inputStatus"
-                        name="status"
-                        value={userData.status}
-                        onChange={handleChange}
-                      >
-                        <option value="Unavailable">Unavailable</option>
-                        <option value="Production">Production</option>
-                        <option value="Meeting">Meeting</option>
-                        <option value="Coaching">Coaching</option>
-                        <option value="Lunch">Lunch</option>
-                        <option value="Break">Break</option>
-                      </select>
+                      <p className="form-control">{userData.status}</p>
                     </div>
                     <div className="mb-3">
                       <label
@@ -315,8 +286,8 @@ function UserProfileEdit() {
                         id="inputPassword"
                         type="password"
                         name="password"
-                        value={userData.password}
-                        onChange={handleChange}
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
                         placeholder="Enter new password"
                       />
                     </div>
