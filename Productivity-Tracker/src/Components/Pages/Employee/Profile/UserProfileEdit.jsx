@@ -162,6 +162,7 @@ function UserProfileEdit() {
               <div className='card-body text-center'>
                 {profilePicture ? (
                   <img
+                    style={{borderRadius: '50%', width: '300px', height: '300px'}}
                     src={`http://localhost:5000/${profilePicture}`}
                     alt="Profile"
                   />
