@@ -448,7 +448,7 @@ function AdminTasks() {
                     </p>
                   </div>
                   <div className={styles.taskActions}>
-                    <button className={styles.actionButton}>Edit</button>
+                    
                     <button
                       onClick={() => handleEditButtonClick(task)}
                       className={styles.actionButton}
