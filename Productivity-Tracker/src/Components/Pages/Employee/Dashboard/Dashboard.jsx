@@ -141,7 +141,7 @@ function Dashboard() {
   useEffect(() => {
     const intervalId = setInterval(() => {
       loadTimersFromDatabase();
-    }, 5000); // Update every 5 seconds
+    }, 1000); // Update every 1 second
 
     return () => clearInterval(intervalId);
   }, []);

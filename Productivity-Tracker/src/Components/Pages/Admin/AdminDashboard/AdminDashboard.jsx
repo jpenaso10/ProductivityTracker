@@ -133,19 +133,22 @@ function AdminDashboard() {
 
   const handleStatusChangeCode = async (newStatus) => {
     try {
-      const response = await axios.put(
+      const response = await axios.post(
         "http://localhost:5000/auth/update-status",
         { status: newStatus },
-        { withCredentials: true } // Ensure cookies are sent with the request
+        { withCredentials: true }
       );
-      if (!response.data.success) {
-        console.error("Failed to update status:", response.data);
-      } else {
-        console.log("Status updated successfully:", response.data);
+      if (response.data.success) {
         setStatus(newStatus);
+        await loadTimersFromDatabase();
+      } else {
+        console.error("Failed to update status:", response.data.message);
       }
     } catch (error) {
-      console.error("Failed to update status:", error);
+      console.error(
+        "Failed to update status:",
+        error.response ? error.response.data.message : error.message
+      );
     }
   };
 
