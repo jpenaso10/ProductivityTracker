@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import styles from "./Dashboard.module.css";
 import { BiLogOut } from "react-icons/bi";
+import moment from "moment-timezone";
 import { CgProfile, CgMenuGridR } from "react-icons/cg";
 import { MdAddTask } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
@@ -11,12 +12,16 @@ axios.defaults.withCredentials = true;
 
 function Dashboard() {
   const navigate = useNavigate();
-  const [currentDate, setCurrentDate] = useState("");
+  const [currentDate, setCurrentDate] = useState(
+    moment().tz("Asia/Manila").format("YYYY-MM-DD")
+  );
+
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [status, setStatus] = useState("Unavailable");
   const dropdownRef = useRef(null);
   const [profilePicture, setProfilePicture] = useState("");
   const [username, setUsername] = useState("");
+
   const [statusTimers, setStatusTimers] = useState({
     Production: 0,
     Meeting: 0,
@@ -64,12 +69,15 @@ function Dashboard() {
 
   useEffect(() => {
     const updateCurrentDate = () => {
-      const now = new Date();
-      const options = { year: "numeric", month: "long", day: "numeric" };
-      setCurrentDate(now.toLocaleDateString(undefined, options));
+      const formattedDate = moment().tz("Asia/Manila").format("YYYY-MM-DD");
+      setCurrentDate(formattedDate);
     };
 
     updateCurrentDate();
+    // Set up an interval to check for date changes
+    const intervalId = setInterval(updateCurrentDate, 60000); // Check every minute
+
+    return () => clearInterval(intervalId);
   }, []);
 
   useEffect(() => {
@@ -120,31 +128,51 @@ function Dashboard() {
   };
 
   const loadTimersFromDatabase = async () => {
-    const currentDate = new Date().toISOString().split("T")[0];
     try {
       const response = await axios.get(
         `http://localhost:5000/auth/get-timers/${currentDate}`,
         { withCredentials: true }
       );
 
-      if (response.data.success && response.data.timers) {
+      if (response.data.success) {
         setStatusTimers(response.data.timers);
         setStatus(response.data.currentStatus || "Unavailable");
       } else {
-        console.log("No timer data for today, starting fresh");
+        // If no data for the day, reset timers to zero
+        setStatusTimers({
+          Production: 0,
+          Meeting: 0,
+          Coaching: 0,
+          Lunch: 0,
+          Break: 0,
+          Unavailable: 0,
+        });
+        setStatus("Unavailable");
+        console.log("No timer data for this date, starting fresh");
       }
     } catch (error) {
       console.error("Error loading timer data:", error);
+      // In case of error, also reset timers
+      setStatusTimers({
+        Production: 0,
+        Meeting: 0,
+        Coaching: 0,
+        Lunch: 0,
+        Break: 0,
+        Unavailable: 0,
+      });
+      setStatus("Unavailable");
     }
   };
 
   useEffect(() => {
+    loadTimersFromDatabase();
     const intervalId = setInterval(() => {
       loadTimersFromDatabase();
     }, 1000); // Update every 1 second
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, [currentDate]); // Add currentDate as a dependency
 
   const formatTime = (seconds) => {
     // Ensure seconds is a whole number
@@ -251,9 +279,7 @@ function Dashboard() {
             <h3>Your shift</h3>
             <p>Your time spent in status codes on {currentDate}</p>
           </div>
-          <div className={styles.timechart}>
-            <h1>TIME CHART HERE</h1>
-          </div>
+
           <div className={styles.statusContainer}>
             <div className={styles.statusprod}>
               <p>Production</p>
