@@ -116,6 +116,10 @@ body {
   border-radius: 10px;
   padding: 10px 2rem;
   margin-bottom: 1rem;
+  background-image: url("sansadas.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .headertitle {
@@ -159,12 +163,17 @@ body {
   background-color: #fff;
   padding: 5px;
   border-radius: 10px;
+  background-image: url("sansadas.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .mainnav button {
   font-weight: normal;
   /* Normal weight initially */
   transition: font-weight 0.3s ease;
+  background: transparent;
 }
 
 .mainnav button:hover {
@@ -354,7 +363,8 @@ body {
   align-items: center;
   gap: 10px;
   cursor: pointer;
-  position: relative; /* Ensure the dropdown is positioned relative to the profile */
+  position: relative;
+  /* Ensure the dropdown is positioned relative to the profile */
 }
 
 .profile img {
@@ -371,7 +381,8 @@ body {
 .initials {
   width: 40px;
   height: 40px;
-  background-color: #cccccc; /* Adjust background color as needed */
+  background-color: #cccccc;
+  /* Adjust background color as needed */
   color: white;
   display: flex;
   align-items: center;
@@ -383,26 +394,31 @@ body {
 
 .statusIndicator {
   position: absolute;
-  bottom: -5px; /* Adjust this value to position the indicator as needed */
-  right: 10px; /* Adjust this value to position the indicator as needed */
+  bottom: -5px;
+  /* Adjust this value to position the indicator as needed */
+  right: 10px;
+  /* Adjust this value to position the indicator as needed */
   width: 10px;
   height: 10px;
   border-radius: 50%;
 }
 
 .statusprod {
-  background-color: #38e173; /* Green */
+  background-color: #38e173;
+  /* Green */
 }
 
 .statusmeeting,
 .statuslunch,
 .statusbreak,
 .statuscoaching {
-  background-color: #fdd835; /* Yellow */
+  background-color: #fdd835;
+  /* Yellow */
 }
 
 .statusunavail {
-  background-color: #9e9e9e; /* Gray */
+  background-color: #9e9e9e;
+  /* Gray */
 }
 
 .dropdown {

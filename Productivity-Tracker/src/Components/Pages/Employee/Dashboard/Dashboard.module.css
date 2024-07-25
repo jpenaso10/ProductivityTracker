@@ -116,6 +116,10 @@ body {
   border-radius: 10px;
   padding: 10px 2rem;
   margin-bottom: 1rem;
+  background-image: url("sansadas.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .headertitle {
@@ -171,7 +175,8 @@ body {
 .initials {
   width: 40px;
   height: 40px;
-  background-color: #cccccc; /* Adjust background color as needed */
+  background-color: #cccccc;
+  /* Adjust background color as needed */
   color: white;
   display: flex;
   align-items: center;
@@ -293,6 +298,10 @@ body {
   border-radius: 10px;
   padding: 0.5rem;
   padding-bottom: 0;
+  background-image: url("sansadas.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .timechart {
