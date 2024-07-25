@@ -18,10 +18,17 @@ const TaskSchema = new mongoose.Schema({
         required: true,
     },
     status: { 
-        type: String, enum: ['Active', 'Pending', 'Done'], default: 'Active' },
+        type: String, 
+        enum: ['Active', 'Pending', 'Done'], 
+        default: 'Active' 
+    },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        default: null
+    }
 });
 
-const TaskModel = mongoose.model("Task", TaskSchema)
+const TaskModel = mongoose.model("Task", TaskSchema);
 
-
-export {TaskModel as Task}
+export {TaskModel as Task};
