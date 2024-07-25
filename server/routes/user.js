@@ -95,7 +95,7 @@ router.post('/login', async (req, res) => {
     const user = await User.findOne({ username });
 
     if (!user) {
-        return res.status(400).json({ message: "User is not registered" });
+        return res.status(400).json({ status: false, message: "User is not registered" });
     }
 
     const validPassword = await bcrypt.compare(password, user.password);
@@ -111,8 +111,9 @@ router.post('/login', async (req, res) => {
 
     res.cookie('token', token, { httpOnly: true, maxAge: 7 * 60 * 60 * 1000 }); // Set maxAge to match the token expiry
 
-    return res.json({ status: true, message: "Login successfully", role: user.role });
+    return res.json({ status: true, message: "Login successfully", role: user.role, token });
 });
+
 
 
 router.post('/logout', (req, res) => {
