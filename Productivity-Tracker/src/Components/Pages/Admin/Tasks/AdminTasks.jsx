@@ -255,31 +255,31 @@ function AdminTasks() {
           <ul className={styles.menu}>
             <li>
               <a href="./AdminDashboard">
-                <CgMenuLeftAlt />
+                <CgMenuLeftAlt style={{ fontSize: "1.2rem" }} />
                 <span>Dashboard</span>
               </a>
             </li>
             <li>
               <a href="/AdminProfile">
-                <CgProfile />
+                <CgProfile style={{ fontSize: "1.2rem" }} />
                 <span>Profile</span>
               </a>
             </li>
             <li>
               <a href="/EmployeeDetails">
-                <FaUsers />
+                <FaUsers style={{ fontSize: "1.2rem" }} />
                 <span>Employee</span>
               </a>
             </li>
             <li className={styles.active}>
               <a href="/AdminTasks">
-                <MdAddTask />
+                <MdAddTask style={{ fontSize: "1.2rem" }} />
                 <span>Tasks</span>
               </a>
             </li>
             <li className={styles.logout}>
               <a href="#" onClick={handleLogout}>
-                <BiLogOut />
+                <BiLogOut style={{ fontSize: "1.3rem" }} />
                 <span>Logout</span>
               </a>
             </li>
@@ -308,14 +308,12 @@ function AdminTasks() {
                 )}
                 <span onClick={toggleDropdown}>{status}</span>
                 <div
-                  className={`${styles.statusIndicator} ${
-                    styles[status.toLowerCase()]
-                  }`}
+                  className={`${styles.statusIndicator} ${styles[status.toLowerCase()]
+                    }`}
                 ></div>
                 <div
-                  className={`${styles.dropdown} ${
-                    dropdownVisible ? styles.show : ""
-                  }`}
+                  className={`${styles.dropdown} ${dropdownVisible ? styles.show : ""
+                    }`}
                 >
                   <ul>
                     <li onClick={() => handleStatusChangeCode("Production")}>
@@ -366,15 +364,14 @@ function AdminTasks() {
                 >
                   <div className={styles.taskDetails}>
                     <p
-                      className={`${styles.status} ${
-                        task.status === "Active"
-                          ? styles.statusActive
-                          : task.status === "Pending"
+                      className={`${styles.status} ${task.status === "Active"
+                        ? styles.statusActive
+                        : task.status === "Pending"
                           ? styles.statusPending
                           : task.status === "Done"
-                          ? styles.statusDone
-                          : ""
-                      }`}
+                            ? styles.statusDone
+                            : ""
+                        }`}
                     >
                       {task.status}
                     </p>

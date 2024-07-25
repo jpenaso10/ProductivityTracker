@@ -22,7 +22,7 @@ body::before {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  filter: blur(2px);
+  filter: blur(0px);
   /* Adjust blur level here */
   z-index: -1;
   /* Ensure the pseudo-element is behind other content */
