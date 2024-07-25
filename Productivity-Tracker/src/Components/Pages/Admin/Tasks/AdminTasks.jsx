@@ -450,9 +450,16 @@ function AdminTasks() {
                   <div className={styles.taskActions}>
                     <button className={styles.actionButton}>Edit</button>
                     <button
-                      onClick={() => handleDelete(task._id)}
+                      onClick={() => handleEditButtonClick(task)}
                       className={styles.actionButton}
                     >
+                    
+            Edit
+          </button>
+          <button
+            onClick={() => handleDelete(task._id)}
+            className={styles.actionButton}
+          >
                       Delete
                     </button>
                   </div>
