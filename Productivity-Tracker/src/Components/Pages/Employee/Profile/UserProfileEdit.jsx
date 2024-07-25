@@ -23,6 +23,7 @@ function UserProfileEdit() {
   const [status, setStatus] = useState("Unavailable");
   const [profilePicture, setProfilePicture] = useState("");
   const [username, setUsername] = useState("");
+  const [contactNumber, setContactNumber] = useState("");
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -44,6 +45,8 @@ function UserProfileEdit() {
           contactNumber: response.data.contactNumber,
           profilePicture: response.data.profilePicture,
         });
+        setProfilePicture(response.data.profilePicture);
+        console.log('Fetched data: ', response.data);
       } catch (error) {
         console.error("Error fetching user data:", error);
         navigate("/"); // Redirect to login if an error occurs
@@ -68,7 +71,7 @@ function UserProfileEdit() {
     );
   };
 
-  useEffect(() => {
+  /*useEffect(() => {
     const verifyUser = async () => {
       const token = localStorage.getItem("token");
       if (!token) {
@@ -91,6 +94,9 @@ function UserProfileEdit() {
           if (response.data.username) {
             setUsername(response.data.username);
           }
+          if(response.data.contactNumber){
+            setContactNumber(response.data.contactNumber);
+          }
         } else {
           navigate("/"); // Redirect to login if verification fails
         }
@@ -101,7 +107,7 @@ function UserProfileEdit() {
     };
 
     verifyUser();
-  }, [navigate]);
+  }, [navigate]);*/
 
   const getInitials = (name) => {
     const nameParts = name.split(" ");
@@ -153,7 +159,7 @@ function UserProfileEdit() {
           <div className="col-xl-4">
             <div className="card mb-4 mb-xl-0">
               <div className="card-header">Profile Picture</div>
-              <div className="card-body text-center">
+              <div className='card-body text-center'>
                 {profilePicture ? (
                   <img
                     src={`http://localhost:5000/${profilePicture}`}

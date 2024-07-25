@@ -95,7 +95,7 @@ router.post('/login', async (req, res) => {
     const user = await User.findOne({ username });
 
     if (!user) {
-        return res.status(400).json({ status: false, message: "User is not registered" });
+        return res.status(400).json({ message: "User is not registered" });
     }
 
     const validPassword = await bcrypt.compare(password, user.password);
@@ -111,9 +111,8 @@ router.post('/login', async (req, res) => {
 
     res.cookie('token', token, { httpOnly: true, maxAge: 7 * 60 * 60 * 1000 }); // Set maxAge to match the token expiry
 
-    return res.json({ status: true, message: "Login successfully", role: user.role, token });
+    return res.json({ status: true, message: "Login successfully", role: user.role });
 });
-
 
 
 router.post('/logout', (req, res) => {
@@ -225,6 +224,14 @@ router.get('/verify', verifyUser, async (req, res) => {
             profilePicture: user.profilePicture,
             status: user.status,
             username: user.username,
+            password: user.password,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            gender: user.gender,
+            role: user.role,
+            contactNumber: user.contactNumber,
+            profilePicture: user.profilePicture,
+            email: user.email,
         });
     } catch (err) {
         console.error(err);
