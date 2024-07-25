@@ -257,7 +257,7 @@ function EmployeeTasks() {
         <div className={styles.maincontent}>
           <div className={styles.headerwrapper}>
             <div className={styles.headertitle}>
-              <span></span>
+              <span>Primary</span>
               <h2>Tasks</h2>
             </div>
             <div className={styles.userinfo}>
@@ -277,14 +277,12 @@ function EmployeeTasks() {
               )}
               <span onClick={toggleDropdown}>{status}</span>
               <div
-                className={`${styles.statusIndicator} ${
-                  styles[status.toLowerCase()]
-                }`}
+                className={`${styles.statusIndicator} ${styles[status.toLowerCase()]
+                  }`}
               ></div>
               <div
-                className={`${styles.dropdown} ${
-                  dropdownVisible ? styles.show : ""
-                }`}
+                className={`${styles.dropdown} ${dropdownVisible ? styles.show : ""
+                  }`}
               >
                 <ul>
                   <li onClick={() => handleStatusChangeCode("Production")}>
@@ -340,15 +338,14 @@ function EmployeeTasks() {
                 >
                   <div className={styles.taskDetails}>
                     <p
-                      className={`${styles.status} ${
-                        task.status === "Active"
+                      className={`${styles.status} ${task.status === "Active"
                           ? styles.statusActive
                           : task.status === "Pending"
-                          ? styles.statusPending
-                          : task.status === "Done"
-                          ? styles.statusDone
-                          : ""
-                      }`}
+                            ? styles.statusPending
+                            : task.status === "Done"
+                              ? styles.statusDone
+                              : ""
+                        }`}
                     >
                       {task.status}
                     </p>
