@@ -8,7 +8,6 @@ body {
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  /* Ensure no scrollbars appear */
 }
 
 body::before {
