@@ -194,7 +194,6 @@ function UserProfileEdit() {
                         value={userData.username}
                         onChange={handleChange}
                         placeholder="Enter username"
-                        readOnly
                       />
                     </div>
                     <div className="mb-3">
@@ -345,35 +344,107 @@ function UserProfileEdit() {
                   <div>
                     <div className="mb-3">
                       <label className="small mb-1">Username</label>
-                      <p>{userData.username}</p>
+                      <input
+                        className="form-control"
+                        id="inputUsername"
+                        type="text"
+                        name="username"
+                        value={userData.username}
+                        onChange={handleChange}
+                        placeholder="Enter username"
+                        readOnly
+                      />
                     </div>
                     <div className="mb-3">
                       <label className="small mb-1">Email address</label>
-                      <p>{userData.email}</p>
+                      <input
+                        className="form-control"
+                        id="inputEmail"
+                        type="email"
+                        name="email"
+                        value={userData.email}
+                        onChange={handleChange}
+                        placeholder="Enter email address"
+                        readOnly
+                      />
                     </div>
                     <div className="mb-3">
                       <label className="small mb-1">First name</label>
-                      <p>{userData.firstName}</p>
+                      <input
+                        className="form-control"
+                        id="inputFirstName"
+                        type="text"
+                        name="firstName"
+                        value={userData.firstName}
+                        onChange={handleChange}
+                        placeholder="Enter first name"
+                        readOnly
+                      />
                     </div>
                     <div className="mb-3">
                       <label className="small mb-1">Last name</label>
-                      <p>{userData.lastName}</p>
+                      <input
+                        className="form-control"
+                        id="inputLastName"
+                        type="text"
+                        name="lastName"
+                        value={userData.lastName}
+                        onChange={handleChange}
+                        placeholder="Enter last name"
+                        readOnly
+                      />
                     </div>
                     <div className="mb-3">
                       <label className="small mb-1">Gender</label>
-                      <p>{userData.gender}</p>
+                      <input
+                        className="form-control"
+                        id="inputGender"
+                        type="text"
+                        name="gender"
+                        value={userData.gender}
+                        onChange={handleChange}
+                        placeholder="Enter last name"
+                        readOnly
+                      />
                     </div>
                     <div className="mb-3">
                       <label className="small mb-1">Role</label>
-                      <p>{userData.role}</p>
+                      <input
+                        className="form-control"
+                        id="inputRole"
+                        type="text"
+                        name="role"
+                        value={userData.role}
+                        onChange={handleChange}
+                        placeholder="Role"
+                        readOnly
+                      />
                     </div>
                     <div className="mb-3">
                       <label className="small mb-1">Status</label>
-                      <p>{userData.status}</p>
+                      <input
+                        className="form-control"
+                        id="inputRole"
+                        type="text"
+                        name="role"
+                        value={userData.status}
+                        onChange={handleChange}
+                        placeholder="Status"
+                        readOnly
+                      />
                     </div>
                     <div className="mb-3">
                       <label className="small mb-1">Contact Number</label>
-                      <p>{userData.contactNumber}</p>
+                      <input
+                        className="form-control"
+                        id="inputContactNumber"
+                        type="tel"
+                        name="contactNumber"
+                        value={userData.contactNumber}
+                        onChange={handleChange}
+                        placeholder="Enter contact number"
+                        readOnly
+                      />
                     </div>
                     <button
                       className="btn btn-primary"
