@@ -152,3 +152,92 @@ body {
 .menu li a.active {
   color: #fff;
 }
+
+
+/* PROFILE PIC AND STATUS */
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  position: relative; /* Ensure the dropdown is positioned relative to the profile */
+}
+
+.profile img {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+
+.profileInfo {
+  display: flex;
+  align-items: center;
+}
+
+.initials {
+  width: 40px;
+  height: 40px;
+  background-color: #cccccc; /* Adjust background color as needed */
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 1.5em;
+  text-transform: uppercase;
+}
+
+
+.statusIndicator {
+  position: absolute;
+  bottom: -5px; /* Adjust this value to position the indicator as needed */
+  right: 10px; /* Adjust this value to position the indicator as needed */
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.statusprod {
+  background-color: #38e173; /* Green */
+}
+
+.statusmeeting,
+.statuslunch,
+.statusbreak,
+.statuscoaching {
+  background-color: #fdd835; /* Yellow */
+}
+
+.statusunavail {
+  background-color: #9e9e9e; /* Gray */
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: none;
+  z-index: 100;
+}
+
+.dropdown.show {
+  display: block;
+}
+
+.dropdown ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dropdown ul li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.dropdown ul li:hover {
+  background-color: #f0f0f0;
+}

@@ -91,21 +91,29 @@ router.post('/task', async (req, res) => {
 
 
 router.post('/login', async (req, res) => {
-    const { username, password } = req.body
-    const user = await User.findOne({ username })
+    const { username, password } = req.body;
+    const user = await User.findOne({ username });
+
     if (!user) {
-        return res.json({ message: "User is not registered" })
+        return res.status(400).json({ status: false, message: "User is not registered" });
     }
 
-    const validPassword = await bcrypt.compare(password, user.password)
+    const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
-        return res.json({ status: false, message: "Password is incorrect" });
+        return res.status(400).json({ status: false, message: "Password is incorrect" });
     }
 
-    const token = jwt.sign({ username: user.username }, process.env.KEY, { expiresIn: '7h' })
-    res.cookie('token', token, { httpOnly: true, maxAge: 360000 })
-    return res.json({ status: true, message: "login successfully", role: user.role })
-})
+    const token = jwt.sign(
+        { id: user._id, username: user.username }, // Include user ID in the token payload
+        process.env.KEY,
+        { expiresIn: '7h' }
+    );
+
+    res.cookie('token', token, { httpOnly: true, maxAge: 7 * 60 * 60 * 1000 }); // Set maxAge to match the token expiry
+
+    return res.json({ status: true, message: "Login successfully", role: user.role, token });
+});
+
 
 
 router.post('/logout', (req, res) => {
@@ -180,30 +188,57 @@ router.post('/reset-password/:token', async (req, res) => {
 
 const verifyUser = async (req, res, next) => {
     try {
-        const token = req.cookies.token
+        const token = req.cookies.token;
         if (!token) {
-            return res.json({ status: false, message: "no token" })
+            console.log("No token provided");
+            return res.status(401).json({ status: false, message: "No token provided" });
         }
-        const decoded = jwt.verify(token, process.env.KEY)
-        next()
+
+        console.log("Token:", token);
+
+        const decoded = jwt.verify(token, process.env.KEY);
+
+        console.log("Decoded token:", decoded);
+
+        if (!decoded.id) {
+            console.log("Token does not contain user ID");
+            return res.status(400).json({ status: false, message: "Invalid token: no user ID" });
+        }
+
+        req.user = decoded; // Attach decoded user info to the request
+        next();
     } catch (err) {
-        return res.json(err)
+        console.error("Token verification error:", err);
+        return res.status(401).json({ status: false, message: "Unauthorized", error: err.message });
     }
+};
 
-}
+router.get('/verify', verifyUser, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id);
+        if (!user) {
+            return res.status(404).json({ status: false, message: "User not found" });
+        }
+        return res.json({
+            status: true,
+            message: "authorized",
+            profilePicture: user.profilePicture,
+            status: user.status,
+            username: user.username,
+        });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ status: false, message: "Internal server error" });
+    }
+});
 
-router.get('/verify', verifyUser, (req, res) => {
-    return res.json({ status: true, message: "authorized" })
-})
 
-
-/* Employee status */
-
+//    ADMIN INTERFACE: Employee Status added in Employe Details
 
 router.put('/status', async (req, res) => {
     const { userId, status } = req.body;
 
-    if (!['active', 'break', 'lunch', 'not working'].includes(status)) {
+    if (!['Production', 'Meeting', 'Coaching', 'Lunch', 'Break', 'Unavailable'].includes(status)) {
         return res.status(400).json({ message: 'Invalid status' });
     }
 
@@ -217,6 +252,58 @@ router.put('/status', async (req, res) => {
         res.status(500).json({ message: 'Server error', error });
     }
 });
+
+
+// EMPLOYEE: Status update
+
+router.put('/update-status', verifyUser, async (req, res) => {
+    const allowedStatuses = ['Production', 'Meeting', 'Coaching', 'Lunch', 'Break', 'Unavailable'];
+    try {
+        const { status } = req.body;
+        const userId = req.user.id;
+
+        console.log('User ID from token:', userId);
+
+        if (!allowedStatuses.includes(status)) {
+            return res.status(400).json({ success: false, message: 'Invalid status' });
+        }
+
+        console.log('Updating status for user:', userId, 'New status:', status);
+
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { status: status },
+            { new: true }
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+
+        res.json({ success: true, message: "Status updated successfully", user: updatedUser });
+    } catch (error) {
+        console.error("Error updating status:", error);
+        res.status(500).json({ success: false, message: "Internal server error", error: error.message });
+    }
+});
+
+router.get('/get-status', verifyUser, async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const user = await User.findById(userId, 'status');
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+        res.json({ success: true, status: user.status });
+    } catch (error) {
+        console.error("Error fetching user status:", error);
+        res.status(500).json({ success: false, message: "Internal server error", error: error.message });
+    }
+});
+
+
+
+  // ------------------------------------------------------
 
 
 /* GET THE INFORMATION TO PUT IN EMPLOYEE DETAILS */

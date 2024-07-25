@@ -10,6 +10,8 @@ import { MdAddTask } from "react-icons/md";
 import axios from "axios";
 import DigitalClock from "./DigitalClock";
 
+axios.defaults.withCredentials = true;
+
 function Dashboard() {
   const navigate = useNavigate();
 
@@ -18,8 +20,9 @@ function Dashboard() {
   const [isTaskActive, setIsTaskActive] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [status, setStatus] = useState("Unavailable");
-
   const dropdownRef = useRef(null);
+  const [profilePicture, setProfilePicture] = useState("");
+  const [username, setUsername] = useState("");
 
   useEffect(() => {
     let timer;
@@ -33,15 +36,39 @@ function Dashboard() {
     return () => clearInterval(timer);
   }, [isTimerRunning]);
 
-  axios.defaults.withCredentials = true;
-
   useEffect(() => {
-    axios.get("http://localhost:5000/auth/verify").then((res) => {
-      if (res.data.status) {
-      } else {
-        navigate("/");
+    const verifyUser = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        navigate("/"); // Redirect to login page if no token
+        return;
       }
-    });
+
+      try {
+        const response = await axios.get("http://localhost:5000/auth/verify", {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include token in the request header
+          },
+        });
+
+        if (response.data.status) {
+          setStatus(response.data.status);
+          if (response.data.profilePicture) {
+            setProfilePicture(response.data.profilePicture);
+          }
+          if (response.data.username) {
+            setUsername(response.data.username);
+          }
+        } else {
+          navigate("/"); // Redirect to login if verification fails
+        }
+      } catch (error) {
+        console.error("Error verifying user:", error);
+        navigate("/"); // Redirect to login if an error occurs
+      }
+    };
+
+    verifyUser();
   }, [navigate]);
 
   useEffect(() => {
@@ -55,6 +82,47 @@ function Dashboard() {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
+  }, []);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/auth/verify");
+        if (response.data.status) {
+          setStatus(response.data.status);
+          if (response.data.profilePicture) {
+            setProfilePicture(response.data.profilePicture);
+          }
+          if (response.data.username) {
+            setUsername(response.data.username);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  const fetchCurrentStatus = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/auth/get-status",
+        { withCredentials: true }
+      );
+      if (response.data.success) {
+        setStatus(response.data.status);
+      } else {
+        console.error("Failed to fetch status:", response.data.message);
+      }
+    } catch (error) {
+      console.error("Error fetching current status:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCurrentStatus();
   }, []);
 
   const handleLogout = async () => {
@@ -89,9 +157,32 @@ function Dashboard() {
     setDropdownVisible((prevVisible) => !prevVisible);
   };
 
-  const handleStatusChange = (newStatus) => {
-    setStatus(newStatus);
-    setDropdownVisible(false); // Close dropdown after selecting a status
+  // STATUS CHANGE
+
+  const handleStatusChange = async (newStatus) => {
+    try {
+      const response = await axios.put(
+        "http://localhost:5000/auth/update-status",
+        { status: newStatus },
+        { withCredentials: true } // Ensure cookies are sent with the request
+      );
+      if (!response.data.success) {
+        console.error("Failed to update status:", response.data);
+      } else {
+        console.log("Status updated successfully:", response.data);
+        setStatus(newStatus);
+      }
+    } catch (error) {
+      console.error("Failed to update status:", error);
+    }
+  };
+
+  const getInitials = (name) => {
+    const nameParts = name.split(" ");
+    if (nameParts.length > 1) {
+      return `${nameParts[0][0]}${nameParts[1][0]}`.toUpperCase();
+    }
+    return name.substring(0, 2).toUpperCase();
   };
 
   return (
@@ -118,12 +209,6 @@ function Dashboard() {
                 <span>Tasks</span>
               </a>
             </li>
-            <li>
-              <a href="./Settings">
-                <VscSettingsGear style={{ fontSize: "1.1rem" }} />
-                <span>Settings</span>
-              </a>
-            </li>
             <li className={styles.logout}>
               <a href="#" onClick={handleLogout}>
                 <BiLogOut style={{ fontSize: "1.3rem" }} />
@@ -138,7 +223,7 @@ function Dashboard() {
               <span>Dashboard</span>
               <h2>Productivity Tracker</h2>
             </div>
-            <DigitalClock/>
+            <DigitalClock />
             <div className={styles.timerButtonWrapper}>
               <button
                 className={`${styles.timerButton} ${
@@ -152,7 +237,14 @@ function Dashboard() {
             </div>
             <div className={styles.userinfo}>
               <div className={styles.profile} ref={dropdownRef}>
-                <img src="https://via.placeholder.com/40" alt="Profile" />
+                {profilePicture ? (
+                  <img
+                    src={`http://localhost:5000/${profilePicture}`}
+                    alt="Profile"
+                  />
+                ) : (
+                  <div className={styles.initials}>{getInitials(username)}</div>
+                )}
                 <span onClick={toggleDropdown}>{status}</span>
                 <div
                   className={`${styles.statusIndicator} ${
