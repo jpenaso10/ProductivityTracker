@@ -312,6 +312,7 @@ function AdminTasks() {
               </a>
             </li>
             <li>
+              
             <a href="/AdminProfile">
                 <CgProfile style={{ fontSize: "1.2rem" }} />
                 <span>Profile</span>
@@ -418,56 +419,49 @@ function AdminTasks() {
 
           <div className={styles.tasks}>
           {tasks.length > 0 ? (
-  tasks.map((task) => {
-    if (!task) return null; // Ensure task is defined
-    return (
-      <div
-        className={`${styles.taskCard} ${getPriorityClass(task.priority)}`}
-        key={task._id}
-      >
-        <div className={styles.taskDetails}>
-          <p
-            className={`${styles.status} ${
-              task.status === "Active"
-                ? styles.statusActive
-                : task.status === "Pending"
-                ? styles.statusPending
-                : task.status === "Done"
-                ? styles.statusDone
-                : ""
-            }`}
-          >
-            {task.status}
-          </p>
-          <h3 className={styles.taskName}>{task.name}</h3>
-          <p className={styles.taskDescription}>{task.description}</p>
-          <p className={styles.taskDate}>
-            Due: {new Date(task.date).toLocaleDateString()}
-          </p>
-          <p className={styles.taskPriority}>
-            Priority: {task.priority}
-          </p>
-        </div>
-        <div className={styles.taskActions}>
-          <button
-            onClick={() => handleEditButtonClick(task)}
-            className={styles.actionButton}
-          >
-            Edit
-          </button>
-          <button
-            onClick={() => handleDelete(task._id)}
-            className={styles.actionButton}
-          >
-            Delete
-          </button>
-        </div>
-      </div>
-    );
-  })
-) : (
-  <p>No tasks found.</p>
-)}
+              tasks.map((task) => (
+                <div
+                  className={`${styles.taskCard} ${getPriorityClass(
+                    task.priority
+                  )}`}
+                  key={task._id}
+                >
+                  <div className={styles.taskDetails}>
+                    <p
+                      className={`${styles.status} ${task.status === "Active"
+                        ? styles.statusActive
+                        : task.status === "Pending"
+                          ? styles.statusPending
+                          : task.status === "Done"
+                            ? styles.statusDone
+                            : ""
+                        }`}
+                    >
+                      {task.status}
+                    </p>
+                    <h3 className={styles.taskName}>{task.name}</h3>
+                    <p className={styles.taskDescription}>{task.description}</p>
+                    <p className={styles.taskDate}>
+                      Due: {new Date(task.date).toLocaleDateString()}
+                    </p>
+                    <p className={styles.taskPriority}>
+                      Priority: {task.priority}
+                    </p>
+                  </div>
+                  <div className={styles.taskActions}>
+                    <button className={styles.actionButton}>Edit</button>
+                    <button
+                      onClick={() => handleDelete(task._id)}
+                      className={styles.actionButton}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p>No tasks found.</p>
+            )}
 
           </div>
         </div>
