@@ -47,7 +47,7 @@ function Login() {
         } else {
           alert(
             response.data.message ||
-              "Incorrect Username or Password. Please try again."
+            "Incorrect Username or Password. Please try again."
           );
         }
       })
@@ -73,9 +73,6 @@ function Login() {
             <div className="logo-text">Productivity Tracker</div>
             <img src="/all-covered-svgrepo-com.png" alt="Productivity Tracker Logo" className="logo" />
             <img
-              src="/all-covered-svgrepo-com.png"
-              alt="Productivity Tracker Logo"
-              className="logo"
             />
           </div>
           <div className="form-group">
