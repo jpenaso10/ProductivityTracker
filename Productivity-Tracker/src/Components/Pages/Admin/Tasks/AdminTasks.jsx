@@ -312,21 +312,21 @@ function AdminTasks() {
               </a>
             </li>
             <li>
+            <a href="/AdminProfile">
+                <CgProfile style={{ fontSize: "1.2rem" }} />
+                <span>Profile</span>
+              </a>
+            </li>
+            <li>
+              <a href="/EmployeeDetails">
+                <FaUsers style={{ fontSize: "1.2rem" }} />
+                <span>Employee</span>
+              </a>
+            </li>
+            <li className={styles.active}>
               <a href="/AdminTasks">
-                <MdAddTask />
+                <MdAddTask style={{ fontSize: "1.2rem" }} />
                 <span>Tasks</span>
-              </a>
-            </li>
-            <li>
-              <a href="/AdminUsers">
-                <FaUsers />
-                <span>Users</span>
-              </a>
-            </li>
-            <li>
-              <a href="./Settings">
-                <VscSettingsGear />
-                <span>Settings</span>
               </a>
             </li>
             <li className={styles.logout}>
