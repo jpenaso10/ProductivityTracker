@@ -91,18 +91,7 @@ body {
 
 /** DASHBOARD CONTENT */
 
-.maincontent {
-  flex: 1;
-  padding: 1rem;
-  background: #ebe9e9;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  top: 0;
-  transition: margin-left 0.2s;
-  height: 100vh;
-}
+
 
 .headerwrapper {
   display: flex;
@@ -154,32 +143,32 @@ body {
 
 
 .maincontent {
-    flex: 1;
-    padding: 1rem;
-    background: #ebe9e9;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    top: 0;
-    transition: margin-left 0.2s;
-    height: 100vh;
-  }
-  
-  .headerwrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #fff;
-    border-radius: 10px;
-    padding: 10px 2rem;
-    margin-bottom: 1rem;
-  }
-  
-  .headertitle {
-    color: rgba(0, 101, 255, 0.7);
-  }
-  
+  flex: 1;
+  padding: 1rem;
+  background: #ebe9e9;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  top: 0;
+  transition: margin-left 0.2s;
+  height: 100vh;
+  background-image: url("sansadas.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 
+.headerwrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  border-radius: 10px;
+  padding: 10px 2rem;
+  margin-bottom: 1rem;
+}
 
-
+.headertitle {
+  color: rgba(0, 101, 255, 0.7);
+}

@@ -102,6 +102,10 @@ body {
   top: 0;
   transition: margin-left 0.2s;
   height: 100vh;
+  background-image: url("sansadas.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .headerwrapper {

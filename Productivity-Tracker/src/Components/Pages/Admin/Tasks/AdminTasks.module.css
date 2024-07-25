@@ -91,19 +91,6 @@ body {
 
 /** DASHBOARD CONTENT */
 
-.maincontent {
-  flex: 1;
-  padding: 1rem;
-  background: #ebe9e9;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  top: 0;
-  transition: margin-left 0.2s;
-  height: 100vh;
-}
-
 .headerwrapper {
   display: flex;
   justify-content: space-between;
@@ -154,135 +141,140 @@ body {
 
 
 .maincontent {
-    flex: 1;
-    padding: 1rem;
-    background: #ebe9e9;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    top: 0;
-    transition: margin-left 0.2s;
-    height: 100vh;
-  }
-  
-  .headerwrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #fff;
-    border-radius: 10px;
-    padding: 10px 2rem;
-    margin-bottom: 1rem;
-  }
-  
-  .headertitle {
-    color: #212121;
-    font-weight: bold;
-  }
-  
+  flex: 1;
+  padding: 1rem;
+  background: #ebe9e9;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  top: 0;
+  transition: margin-left 0.2s;
+  height: 100vh;
+  background-image: url("sansadas.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 
-  .adminnav {
-    display: flex;
-    padding: 0px;
-    padding: 5px 1rem;
-    background: #fff;
-    border-radius: 10px;
-    
-  }
+.headerwrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  border-radius: 10px;
+  padding: 10px 2rem;
+  margin-bottom: 1rem;
+}
 
-  .addemployee {
-    color: rgba(0, 101, 255, 0.7);
-    margin: 5px;
-    padding: 8px;
-    border-radius: 10px;
-    background-color: #fff;
-    font-size: 15px;
-  }
-
-  .addemployee:hover {
-    color: rgba(0, 101, 255, 0.7);
-    background-color: aqua;
-    border-radius: 10px;
-    font-weight: bold;
-  }
+.headertitle {
+  color: #212121;
+  font-weight: bold;
+}
 
 
-  .mainnav {
-    background-color: #fff;
-    padding: 5px;
-    border-radius: 10px;
-    
-  }
+.adminnav {
+  display: flex;
+  padding: 0px;
+  padding: 5px 1rem;
+  background: #fff;
+  border-radius: 10px;
 
-  .mainnav button {
-    font-weight: normal; /* Normal weight initially */
-    transition: font-weight 0.3s ease;
-  }
+}
 
-  .mainnav button:hover {
-    font-weight: bold;
-  }
-  
-  .navbutton {
-    background-color: #fff;
-    margin: 10px 40px 10px 10px;
-    color: #212121;
-  }
+.addemployee {
+  color: rgba(0, 101, 255, 0.7);
+  margin: 5px;
+  padding: 8px;
+  border-radius: 10px;
+  background-color: #fff;
+  font-size: 15px;
+}
+
+.addemployee:hover {
+  color: rgba(0, 101, 255, 0.7);
+  background-color: aqua;
+  border-radius: 10px;
+  font-weight: bold;
+}
 
 
-  .modal {
-    position: absolute;
-    top: 10%;
-    left: 40%;
-    right: auto;
-    bottom: auto;
-    marginRight: '-50%';
-    transform: translate('-50%', '-50%');
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
+.mainnav {
+  background-color: #fff;
+  padding: 5px;
+  border-radius: 10px;
 
-  .modal h2{
-    text-align: center;
-  }
-  
-  .modal label {
-    margin: 5px;
-  }
+}
 
-  .modal option{
-    text-align: center;
-    margin-right: 10px;
-  }
+.mainnav button {
+  font-weight: normal;
+  /* Normal weight initially */
+  transition: font-weight 0.3s ease;
+}
 
-  .modal input {
-    box-sizing: border-box;
+.mainnav button:hover {
+  font-weight: bold;
+}
+
+.navbutton {
+  background-color: #fff;
+  margin: 10px 40px 10px 10px;
+  color: #212121;
+}
+
+
+.modal {
+  position: absolute;
+  top: 10%;
+  left: 40%;
+  right: auto;
+  bottom: auto;
+  marginRight: '-50%';
+  transform: translate('-50%', '-50%');
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal h2 {
+  text-align: center;
+}
+
+.modal label {
+  margin: 5px;
+}
+
+.modal option {
+  text-align: center;
+  margin-right: 10px;
+}
+
+.modal input {
+  box-sizing: border-box;
   border: 2px solid #ccc;
   border-radius: 4px;
   background-color: #f8f8f8;
-    margin: 10px;
-    border: 1px solid #ccc;
-    text-align: center;
-    
-  }
+  margin: 10px;
+  border: 1px solid #ccc;
+  text-align: center;
 
-  .modal button {
-    margin: 5px;
-  }
-  
-  .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    backgroundColor: 'rgba(0, 0, 0, 0.75)';
-  }
+}
 
- .fixedTextarea {
+.modal button {
+  margin: 5px;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  backgroundColor: 'rgba(0, 0, 0, 0.75)';
+}
+
+.fixedTextarea {
   width: 100%;
   height: 150px;
   padding: 12px 20px;
@@ -293,15 +285,15 @@ body {
   font-size: 16px;
   resize: none;
 
- }
-  
+}
 
 
 
- /*  TASKS CARD CSS */
+
+/*  TASKS CARD CSS */
 
 
- .tasks {
+.tasks {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
@@ -312,8 +304,10 @@ body {
   border: 1px solid #ddd;
   border-radius: 20px;
   padding: 1rem;
-  width: 300px; /* Fixed width */
-  height: 400px; /* Fixed height */
+  width: 300px;
+  /* Fixed width */
+  height: 400px;
+  /* Fixed height */
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
@@ -339,7 +333,7 @@ body {
 }
 
 .statusActive {
-  background-color: red;
+  background-color: rgb(24, 193, 119);
   color: white;
 }
 
@@ -349,22 +343,25 @@ body {
 }
 
 .statusDone {
-  background-color: green;
+  background-color: rgb(68, 102, 242);
   color: white;
 }
 
 
 
 .highPriority {
-  background-color: #ffcccc; /* Light red for high priority */
+  background-color: #ffcccc;
+  /* Light red for high priority */
 }
 
 .mediumPriority {
-  background-color: #fff4cc; /* Light yellow for medium priority */
+  background-color: #fff4cc;
+  /* Light yellow for medium priority */
 }
 
 .lowPriority {
-  background-color: #ccffcc; /* Light green for low priority */
+  background-color: #ccffcc;
+  /* Light green for low priority */
 }
 
 .taskDetails {
@@ -386,21 +383,28 @@ body {
   margin-bottom: 0.5rem;
   border: 1px solid #0000001f;
   padding: 0.5rem;
-  max-height: 180px; /* Adjust max-height as needed */
-  width: 100%; /* Ensure full width */
-  display: block; /* Ensure it behaves as a block element */
-  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  max-height: 180px;
+  /* Adjust max-height as needed */
+  width: 100%;
+  /* Ensure full width */
+  display: block;
+  /* Ensure it behaves as a block element */
+  box-sizing: border-box;
+  /* Include padding and border in the element's total width and height */
 
 }
 
 .taskDescription::-webkit-scrollbar {
-  width: 8px; /* Width of the scrollbar */
+  width: 8px;
+  /* Width of the scrollbar */
 }
 
 
 .taskDescription::-webkit-scrollbar-thumb {
-  background: #88888890; /* Color of the scrollbar thumb */
-  border-radius: 10px; /* Rounded corners */
+  background: #88888890;
+  /* Color of the scrollbar thumb */
+  border-radius: 10px;
+  /* Rounded corners */
 }
 
 
@@ -417,13 +421,26 @@ body {
 }
 
 .actionButton {
-  background-color: #007bff;
+  background-color: #1b80f5;
   border: none;
   color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 15px;
+  padding: 0.5rem 2rem;
+  /* Adjust the padding to increase width */
+  border-radius: 50px;
   cursor: pointer;
   transition: background-color 0.3s;
+  width: auto;
+  /* Ensures the button width adjusts based on content */
+  text-align: center;
+  /* Aligns text and inline elements inside button to the center */
+  display: inline-block;
+  margin: 0 auto;
+}
+
+/* Example for a wider button */
+.actionButtonWide {
+  padding: 0.5rem 31rem;
+  /* Increase padding to make the button wider */
 }
 
 .actionButton:hover {

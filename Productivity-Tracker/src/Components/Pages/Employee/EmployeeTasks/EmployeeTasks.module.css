@@ -102,25 +102,10 @@ body {
   top: 0;
   transition: margin-left 0.2s;
   height: 100vh;
-}
-
-.TaskBox1 {
-  margin: 12px 0;
-  padding: 20px;
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  width: calc(100% - 40px);
-  /* Adjust width for responsiveness */
-  max-width: 454px;
-  height: 250px;
-  position: absolute;
-  left: 20px;
-  top: 30%;
-  transform: translateY(-50%);
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: transparent transparent;
+  background-image: url("sansadas.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .headerwrapper {
@@ -174,7 +159,6 @@ body {
   background-color: #fff;
   padding: 5px;
   border-radius: 10px;
-
 }
 
 .mainnav button {
@@ -193,10 +177,7 @@ body {
   color: #212121;
 }
 
-
-
 /*  TASKS CARD CSS */
-
 
 .tasks {
   display: flex;
@@ -238,7 +219,7 @@ body {
 }
 
 .statusActive {
-  background-color: red;
+  background-color: rgb(24, 193, 119);
   color: white;
 }
 
@@ -248,11 +229,9 @@ body {
 }
 
 .statusDone {
-  background-color: green;
+  background-color: rgb(68, 102, 242);
   color: white;
 }
-
-
 
 .highPriority {
   background-color: #ffcccc;
@@ -296,14 +275,12 @@ body {
   /* Ensure it behaves as a block element */
   box-sizing: border-box;
   /* Include padding and border in the element's total width and height */
-
 }
 
 .taskDescription::-webkit-scrollbar {
-  width: 8px;
+  width: 0px;
   /* Width of the scrollbar */
 }
-
 
 .taskDescription::-webkit-scrollbar-thumb {
   background: #88888890;
@@ -311,7 +288,6 @@ body {
   border-radius: 10px;
   /* Rounded corners */
 }
-
 
 .taskDate,
 .taskPriority {
@@ -321,23 +297,13 @@ body {
 
 .taskActions {
   display: flex;
-  justify-content: space-between;
-  padding-left: 60%;
+  justify-content: flex-start;
+  /* Align children to the start (left) */
+  gap: 1rem;
 }
-
 
 .actionButtoncomplete {
-  background-color: #007bff;
-  border: none;
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.actionButton {
-  background-color: #007bff;
+  background-color: #1b80f5;
   border: none;
   color: white;
   padding: 0.5rem 2rem;
@@ -347,8 +313,33 @@ body {
   transition: background-color 0.3s;
   width: auto;
   /* Ensures the button width adjusts based on content */
-  text-align: left;
-  /* Aligns text and inline elements inside button to the left */
+  text-align: center;
+  /* Aligns text and inline elements inside button to the center */
+  display: inline-block;
+  margin: 0 auto;
+}
+
+.actionButton {
+  background-color: #1b80f5;
+  border: none;
+  color: white;
+  padding: 0.5rem 4rem;
+  /* Adjust the padding to increase width */
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: auto;
+  /* Ensures the button width adjusts based on content */
+  text-align: center;
+  /* Aligns text and inline elements inside button to the center */
+  display: inline-block;
+  margin: 0 auto;
+}
+
+/* Example for a wider button */
+.actionButtonWide {
+  padding: 0.5rem 3rem;
+  /* Increase padding to make the button wider */
 }
 
 .actionButton:hover {

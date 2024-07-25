@@ -56,6 +56,7 @@ function Login() {
       <div className="form-box login">
         <form onSubmit={handleSubmit}>
           <div className="logo-container">
+            <div className="logo-text">Productivity Tracker</div>
             <img src="/all-covered-svgrepo-com.png" alt="Productivity Tracker Logo" className="logo" />
           </div>
           <div className="form-group">
