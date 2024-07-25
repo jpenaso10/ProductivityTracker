@@ -341,22 +341,24 @@ router.get('/tasks', async (req, res) => {
     }
 });
 
-router.put('/tasks/:taskId', async (req, res) => {
-    const { taskId } = req.params;
-    const { status } = req.body;
-
+router.put('/tasks/:id', async (req, res) => {
+    const taskId = req.params.id;
+    const taskData = req.body;
+  
     try {
-        const updatedTask = await Task.findByIdAndUpdate(
-            taskId,
-            { status },
-            { new: true }
-        );
-        res.status(200).json(updatedTask);
+      const updatedTask = await Task.findByIdAndUpdate(taskId, taskData, {
+        new: true,
+      });
+      if (!updatedTask) {
+        return res.status(404).json({ status: false, message: 'Task not found' });
+      }
+      res.json({ status: true, updatedTask });
     } catch (error) {
-        console.error("Error updating task status:", error);
-        res.status(500).json({ message: "Internal Server Error" });
+      console.error('Error updating task:', error);
+      res.status(500).json({ status: false, message: 'Internal Server Error' });
     }
-});
+  });
+
 
 
 

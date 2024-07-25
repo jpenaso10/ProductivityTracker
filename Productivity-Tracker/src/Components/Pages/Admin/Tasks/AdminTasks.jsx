@@ -22,6 +22,14 @@ function AdminTasks() {
   const dropdownRef = useRef(null);
   const [profilePicture, setProfilePicture] = useState("");
   const [username, setUsername] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
+  const [currentTaskId, setCurrentTaskId] = useState(null);
+  const [taskData, setTaskData] = useState({
+    name: "",
+    description: "",
+    date: new Date(),
+    priority: "",
+  });
 
   axios.defaults.withCredentials = true;
 
@@ -29,27 +37,29 @@ function AdminTasks() {
     axios
       .get("http://localhost:5000/auth/tasks")
       .then((response) => {
-        setTasks(response.data);
+        if (Array.isArray(response.data)) {
+          setTasks(response.data);
+        } else {
+          console.error("Unexpected response format:", response.data);
+        }
       })
       .catch((error) => {
         console.error("There was an error fetching the tasks data!", error);
       });
   }, []);
 
-  //  VERIFY USER AND UPDATE REALTIME STATUS
-
   useEffect(() => {
     const verifyUser = async () => {
       const token = localStorage.getItem("token");
       if (!token) {
-        navigate("/"); // Redirect to login page if no token
+        navigate("/");
         return;
       }
 
       try {
         const response = await axios.get("http://localhost:5000/auth/verify", {
           headers: {
-            Authorization: `Bearer ${token}`, // Include token in the request header
+            Authorization: `Bearer ${token}`,
           },
         });
 
@@ -62,11 +72,11 @@ function AdminTasks() {
             setUsername(response.data.username);
           }
         } else {
-          navigate("/"); // Redirect to login if verification fails
+          navigate("/");
         }
       } catch (error) {
         console.error("Error verifying user:", error);
-        navigate("/"); // Redirect to login if an error occurs
+        navigate("/");
       }
     };
 
@@ -93,9 +103,6 @@ function AdminTasks() {
     fetchCurrentStatus();
   }, []);
 
-  // ---------------------------------------------------------
-
-  // FETCH PROFILE PIC
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -124,10 +131,6 @@ function AdminTasks() {
     }
     return name.substring(0, 2).toUpperCase();
   };
-
-  // ----------------------------------------------------------
-
-  // FOR STATUS CODE CHANGE
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -167,8 +170,6 @@ function AdminTasks() {
     }
   };
 
-  // -------------------------------
-
   const handleLogout = async () => {
     try {
       await axios.post("http://localhost:5000/auth/logout");
@@ -194,12 +195,41 @@ function AdminTasks() {
       });
   };
 
-  const [taskData, setTaskData] = useState({
-    name: "",
-    description: "",
-    date: new Date(),
-    priority: "",
-  });
+  const handleTaskEdit = (taskData) => {
+    if (!currentTaskId) {
+      console.error("No task ID available for editing");
+      return;
+    }
+  
+    console.log("Editing task with ID:", currentTaskId);
+    console.log("Task data to update:", taskData);
+  
+    axios
+      .put(`http://localhost:5000/auth/tasks/${currentTaskId}`, taskData)
+      .then((response) => {
+        console.log("Response from task edit:", response.data);
+        if (response.data.status && response.data.updatedTask) {
+          setTasks(
+            tasks.map((task) =>
+              task._id === currentTaskId ? response.data.updatedTask : task
+            )
+          );
+          setModalIsOpen(false);
+          setIsEditing(false);
+          setCurrentTaskId(null);
+        } else {
+          console.error("Error updating task:", response.data.message || "Unknown error");
+          alert(response.data.message || "Error updating task");
+        }
+      })
+      .catch((error) => {
+        console.error("There was an error editing the task!", error);
+      });
+  };
+  
+  
+  
+  
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -234,10 +264,32 @@ function AdminTasks() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleTaskSubmit(taskData);
+    if (isEditing) {
+      handleTaskEdit(taskData);
+    } else {
+      handleTaskSubmit(taskData);
+    }
+  };
+
+  const handleEditButtonClick = (task) => {
+    if (!task || !task._id) {
+      console.error("Task or Task ID is undefined");
+      return;
+    }
+  
+    setTaskData({
+      name: task.name || "",
+      description: task.description || "",
+      date: new Date(task.date) || new Date(),
+      priority: task.priority || "",
+    });
+    setCurrentTaskId(task._id);
+    setIsEditing(true);
+    setModalIsOpen(true);
   };
 
   const getPriorityClass = (priority) => {
+    if (!priority) return ""; // Default to no class if priority is undefined
     switch (priority) {
       case "High":
         return styles.highPriority;
@@ -347,7 +399,16 @@ function AdminTasks() {
             <nav>
               <button
                 className={styles.navbutton}
-                onClick={() => setModalIsOpen(true)}
+                onClick={() => {
+                  setIsEditing(false);
+                  setTaskData({
+                    name: "",
+                    description: "",
+                    date: new Date(),
+                    priority: "",
+                  });
+                  setModalIsOpen(true);
+                }}
               >
                 Create Task
               </button>
@@ -357,7 +418,7 @@ function AdminTasks() {
           </div>
 
           <div className={styles.tasks}>
-            {tasks.length > 0 ? (
+          {tasks.length > 0 ? (
               tasks.map((task) => (
                 <div
                   className={`${styles.taskCard} ${getPriorityClass(
@@ -388,11 +449,18 @@ function AdminTasks() {
                     </p>
                   </div>
                   <div className={styles.taskActions}>
-                    <button className={styles.actionButton}>Edit</button>
+                    
                     <button
-                      onClick={() => handleDelete(task._id)}
+                      onClick={() => handleEditButtonClick(task)}
                       className={styles.actionButton}
                     >
+                    
+            Edit
+          </button>
+          <button
+            onClick={() => handleDelete(task._id)}
+            className={styles.actionButton}
+          >
                       Delete
                     </button>
                   </div>
@@ -401,6 +469,7 @@ function AdminTasks() {
             ) : (
               <p>No tasks found.</p>
             )}
+
           </div>
         </div>
       </body>
@@ -411,7 +480,7 @@ function AdminTasks() {
         className={styles.modal}
         overlayClassName={styles.overlay}
       >
-        <h2>Create Task</h2>
+        <h2>{isEditing ? "Edit Task" : "Create Task"}</h2>
         <form onSubmit={handleSubmit}>
           <div>
             <label>Name:</label>
@@ -458,7 +527,9 @@ function AdminTasks() {
               <option value="Low">Low</option>
             </select>
           </div>
-          <button type="submit">Create Task</button>
+          <button type="submit">
+            {isEditing ? "Update Task" : "Create Task"}
+          </button>
           <button type="button" onClick={() => setModalIsOpen(false)}>
             Cancel
           </button>
