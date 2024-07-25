@@ -418,26 +418,25 @@ function AdminTasks() {
 
           <div className={styles.tasks}>
           {tasks.length > 0 ? (
-  tasks.map((task) => {
-    if (!task) return null; // Ensure task is defined
-    return (
-      <div
-        className={`${styles.taskCard} ${getPriorityClass(task.priority)}`}
-        key={task._id}
-      >
-        <div className={styles.taskDetails}>
-          <p
-            className={`${styles.status} ${
-              task.status === "Active"
-                ? styles.statusActive
-                : task.status === "Pending"
-                ? styles.statusPending
-                : task.status === "Done"
-                ? styles.statusDone
-                : ""
-            }`}
-          >
-            {task.status}
+              tasks.map((task) => (
+                <div
+                  className={`${styles.taskCard} ${getPriorityClass(
+                    task.priority
+                  )}`}
+                  key={task._id}
+                >
+                  <div className={styles.taskDetails}>
+                    <p
+                      className={`${styles.status} ${task.status === "Active"
+                        ? styles.statusActive
+                        : task.status === "Pending"
+                          ? styles.statusPending
+                          : task.status === "Done"
+                            ? styles.statusDone
+                            : ""
+                        }`}
+                    >
+                      {task.status}
                     </p>
                     <h3 className={styles.taskName}>{task.name}</h3>
                     <p className={styles.taskDescription}>{task.description}</p>
@@ -449,26 +448,19 @@ function AdminTasks() {
                     </p>
                   </div>
                   <div className={styles.taskActions}>
-                    
+                    <button className={styles.actionButton}>Edit</button>
                     <button
-                      onClick={() => handleEdit(task)}
+                      onClick={() => handleDelete(task._id)}
                       className={styles.actionButton}
                     >
-                      Edit
-          </button>
-          <button
-            onClick={() => handleDelete(task._id)}
-            className={styles.actionButton}
-          >
-            Delete
-          </button>
-        </div>
-      </div>
-    );
-  })
-) : (
-  <p>No tasks found.</p>
-)}
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p>No tasks found.</p>
+            )}
 
           </div>
         </div>
