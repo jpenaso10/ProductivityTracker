@@ -1,18 +1,31 @@
 import mongoose from 'mongoose';
 
 const timerDataSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  date: { type: String, required: true },
-  timers: {
-    Production: { type: Number, default: 0 },
-    Meeting: { type: Number, default: 0 },
-    Coaching: { type: Number, default: 0 },
-    Lunch: { type: Number, default: 0 },
-    Break: { type: Number, default: 0 },
-    Unavailable: { type: Number, default: 0 }
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
   },
-  currentStatus: { type: String, default: 'Unavailable' },
-  updatedAt: { type: Date, default: Date.now }
+  status: {
+    type: String,
+    required: true,
+    enum: ['Production', 'Meeting', 'Coaching', 'Lunch', 'Break', 'Unavailable']
+  },
+  startTime: {
+    type: Date,
+    required: true
+  },
+  endTime: {
+    type: Date
+  },
+  duration: {
+    type: Number,
+    default: 0
+  },
+  date: {
+    type: Date,
+    required: true
+  }
 });
 
 export const TimerData = mongoose.model('TimerData', timerDataSchema);
