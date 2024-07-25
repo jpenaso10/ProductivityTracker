@@ -237,25 +237,25 @@ function EmployeeDetails() {
           <ul className={styles.menu}>
             <li>
               <a href="./AdminDashboard">
-                <CgMenuLeftAlt />
+                <CgMenuLeftAlt style={{ fontSize: "1.2rem" }} />
                 <span>Dashboard</span>
               </a>
             </li>
             <li>
               <a href="/AdminProfile">
-                <CgProfile />
+                <CgProfile style={{ fontSize: "1.2rem" }} />
                 <span>Profile</span>
               </a>
             </li>
             <li className={styles.active}>
               <a href="/EmployeeDetails">
-                <FaUsers />
+                <FaUsers style={{ fontSize: "1.2rem" }} />
                 <span>Employee</span>
               </a>
             </li>
             <li>
               <a href="/AdminTasks">
-                <MdAddTask />
+                <MdAddTask style={{ fontSize: "1.2rem" }} />
                 <span>Tasks</span>
               </a>
             </li>
@@ -290,14 +290,12 @@ function EmployeeDetails() {
                 )}
                 <span onClick={toggleDropdown}>{status}</span>
                 <div
-                  className={`${styles.statusIndicator} ${
-                    styles[status.toLowerCase()]
-                  }`}
+                  className={`${styles.statusIndicator} ${styles[status.toLowerCase()]
+                    }`}
                 ></div>
                 <div
-                  className={`${styles.dropdown} ${
-                    dropdownVisible ? styles.show : ""
-                  }`}
+                  className={`${styles.dropdown} ${dropdownVisible ? styles.show : ""
+                    }`}
                 >
                   <ul>
                     <li onClick={() => handleStatusChangeCode("Production")}>
