@@ -438,22 +438,23 @@ function AdminTasks() {
             }`}
           >
             {task.status}
-          </p>
-          <h3 className={styles.taskName}>{task.name}</h3>
-          <p className={styles.taskDescription}>{task.description}</p>
-          <p className={styles.taskDate}>
-            Due: {new Date(task.date).toLocaleDateString()}
-          </p>
-          <p className={styles.taskPriority}>
-            Priority: {task.priority}
-          </p>
-        </div>
-        <div className={styles.taskActions}>
-          <button
-            onClick={() => handleEditButtonClick(task)}
-            className={styles.actionButton}
-          >
-            Edit
+                    </p>
+                    <h3 className={styles.taskName}>{task.name}</h3>
+                    <p className={styles.taskDescription}>{task.description}</p>
+                    <p className={styles.taskDate}>
+                      Due: {new Date(task.date).toLocaleDateString()}
+                    </p>
+                    <p className={styles.taskPriority}>
+                      Priority: {task.priority}
+                    </p>
+                  </div>
+                  <div className={styles.taskActions}>
+                    
+                    <button
+                      onClick={() => handleEdit(task)}
+                      className={styles.actionButton}
+                    >
+                      Edit
           </button>
           <button
             onClick={() => handleDelete(task._id)}
