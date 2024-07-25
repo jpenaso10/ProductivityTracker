@@ -34,18 +34,38 @@ function AdminProfile() {
 
   useEffect(() => {
     const verifyUser = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        navigate("/"); // Redirect to login page if no token
+        return;
+      }
+
       try {
         const response = await axios.get("http://localhost:5000/auth/verify", {
-          withCredentials: true, // Ensure cookies are sent with the request
+          headers: {
+            Authorization: `Bearer ${token}`, // Include token in the request header
+          },
         });
-        console.log("Verification response:", response.data);
+
+        if (response.data.status) {
+          setStatus(response.data.status);
+          if (response.data.profilePicture) {
+            setProfilePicture(response.data.profilePicture);
+          }
+          if (response.data.username) {
+            setUsername(response.data.username);
+          }
+        } else {
+          navigate("/"); // Redirect to login if verification fails
+        }
       } catch (error) {
         console.error("Error verifying user:", error);
+        navigate("/"); // Redirect to login if an error occurs
       }
     };
 
     verifyUser();
-  }, []);
+  }, [navigate]);
 
   const fetchCurrentStatus = async () => {
     try {

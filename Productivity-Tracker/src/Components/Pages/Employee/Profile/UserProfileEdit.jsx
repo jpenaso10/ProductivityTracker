@@ -1,11 +1,54 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import styles from "./Profile.module.css";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function UserProfileEdit() {
-  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [userData, setUserData] = useState({
+    username: "",
+    email: "",
+    firstName: "",
+    lastName: "",
+    gender: "",
+    role: "",
+    status: "",
+    contactNumber: "",
+    profilePicture: "",
+    password: "",
+  });
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get("http://localhost:5000/auth/verify", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setUserData({
+          username: response.data.username,
+          email: response.data.email,
+          firstName: response.data.firstName,
+          lastName: response.data.lastName,
+          gender: response.data.gender,
+          role: response.data.role,
+          status: response.data.status,
+          contactNumber: response.data.contactNumber,
+          profilePicture: response.data.profilePicture,
+        });
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        navigate("/"); // Redirect to login if an error occurs
+      }
+    };
+
+    fetchUserData();
+  }, [navigate]);
 
   const password_validate = (password) => {
     var re = {
@@ -22,16 +65,38 @@ function UserProfileEdit() {
     );
   };
 
-  const handleSubmit = (event) => {
+  const handleChange = (e) => {
+    setUserData({ ...userData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    if (password !== confirmPassword) {
+    if (userData.password !== confirmPassword) {
       setPasswordError("Passwords do not match");
-    } else if (!password_validate(password)) {
+    } else if (userData.password && !password_validate(userData.password)) {
       setPasswordError(
         "Password must contain at least 1 capital letter, 1 special character, 1 digit, and be between 7-40 characters long"
       );
     } else {
-      console.log("Form submitted successfully");
+      try {
+        const token = localStorage.getItem("token");
+        await axios.put(
+          "http://localhost:5000/auth/update",
+          { ...userData },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        alert("Profile updated successfully");
+        setIsEditMode(false); // Exit edit mode after successful update
+      } catch (error) {
+        console.error("Error updating profile:", error);
+        alert(
+          "An error occurred while updating the profile. Please try again."
+        );
+      }
     }
   };
 
@@ -45,8 +110,10 @@ function UserProfileEdit() {
               <div className="card-body text-center">
                 <img
                   className="img-account-profile rounded-circle mb-2"
-                  src="https://via.placeholder.com/150"
-                  alt=""
+                  src={
+                    userData.profilePicture || "https://via.placeholder.com/150"
+                  }
+                  alt="Profile"
                 />
                 <div className="small font-italic text-muted mb-4"></div>
                 <button className="btn btn-primary" type="button">
@@ -59,60 +126,38 @@ function UserProfileEdit() {
             <div className="card mb-4">
               <div className="card-header">Account Details</div>
               <div className="card-body">
-                <form onSubmit={handleSubmit}>
-                  <div className="mb-3">
-                    <label className="small mb-1" htmlFor="inputUsername">
-                      Username
-                    </label>
-                    <input
-                      className="form-control"
-                      id="inputUsername"
-                      type="text"
-                      placeholder="Enter username"
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label className="small mb-1" htmlFor="inputEmail">
-                      Email address
-                    </label>
-                    <input
-                      className="form-control"
-                      id="inputEmail"
-                      type="email"
-                      placeholder="Enter email address"
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label className="small mb-1" htmlFor="inputPassword">
-                      Password
-                    </label>
-                    <input
-                      className="form-control"
-                      id="inputPassword"
-                      type="password"
-                      placeholder="Enter new password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label className="small mb-1" htmlFor="inputConfirm">
-                      Confirm Password
-                    </label>
-                    <input
-                      className="form-control"
-                      id="inputConfirm"
-                      type="password"
-                      placeholder="Confirm password"
-                      value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
-                    />
-                    {passwordError && (
-                      <div className="text-danger">{passwordError}</div>
-                    )}
-                  </div>
-                  <div className="row gx-3 mb-3">
-                    <div className="col-md-6">
+                {isEditMode ? (
+                  <form onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                      <label className="small mb-1" htmlFor="inputUsername">
+                        Username
+                      </label>
+                      <input
+                        className="form-control"
+                        id="inputUsername"
+                        type="text"
+                        name="username"
+                        value={userData.username}
+                        onChange={handleChange}
+                        placeholder="Enter username"
+                        readOnly
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label className="small mb-1" htmlFor="inputEmail">
+                        Email address
+                      </label>
+                      <input
+                        className="form-control"
+                        id="inputEmail"
+                        type="email"
+                        name="email"
+                        value={userData.email}
+                        onChange={handleChange}
+                        placeholder="Enter email address"
+                      />
+                    </div>
+                    <div className="mb-3">
                       <label className="small mb-1" htmlFor="inputFirstName">
                         First name
                       </label>
@@ -120,10 +165,13 @@ function UserProfileEdit() {
                         className="form-control"
                         id="inputFirstName"
                         type="text"
+                        name="firstName"
+                        value={userData.firstName}
+                        onChange={handleChange}
                         placeholder="Enter first name"
                       />
                     </div>
-                    <div className="col-md-6">
+                    <div className="mb-3">
                       <label className="small mb-1" htmlFor="inputLastName">
                         Last name
                       </label>
@@ -131,49 +179,156 @@ function UserProfileEdit() {
                         className="form-control"
                         id="inputLastName"
                         type="text"
+                        name="lastName"
+                        value={userData.lastName}
+                        onChange={handleChange}
                         placeholder="Enter last name"
                       />
                     </div>
-                  </div>
-                  <div className="row gx-3 mb-3">
-                    <div className="col-md-6">
-                      <label className="small mb-1" htmlFor="inputOrgName">
-                        Career Field
+                    <div className="mb-3">
+                      <label className="small mb-1" htmlFor="inputGender">
+                        Gender
+                      </label>
+                      <select
+                        className="form-control"
+                        id="inputGender"
+                        name="gender"
+                        value={userData.gender}
+                        onChange={handleChange}
+                      >
+                        <option value="">Select gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                      </select>
+                    </div>
+                    <div className="mb-3">
+                      <label className="small mb-1" htmlFor="inputRole">
+                        Role
                       </label>
                       <input
                         className="form-control"
-                        id="inputOrgName"
+                        id="inputRole"
                         type="text"
-                        placeholder="Role/Position"
+                        name="role"
+                        value={userData.role}
+                        onChange={handleChange}
+                        placeholder="Role"
+                        readOnly
                       />
                     </div>
-                    <div className="col-md-6">
-                      <label className="small mb-1" htmlFor="inputLocation">
-                        Location
+                    <div className="mb-3">
+                      <label className="small mb-1" htmlFor="inputStatus">
+                        Status
+                      </label>
+                      <select
+                        className="form-control"
+                        id="inputStatus"
+                        name="status"
+                        value={userData.status}
+                        onChange={handleChange}
+                      >
+                        <option value="Unavailable">Unavailable</option>
+                        <option value="Production">Production</option>
+                        <option value="Meeting">Meeting</option>
+                        <option value="Coaching">Coaching</option>
+                        <option value="Lunch">Lunch</option>
+                        <option value="Break">Break</option>
+                      </select>
+                    </div>
+                    <div className="mb-3">
+                      <label
+                        className="small mb-1"
+                        htmlFor="inputContactNumber"
+                      >
+                        Contact Number
                       </label>
                       <input
                         className="form-control"
-                        id="inputLocation"
-                        type="text"
-                        placeholder="Enter Address"
+                        id="inputContactNumber"
+                        type="tel"
+                        name="contactNumber"
+                        value={userData.contactNumber}
+                        onChange={handleChange}
+                        placeholder="Enter contact number"
                       />
                     </div>
+                    <div className="mb-3">
+                      <label className="small mb-1" htmlFor="inputPassword">
+                        Password
+                      </label>
+                      <input
+                        className="form-control"
+                        id="inputPassword"
+                        type="password"
+                        name="password"
+                        value={userData.password}
+                        onChange={handleChange}
+                        placeholder="Enter new password"
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label className="small mb-1" htmlFor="inputConfirm">
+                        Confirm Password
+                      </label>
+                      <input
+                        className="form-control"
+                        id="inputConfirm"
+                        type="password"
+                        placeholder="Confirm password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                      />
+                      {passwordError && (
+                        <div className="text-danger">{passwordError}</div>
+                      )}
+                    </div>
+                    <button className="btn btn-primary" type="submit">
+                      Save changes
+                    </button>
+                  </form>
+                ) : (
+                  <div>
+                    <div className="mb-3">
+                      <label className="small mb-1">Username</label>
+                      <p>{userData.username}</p>
+                    </div>
+                    <div className="mb-3">
+                      <label className="small mb-1">Email address</label>
+                      <p>{userData.email}</p>
+                    </div>
+                    <div className="mb-3">
+                      <label className="small mb-1">First name</label>
+                      <p>{userData.firstName}</p>
+                    </div>
+                    <div className="mb-3">
+                      <label className="small mb-1">Last name</label>
+                      <p>{userData.lastName}</p>
+                    </div>
+                    <div className="mb-3">
+                      <label className="small mb-1">Gender</label>
+                      <p>{userData.gender}</p>
+                    </div>
+                    <div className="mb-3">
+                      <label className="small mb-1">Role</label>
+                      <p>{userData.role}</p>
+                    </div>
+                    <div className="mb-3">
+                      <label className="small mb-1">Status</label>
+                      <p>{userData.status}</p>
+                    </div>
+                    <div className="mb-3">
+                      <label className="small mb-1">Contact Number</label>
+                      <p>{userData.contactNumber}</p>
+                    </div>
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => setIsEditMode(true)}
+                    >
+                      Edit Profile
+                    </button>
                   </div>
-                  <div className="mb-3">
-                    <label className="small mb-1" htmlFor="inputPhone">
-                      Phone number
-                    </label>
-                    <input
-                      className="form-control"
-                      id="inputPhone"
-                      type="tel"
-                      placeholder="Enter phone number"
-                    />
-                  </div>
-                  <button className="btn btn-primary" type="submit">
-                    Save changes
-                  </button>
-                </form>
+                )}
               </div>
             </div>
           </div>

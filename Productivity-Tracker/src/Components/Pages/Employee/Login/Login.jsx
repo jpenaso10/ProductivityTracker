@@ -29,11 +29,15 @@ function Login() {
       })
       .then((response) => {
         if (response.data.status) {
+          // Store token in localStorage
+          localStorage.setItem("token", response.data.token);
+
           if (rememberMe) {
             localStorage.setItem("username", username);
           } else {
             localStorage.removeItem("username");
           }
+
           const role = response.data.role;
           if (role === "Admin") {
             navigate("/admindashboard");
@@ -41,10 +45,20 @@ function Login() {
             navigate("/dashboard");
           }
         } else {
-          alert("Incorrect Username or Password. Please try again.");
+          alert(
+            response.data.message ||
+              "Incorrect Username or Password. Please try again."
+          );
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        if (err.response && err.response.data && err.response.data.message) {
+          alert(err.response.data.message); // Show the error message from the server
+        } else {
+          console.error("Error during login:", err);
+          alert("An error occurred during login. Please try again.");
+        }
+      });
   };
 
   const togglePasswordVisibility = () => {
@@ -56,7 +70,11 @@ function Login() {
       <div className="form-box login">
         <form onSubmit={handleSubmit}>
           <div className="logo-container">
-            <img src="/all-covered-svgrepo-com.png" alt="Productivity Tracker Logo" className="logo" />
+            <img
+              src="/all-covered-svgrepo-com.png"
+              alt="Productivity Tracker Logo"
+              className="logo"
+            />
           </div>
           <div className="form-group">
             <input
@@ -83,7 +101,7 @@ function Login() {
             )}
           </div>
           <div className="remember-forgot">
-            <label style={{ color: 'black' }}>
+            <label style={{ color: "black" }}>
               <input
                 type="checkbox"
                 checked={rememberMe}
