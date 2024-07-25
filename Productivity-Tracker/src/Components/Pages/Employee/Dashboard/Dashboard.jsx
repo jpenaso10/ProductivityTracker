@@ -14,15 +14,26 @@ axios.defaults.withCredentials = true;
 
 function Dashboard() {
   const navigate = useNavigate();
-
+  const [currentDate, setCurrentDate] = useState("");
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [time, setTime] = useState(0);
   const [isTaskActive, setIsTaskActive] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [status, setStatus] = useState("Unavailable");
+  const [statusTimers, setStatusTimers] = useState({
+    Production: 0,
+    Meeting: 0,
+    Coaching: 0,
+    Lunch: 0,
+    Break: 0,
+    Unavailable: 0,
+    current: 0,
+  });
   const dropdownRef = useRef(null);
   const [profilePicture, setProfilePicture] = useState("");
   const [username, setUsername] = useState("");
+  const [currentStatusStartTime, setCurrentStatusStartTime] = useState(null);
+  const [currentTimerInterval, setCurrentTimerInterval] = useState(null);
 
   useEffect(() => {
     let timer;
@@ -40,14 +51,14 @@ function Dashboard() {
     const verifyUser = async () => {
       const token = localStorage.getItem("token");
       if (!token) {
-        navigate("/"); // Redirect to login page if no token
+        navigate("/");
         return;
       }
 
       try {
         const response = await axios.get("http://localhost:5000/auth/verify", {
           headers: {
-            Authorization: `Bearer ${token}`, // Include token in the request header
+            Authorization: `Bearer ${token}`,
           },
         });
 
@@ -59,17 +70,33 @@ function Dashboard() {
           if (response.data.username) {
             setUsername(response.data.username);
           }
+          await loadTimersFromDatabase(); // Load timers after user is verified
         } else {
-          navigate("/"); // Redirect to login if verification fails
+          navigate("/");
         }
       } catch (error) {
         console.error("Error verifying user:", error);
-        navigate("/"); // Redirect to login if an error occurs
+        navigate("/");
       }
     };
 
     verifyUser();
   }, [navigate]);
+
+  // FETCH CURRENT DATE
+
+  useEffect(() => {
+    // Function to format and set the current date
+    const updateCurrentDate = () => {
+      const now = new Date();
+      const options = { year: "numeric", month: "long", day: "numeric" };
+      setCurrentDate(now.toLocaleDateString(undefined, options));
+    };
+
+    updateCurrentDate(); // Set the date when the component mounts
+  }, []);
+
+  //---------------------------------------------------------------------
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -127,6 +154,7 @@ function Dashboard() {
 
   const handleLogout = async () => {
     try {
+      await saveTimersToDatabase(); // Save timers before logging out
       await axios.post("http://localhost:5000/auth/logout");
       navigate("/");
     } catch (error) {
@@ -146,11 +174,12 @@ function Dashboard() {
   };
 
   const formatTime = (seconds) => {
-    const getSeconds = `0${seconds % 60}`.slice(-2);
-    const minutes = `${Math.floor(seconds / 60)}`;
-    const getMinutes = `0${minutes % 60}`.slice(-2);
-    const getHours = `0${Math.floor(seconds / 3600)}`.slice(-2);
-    return `${getHours}:${getMinutes}:${getSeconds}`;
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds = seconds % 60;
+    return `${hours.toString().padStart(2, "0")}:${minutes
+      .toString()
+      .padStart(2, "0")}:${remainingSeconds.toString().padStart(2, "0")}`;
   };
 
   const toggleDropdown = () => {
@@ -164,17 +193,74 @@ function Dashboard() {
       const response = await axios.put(
         "http://localhost:5000/auth/update-status",
         { status: newStatus },
-        { withCredentials: true } // Ensure cookies are sent with the request
+        { withCredentials: true }
       );
       if (!response.data.success) {
         console.error("Failed to update status:", response.data);
       } else {
         console.log("Status updated successfully:", response.data);
-        setStatus(newStatus);
+        stopCurrentTimer(); // Stop the current timer
+        updateStatusTimers(newStatus); // Update timers
+        setStatus(newStatus); // Set new status
+        await saveTimersToDatabase(); // Save updated timers
       }
     } catch (error) {
       console.error("Failed to update status:", error);
     }
+  };
+
+  const updateStatusTimers = (newStatus) => {
+    setCurrentStatusStartTime(new Date());
+    // We don't start a new timer here anymore
+  };
+
+  useEffect(() => {
+    return () => {
+      stopCurrentTimer();
+    };
+  }, []);
+
+  useEffect(() => {
+    let intervalId;
+    if (currentStatusStartTime) {
+      intervalId = setInterval(() => {
+        const now = new Date();
+        const timeSpent = Math.floor((now - currentStatusStartTime) / 1000);
+        setStatusTimers((prevTimers) => ({
+          ...prevTimers,
+          [status]: prevTimers[status] + timeSpent,
+          current: timeSpent,
+        }));
+      }, 1000); // Update every second for accuracy
+    }
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
+  }, [status, currentStatusStartTime]);
+
+  const stopCurrentTimer = () => {
+    if (currentTimerInterval) {
+      clearInterval(currentTimerInterval);
+      setCurrentTimerInterval(null);
+    }
+    if (currentStatusStartTime) {
+      const now = new Date();
+      const timeSpent = Math.floor((now - currentStatusStartTime) / 1000);
+      setStatusTimers((prevTimers) => ({
+        ...prevTimers,
+        [status]: prevTimers[status] + timeSpent,
+        current: 0,
+      }));
+      setCurrentStatusStartTime(null);
+    }
+  };
+
+  const getTotalTime = (statusKey) => {
+    return statusKey === status
+      ? statusTimers[statusKey] + statusTimers.current
+      : statusTimers[statusKey];
   };
 
   const getInitials = (name) => {
@@ -184,6 +270,99 @@ function Dashboard() {
     }
     return name.substring(0, 2).toUpperCase();
   };
+
+  // SAVE THE TIMER IN DATABASE
+
+  const saveTimersToDatabase = async () => {
+    const currentDate = new Date().toISOString().split("T")[0];
+    try {
+      const timersToSave = {
+        Production: getTotalTime("Production"),
+        Meeting: getTotalTime("Meeting"),
+        Coaching: getTotalTime("Coaching"),
+        Lunch: getTotalTime("Lunch"),
+        Break: getTotalTime("Break"),
+        Unavailable: getTotalTime("Unavailable"),
+      };
+
+      const response = await axios.post(
+        "http://localhost:5000/auth/save-timers",
+        {
+          date: currentDate,
+          timers: timersToSave,
+          currentStatus: status,
+        },
+        { withCredentials: true }
+      );
+
+      if (response.data.success) {
+        console.log("Timer data saved successfully");
+      } else {
+        console.error("Failed to save timer data");
+      }
+    } catch (error) {
+      console.error("Error saving timer data:", error);
+    }
+  };
+
+  const loadTimersFromDatabase = async () => {
+    const currentDate = new Date().toISOString().split("T")[0];
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/auth/get-timers/${currentDate}`,
+        { withCredentials: true }
+      );
+
+      if (response.data.success && response.data.timers) {
+        setStatusTimers((prevTimers) => ({
+          ...prevTimers,
+          ...response.data.timers,
+          current: 0, // Reset current to 0 as we'll start counting from now
+        }));
+        // Set the current status start time to now
+        setCurrentStatusStartTime(new Date());
+        setStatus(response.data.currentStatus || "Unavailable");
+      } else {
+        console.log("No timer data for today, starting fresh");
+        // If no data, keep the default state (all zeros)
+      }
+    } catch (error) {
+      console.error("Error loading timer data:", error);
+    }
+  };
+
+  useEffect(() => {
+    const saveInterval = setInterval(() => {
+      saveTimersToDatabase();
+    }, 5 * 60 * 1000); // Save every 5 minutes
+
+    return () => clearInterval(saveInterval);
+  }, []);
+
+  useEffect(() => {
+    let lastSavedDate = new Date().toISOString().split("T")[0];
+
+    const saveInterval = setInterval(async () => {
+      const currentDate = new Date().toISOString().split("T")[0];
+      if (currentDate !== lastSavedDate) {
+        // It's a new day, reset timers and update lastSavedDate
+        setStatusTimers({
+          Production: 0,
+          Meeting: 0,
+          Coaching: 0,
+          Lunch: 0,
+          Break: 0,
+          Unavailable: 0,
+          current: 0,
+        });
+        lastSavedDate = currentDate;
+      }
+      await saveTimersToDatabase();
+    }, 5 * 60 * 1000); // Save every 5 minutes
+
+    return () => clearInterval(saveInterval);
+  }, []);
+  //-------------------------------------------------------
 
   return (
     <div>
@@ -224,17 +403,6 @@ function Dashboard() {
               <h2>Productivity Tracker</h2>
             </div>
             <DigitalClock />
-            <div className={styles.timerButtonWrapper}>
-              <button
-                className={`${styles.timerButton} ${
-                  isTimerRunning ? styles.endShiftButton : ""
-                }`}
-                onClick={toggleTimer}
-              >
-                {isTimerRunning ? "End Shift" : "Start Shift"}
-              </button>
-              <div className={styles.timerDisplay}>{formatTime(time)}</div>
-            </div>
             <div className={styles.userinfo}>
               <div className={styles.profile} ref={dropdownRef}>
                 {profilePicture ? (
@@ -278,7 +446,7 @@ function Dashboard() {
           </div>
           <div className={styles.mainnav}>
             <h3>Your shift</h3>
-            <p>Your time spent in status codes on "insert date here"</p>
+            <p>Your time spent in status codes on {currentDate}</p>
           </div>
           <div className={styles.timechart}>
             <h1>TIME CHART HERE</h1>
@@ -286,22 +454,27 @@ function Dashboard() {
           <div className={styles.statusContainer}>
             <div className={styles.statusprod}>
               <p>Production</p>
-              <p>00:00</p>
+              <p>{formatTime(getTotalTime("Production"))}</p>
             </div>
             <div className={styles.statusmeeting}>
-              <p>Meeting</p> <p>00:00</p>
+              <p>Meeting</p>
+              <p>{formatTime(getTotalTime("Meeting"))}</p>
             </div>
             <div className={styles.statuscoaching}>
-              <p>Coaching</p> <p>00:00</p>
+              <p>Coaching</p>
+              <p>{formatTime(getTotalTime("Coaching"))}</p>
             </div>
             <div className={styles.statuslunch}>
-              <p>Lunch</p> <p>00:00</p>
+              <p>Lunch</p>
+              <p>{formatTime(getTotalTime("Lunch"))}</p>
             </div>
             <div className={styles.statusbreak}>
-              <p>Break</p> <p>00:00</p>
+              <p>Break</p>
+              <p>{formatTime(getTotalTime("Break"))}</p>
             </div>
             <div className={styles.statusunavail}>
-              <p>Unavailable</p> <p>00:00</p>
+              <p>Unavailable</p>
+              <p>{formatTime(getTotalTime("Unavailable"))}</p>
             </div>
           </div>
         </div>
