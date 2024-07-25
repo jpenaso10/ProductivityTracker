@@ -20,6 +20,9 @@ function UserProfileEdit() {
   });
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [status, setStatus] = useState("Unavailable");
+  const [profilePicture, setProfilePicture] = useState("");
+  const [username, setUsername] = useState("");
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -65,6 +68,49 @@ function UserProfileEdit() {
     );
   };
 
+  useEffect(() => {
+    const verifyUser = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        navigate("/"); // Redirect to login page if no token
+        return;
+      }
+
+      try {
+        const response = await axios.get("http://localhost:5000/auth/verify", {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include token in the request header
+          },
+        });
+
+        if (response.data.status) {
+          setStatus(response.data.status);
+          if (response.data.profilePicture) {
+            setProfilePicture(response.data.profilePicture);
+          }
+          if (response.data.username) {
+            setUsername(response.data.username);
+          }
+        } else {
+          navigate("/"); // Redirect to login if verification fails
+        }
+      } catch (error) {
+        console.error("Error verifying user:", error);
+        navigate("/"); // Redirect to login if an error occurs
+      }
+    };
+
+    verifyUser();
+  }, [navigate]);
+
+  const getInitials = (name) => {
+    const nameParts = name.split(" ");
+    if (nameParts.length > 1) {
+      return `${nameParts[0][0]}${nameParts[1][0]}`.toUpperCase();
+    }
+    return name.substring(0, 2).toUpperCase();
+  };
+
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
   };
@@ -108,13 +154,14 @@ function UserProfileEdit() {
             <div className="card mb-4 mb-xl-0">
               <div className="card-header">Profile Picture</div>
               <div className="card-body text-center">
-                <img
-                  className="img-account-profile rounded-circle mb-2"
-                  src={
-                    userData.profilePicture || "https://via.placeholder.com/150"
-                  }
-                  alt="Profile"
-                />
+                {profilePicture ? (
+                  <img
+                    src={`http://localhost:5000/${profilePicture}`}
+                    alt="Profile"
+                  />
+                ) : (
+                  <div className={styles.initials}>{getInitials(username)}</div>
+                )}
                 <div className="small font-italic text-muted mb-4"></div>
                 <button className="btn btn-primary" type="button">
                   Upload new image
