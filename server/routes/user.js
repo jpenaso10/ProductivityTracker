@@ -377,12 +377,19 @@ router.delete("/tasks/:id", async (req, res) => {
 });
 
 // TIMER DATA
-router.post('/update-status', verifyUser, async (req, res) => {
+
+const adjustToLocalTime = (date) => {
+    const localDate = new Date(date);
+    localDate.setMinutes(localDate.getMinutes() - localDate.getTimezoneOffset());
+    localDate.setHours(0, 0, 0, 0);
+    return localDate;
+  };
+
+  router.post('/update-status', verifyUser, async (req, res) => {
     try {
       const { status } = req.body;
       const userId = req.user.id;
-      const currentDate = new Date();
-      currentDate.setHours(0, 0, 0, 0);
+      const currentDate = adjustToLocalTime(new Date());
   
       // Update user's status in User schema
       await User.findByIdAndUpdate(userId, { status: status });
@@ -396,7 +403,7 @@ router.post('/update-status', verifyUser, async (req, res) => {
   
       if (previousTimer) {
         const endTime = new Date();
-        const duration = Math.round((endTime - previousTimer.startTime) / 1000); // duration in seconds
+        const duration = Math.round((endTime - previousTimer.startTime) / 1000);
         previousTimer.endTime = endTime;
         previousTimer.duration = duration;
         await previousTimer.save();
@@ -424,8 +431,7 @@ router.post('/update-status', verifyUser, async (req, res) => {
     try {
       const { date } = req.params;
       const userId = req.user.id;
-      const queryDate = new Date(date);
-      queryDate.setHours(0, 0, 0, 0);
+      const queryDate = adjustToLocalTime(new Date(date));
   
       const timers = await TimerData.find({
         userId,
