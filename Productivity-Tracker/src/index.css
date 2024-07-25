@@ -24,9 +24,9 @@
 
 .wrapper {
   position: relative;
-  width: 420px;
-  height: 550px;
-  background: rgba(255, 255, 255, 0.6);
+  width: 445px;
+  height: 535px;
+  background: rgba(255, 255, 255, 0.7);
   border-radius: 50px;
   color: rgb(0, 0, 0);
   display: flex;
@@ -34,6 +34,36 @@
   overflow: hidden;
 }
 
+.wrapper-forgot {
+  position: relative;
+  width: 445px;
+  height: 500px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 50px;
+  color: rgb(0, 0, 0);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.wrapper-forgot.active {
+  height: 520px;
+}
+
+.wrapper-forgot .form-box {
+  width: 100%;
+  padding: 40px;
+}
+
+.wrapper-forgot .form-box.login {
+  transition: transform 0.18s ease;
+  transform: translateX(0);
+}
+
+.wrapper-forgot.active .form-box.login {
+  transition: none;
+  transform: translateX(-400px);
+}
 
 .remember-forgot {
   display: flex;
@@ -57,14 +87,24 @@
 }
 
 .logo-container {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
+  text-align: center;
+  /* Center the content horizontally */
+}
+
+.logo-text {
+  font-family: 'Roboto', sans-serif;
+  /* Apply the formal font */
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: rgb(66, 129, 211);
+  margin-bottom: 0rem;
+  /* Add space between text and image */
 }
 
 .logo {
-  width: 170px;
-  /* Adjust width to make the image smaller */
+  width: 150px;
+  margin-bottom: rem;
+  /* Adjust the size of the logo as needed */
   height: auto;
 }
 

@@ -257,7 +257,7 @@ function EmployeeTasks() {
         <div className={styles.maincontent}>
           <div className={styles.headerwrapper}>
             <div className={styles.headertitle}>
-              <span>Productivity Tracker</span>
+              <span></span>
               <h2>Tasks</h2>
             </div>
             <div className={styles.userinfo}>
