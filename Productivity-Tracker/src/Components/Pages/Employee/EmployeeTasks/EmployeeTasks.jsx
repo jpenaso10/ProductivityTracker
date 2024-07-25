@@ -145,19 +145,22 @@ function EmployeeTasks() {
 
   const handleStatusChangeCode = async (newStatus) => {
     try {
-      const response = await axios.put(
+      const response = await axios.post(
         "http://localhost:5000/auth/update-status",
         { status: newStatus },
-        { withCredentials: true } // Ensure cookies are sent with the request
+        { withCredentials: true }
       );
-      if (!response.data.success) {
-        console.error("Failed to update status:", response.data);
-      } else {
-        console.log("Status updated successfully:", response.data);
+      if (response.data.success) {
         setStatus(newStatus);
+        await loadTimersFromDatabase();
+      } else {
+        console.error("Failed to update status:", response.data.message);
       }
     } catch (error) {
-      console.error("Failed to update status:", error);
+      console.error(
+        "Failed to update status:",
+        error.response ? error.response.data.message : error.message
+      );
     }
   };
 
@@ -277,12 +280,14 @@ function EmployeeTasks() {
               )}
               <span onClick={toggleDropdown}>{status}</span>
               <div
-                className={`${styles.statusIndicator} ${styles[status.toLowerCase()]
-                  }`}
+                className={`${styles.statusIndicator} ${
+                  styles[status.toLowerCase()]
+                }`}
               ></div>
               <div
-                className={`${styles.dropdown} ${dropdownVisible ? styles.show : ""
-                  }`}
+                className={`${styles.dropdown} ${
+                  dropdownVisible ? styles.show : ""
+                }`}
               >
                 <ul>
                   <li onClick={() => handleStatusChangeCode("Production")}>
@@ -338,14 +343,15 @@ function EmployeeTasks() {
                 >
                   <div className={styles.taskDetails}>
                     <p
-                      className={`${styles.status} ${task.status === "Active"
-                        ? styles.statusActive
-                        : task.status === "Pending"
+                      className={`${styles.status} ${
+                        task.status === "Active"
+                          ? styles.statusActive
+                          : task.status === "Pending"
                           ? styles.statusPending
                           : task.status === "Done"
-                            ? styles.statusDone
-                            : ""
-                        }`}
+                          ? styles.statusDone
+                          : ""
+                      }`}
                     >
                       {task.status}
                     </p>

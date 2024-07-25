@@ -377,62 +377,96 @@ router.delete("/tasks/:id", async (req, res) => {
 });
 
 // TIMER DATA
-router.post('/save-timers', verifyUser, async (req, res) => {
+router.post('/update-status', verifyUser, async (req, res) => {
     try {
-      const { date, timers, currentStatus } = req.body;
+      const { status } = req.body;
       const userId = req.user.id;
+      const currentDate = new Date();
+      currentDate.setHours(0, 0, 0, 0);
   
-      let timerData = await TimerData.findOne({ userId, date });
-      
-      if (timerData) {
-        timerData.timers = timers;
-        timerData.currentStatus = currentStatus;
-        timerData.updatedAt = new Date(); // Update the timestamp
-        await timerData.save();
-      } else {
-        timerData = new TimerData({
-          userId,
-          date,
-          timers,
-          currentStatus,
-          updatedAt: new Date() // Set the initial timestamp
-        });
-        await timerData.save();
+      // Update user's status in User schema
+      await User.findByIdAndUpdate(userId, { status: status });
+  
+      // End the previous timer
+      const previousTimer = await TimerData.findOne({
+        userId,
+        date: currentDate,
+        endTime: null
+      });
+  
+      if (previousTimer) {
+        const endTime = new Date();
+        const duration = Math.round((endTime - previousTimer.startTime) / 1000); // duration in seconds
+        previousTimer.endTime = endTime;
+        previousTimer.duration = duration;
+        await previousTimer.save();
       }
   
-      res.json({ success: true, message: 'Timer data saved successfully' });
+      // Start a new timer
+      const newTimer = new TimerData({
+        userId,
+        status,
+        startTime: new Date(),
+        date: currentDate,
+        endTime: null,
+        duration: 0
+      });
+      await newTimer.save();
+  
+      res.json({ success: true, message: 'Status updated successfully' });
     } catch (error) {
-      console.error('Error saving timer data:', error);
-      res.status(500).json({ success: false, message: 'Failed to save timer data' });
+      console.error('Error updating status:', error);
+      res.status(500).json({ success: false, message: 'Failed to update status', error: error.message });
     }
   });
-
+  
   router.get('/get-timers/:date', verifyUser, async (req, res) => {
     try {
       const { date } = req.params;
       const userId = req.user.id;
+      const queryDate = new Date(date);
+      queryDate.setHours(0, 0, 0, 0);
   
-      const timerData = await TimerData.findOne({ userId, date });
+      const timers = await TimerData.find({
+        userId,
+        date: queryDate
+      });
   
-      if (timerData) {
-        res.json({
-          success: true,
-          timers: timerData.timers,
-          currentStatus: timerData.currentStatus,
-          lastUpdated: timerData.updatedAt
-        });
-      } else {
-        res.json({
-          success: false,
-          message: 'No timer data found for this date'
-        });
-      }
+      const user = await User.findById(userId);
+      const currentStatus = user ? user.status : 'Unavailable';
+  
+      const timerSummary = {
+        Production: 0,
+        Meeting: 0,
+        Coaching: 0,
+        Lunch: 0,
+        Break: 0,
+        Unavailable: 0
+      };
+  
+      let currentDuration = 0;
+  
+      timers.forEach(timer => {
+        if (timer.endTime) {
+          timerSummary[timer.status] += timer.duration;
+        } else {
+          const duration = Math.round((new Date() - timer.startTime) / 1000);
+          timerSummary[timer.status] += duration;
+          currentDuration = duration;
+        }
+      });
+  
+      res.json({
+        success: true,
+        timers: timerSummary,
+        currentStatus,
+        currentDuration
+      });
     } catch (error) {
       console.error('Error fetching timer data:', error);
       res.status(500).json({ success: false, message: 'Failed to fetch timer data' });
     }
   });
-
 
 //--------------------------------------------------------
 
