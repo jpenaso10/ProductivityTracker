@@ -339,12 +339,12 @@ function EmployeeTasks() {
                   <div className={styles.taskDetails}>
                     <p
                       className={`${styles.status} ${task.status === "Active"
-                          ? styles.statusActive
-                          : task.status === "Pending"
-                            ? styles.statusPending
-                            : task.status === "Done"
-                              ? styles.statusDone
-                              : ""
+                        ? styles.statusActive
+                        : task.status === "Pending"
+                          ? styles.statusPending
+                          : task.status === "Done"
+                            ? styles.statusDone
+                            : ""
                         }`}
                     >
                       {task.status}
