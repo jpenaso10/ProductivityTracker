@@ -8,7 +8,6 @@ body {
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  /* Ensure no scrollbars appear */
 }
 
 body::before {
@@ -22,7 +21,7 @@ body::before {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  filter: blur(2px);
+  filter: blur(px);
   /* Adjust blur level here */
   z-index: -1;
   /* Ensure the pseudo-element is behind other content */
