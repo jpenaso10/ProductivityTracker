@@ -168,7 +168,7 @@ function UserProfileEdit() {
                     alt="Profile"
                   />
                 ) : (
-                  <div className={styles.initials}>{getInitials(username)}</div>
+                  <div className={styles.biginitials}>{getInitials(userData.username)}</div>
                 )}
                 <div className="small font-italic text-muted mb-4"></div>
                 <button className="btn btn-primary" type="button">
