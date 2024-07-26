@@ -20,6 +20,7 @@ function EmployeeTasks() {
   const dropdownRef = useRef(null);
   const [profilePicture, setProfilePicture] = useState("");
   const [username, setUsername] = useState("");
+  const [currentUserId, setCurrentUserId] = useState(null);
 
   //  VERIFY USER AND UPDATE REALTIME STATUS
 
@@ -45,6 +46,9 @@ function EmployeeTasks() {
           }
           if (response.data.username) {
             setUsername(response.data.username);
+          }
+          if (response.data.userId) {
+            setCurrentUserId(response.data.userId);
           }
         } else {
           navigate("/"); // Redirect to login if verification fails
@@ -178,13 +182,13 @@ function EmployeeTasks() {
   const filterTasks = (status, allTasks = tasks) => {
     const filtered = allTasks.filter((task) => {
       if (status === "To do") {
-        return task.status === "Active";
+        return task.status === "Active" && task.userId === null;
       }
       if (status === "Pending") {
-        return task.status === "Pending";
+        return task.status === "Pending" && task.userId === currentUserId;
       }
       if (status === "Completed") {
-        return task.status === "Done";
+        return task.status === "Done" && task.userId === currentUserId;
       }
       return false;
     });
@@ -197,11 +201,21 @@ function EmployeeTasks() {
   };
 
   const handleStatusChange = (taskId, newStatus) => {
+    const data = {
+      status: newStatus,
+      userId:
+        newStatus === "Pending" || newStatus === "Active"
+          ? currentUserId
+          : null,
+    };
+
+    console.log("Sending data:", data); // Debugging line
+
     axios
-      .put(`http://localhost:5000/auth/tasks/${taskId}`, { status: newStatus })
+      .put(`http://localhost:5000/tasks/${taskId}`, data)
       .then((response) => {
         const updatedTasks = tasks.map((task) =>
-          task._id === taskId ? { ...task, status: newStatus } : task
+          task._id === taskId ? { ...task, ...response.data } : task
         );
         setTasks(updatedTasks);
         filterTasks(currentTab, updatedTasks);

@@ -341,16 +341,31 @@ router.get('/tasks', async (req, res) => {
     }
 });
 
-router.put('/tasks/:taskId', async (req, res) => {
+// Update task status and userId if applicable
+router.put('/tasks/:taskId', verifyUser, async (req, res) => {
     const { taskId } = req.params;
-    const { status } = req.body;
+    const { status, userId } = req.body;
+
+    console.log("Received data:", { taskId, status, userId }); // Debugging line
 
     try {
-        const updatedTask = await Task.findByIdAndUpdate(
-            taskId,
-            { status },
-            { new: true }
-        );
+        const updateData = { status };
+        if (status === 'Pending' && userId) {
+            updateData.userId = userId;
+        } else if (status === 'Active') {
+            updateData.userId = userId; // Adjusted to set userId to currentUserId
+        }
+
+        console.log("Update data:", updateData); // Debugging line
+
+        const updatedTask = await Task.findByIdAndUpdate(taskId, updateData, { new: true });
+
+        if (!updatedTask) {
+            return res.status(404).json({ message: "Task not found" });
+        }
+
+        console.log("Updated task:", updatedTask); // Debugging line
+
         res.status(200).json(updatedTask);
     } catch (error) {
         console.error("Error updating task status:", error);
@@ -358,6 +373,22 @@ router.put('/tasks/:taskId', async (req, res) => {
     }
 });
 
+
+router.put('/tasks/:id', verifyUser, async (req, res) => {
+    const { id } = req.params;
+    const { status, userId } = req.body;
+  
+    try {
+      const updatedTask = await Task.findByIdAndUpdate(
+        id,
+        { status, userId },
+        { new: true }
+      );
+      res.status(200).json(updatedTask);
+    } catch (error) {
+      res.status(500).json({ message: 'Failed to update task', error });
+    }
+  });
 
 
 /* Delete Tasks */
